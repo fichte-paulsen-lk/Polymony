@@ -7,4 +7,5 @@ Wie man das Repository hinzufügt:
 git init
 git remote add origin httpst://github.com/fichte-paulsen-lk/Polymony
 git pull
+GUTEN TAG
 ```
