@@ -8,3 +8,4 @@ git init
 git remote add origin httpst://github.com/fichte-paulsen-lk/Polymony
 git pull
 ```
+Git Cheatsheet: https://github.com/esc/git-cheatsheet-de/blob/master/cheatsheet.pdf
