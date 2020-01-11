@@ -5,7 +5,7 @@ Wie man das Repository hinzufügt:
 2. Ordner in Konsole öffnen
 ```
 git init
-git remote add origin httpst://github.com/fichte-paulsen-lk/Polymony
+git remote add origin https://github.com/fichte-paulsen-lk/Polymony
 git pull
 ```
 Git Cheatsheet: https://github.com/esc/git-cheatsheet-de/blob/master/cheatsheet.pdf
