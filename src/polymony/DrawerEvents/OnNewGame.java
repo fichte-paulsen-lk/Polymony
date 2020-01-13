@@ -1,8 +1,8 @@
 package polymony.DrawerEvents;
 
 import javafx.scene.Group;
-import polymony.Drawer;
-import polymony.GameInterface;;
+import polymony.Main.Drawer;
+import polymony.Main.GameInterface;;
 
 public class OnNewGame implements Drawer {
     GameInterface spielLogik;

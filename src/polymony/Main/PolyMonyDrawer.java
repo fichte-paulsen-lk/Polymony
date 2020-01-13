@@ -1,4 +1,4 @@
-package polymony;
+package polymony.Main;
 
 import javafx.scene.Group;
 import polymony.DrawerEvents.OnNewGame;

@@ -1,4 +1,4 @@
-package polymony;
+package polymony.Main;
 
 public interface GameInterface {
     

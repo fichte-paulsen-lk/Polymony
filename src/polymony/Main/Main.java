@@ -1,4 +1,4 @@
-package polymony;
+package polymony.Main;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
