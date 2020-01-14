@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package polymony;
+package polymony.Gamelogic.Fields;
 
 /**
  *
  * @author manfr
  */
-public abstract class Field {
-  int index;
-  String name;
+public class TrafficField {
+    
 }

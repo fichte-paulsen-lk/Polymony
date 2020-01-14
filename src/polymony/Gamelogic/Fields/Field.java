@@ -3,12 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package polymony.Gamelogic;
+package polymony.Gamelogic.Fields;
 
 /**
  *
  * @author manfr
  */
-public class normalDice {
-    
+public abstract class Field {
+  int index;
+  String name;
 }

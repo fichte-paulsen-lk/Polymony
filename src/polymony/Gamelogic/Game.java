@@ -1,5 +1,7 @@
-
 package polymony.Gamelogic;
+
+import polymony.Gamelogic.Player.HumanPlayer;
+import polymony.Gamelogic.Player.Player;
 import polymony.Main.GameInterface;
 
 public class Game implements GameInterface{
@@ -42,9 +44,11 @@ public class Game implements GameInterface{
         Game g1 = new Game(3,40,2);
     }
     
+    /*
     public int[] rollDices(){
         for (Dice d : dices){
             d.rollDice();
         }
     }
+    */
 }

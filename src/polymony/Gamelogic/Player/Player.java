@@ -1,4 +1,4 @@
-package polymony.Gamelogic;
+package polymony.Gamelogic.Player;
 
 public abstract class Player {
     public Player(){
