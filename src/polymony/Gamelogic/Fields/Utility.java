@@ -1,5 +1,4 @@
 package polymony.Gamelogic.Fields;
 
-public class Utility {
-    
+public class Utility extends OwnableField{
 }

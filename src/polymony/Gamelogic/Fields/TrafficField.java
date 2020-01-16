@@ -1,5 +1,4 @@
 package polymony.Gamelogic.Fields;
 
-public class TrafficField {
-    
+public class TrafficField extends OwnableField {
 }

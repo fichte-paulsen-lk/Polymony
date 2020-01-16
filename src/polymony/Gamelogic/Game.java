@@ -12,7 +12,7 @@ public class Game implements GameInterface{
     Field[] fields;
     Dice[] dices;
     
-    int activePlayer;
+    int activePlayerIndex;
     public Game(int playerCount,int fieldCount,int diceCount){
         // erstelle Spieler Array mit angegebener Spieleranzahl
         this.players = new Player[playerCount];
@@ -20,7 +20,7 @@ public class Game implements GameInterface{
         for(int i=0;i<playerCount;i++){
             this.players[i] = new HumanPlayer();
         }
-        activePlayer = 0;
+        activePlayerIndex = 0;
         
         
         // erstelle Felder Array mit angegebener Felderanzahl
@@ -54,11 +54,11 @@ public class Game implements GameInterface{
         for (int i = 0;i<dices.length;i++){
             results[i] = dices[i].roll();
         }
-        System.out.println("n0 = "+results[0]+ " n1 = "+results[1]);
+        //System.out.println("n0 = "+results[0]+ " n1 = "+results[1]);
         
         //Guck ob es ein Pasch ist
         
-        boolean doublets = false;
+        boolean doublets =  isDoublets(results);
 
         
         //Gesamtzahl der Würfel holen
@@ -75,8 +75,12 @@ public class Game implements GameInterface{
         
         
         //TODO: Spiellogik ausführen
+        Player activePlayer = players[activePlayerIndex];
+        System.out.println(activePlayer.getPosition());
+        int newPos = (activePlayer.getPosition()  + gesamtZahl) % fields.length;
+        activePlayer.setPosition(newPos);
         
-     
+        System.out.println(activePlayer.getPosition());
         
         
         return results;
