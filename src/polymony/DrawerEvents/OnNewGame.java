@@ -2,7 +2,7 @@ package polymony.DrawerEvents;
 
 import javafx.scene.Group;
 import polymony.Main.Drawer;
-import polymony.Main.GameInterface;;
+import polymony.Gamelogic.GameInterface;;
 
 public class OnNewGame implements Drawer {
     GameInterface spielLogik;

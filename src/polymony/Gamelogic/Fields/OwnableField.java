@@ -1,5 +1,7 @@
 package polymony.Gamelogic.Fields;
 
+import polymony.Gamelogic.Player.Player;
+
 public abstract class OwnableField extends Field{
   int price;
   Player owner;
