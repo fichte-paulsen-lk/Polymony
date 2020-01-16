@@ -30,6 +30,4 @@ public abstract class OwnableField extends Field{
     public void setName(String name) {
         this.name = name;
     }
-   
-  
 }
