@@ -36,11 +36,6 @@ public abstract class Player {
         return position;
     }
 
-    /**
-     * Set the value of position
-     *
-     * @param position new value of position
-     */
     public void setPosition(int position) {
         this.position = position;
     }
