@@ -1,15 +1,16 @@
 package polymony.Gamelogic;
 
+import polymony.Gamelogic.Dice.Dice;
+import polymony.Gamelogic.Dice.NormalDice;
+import polymony.Gamelogic.Fields.Field;
 import polymony.Gamelogic.Player.HumanPlayer;
 import polymony.Gamelogic.Player.Player;
-import polymony.Main.GameInterface;
 
 public class Game implements GameInterface{
     Player[] players;
-    /*
     Field[] fields;
     Dice[] dices;
-    */
+    
     int activePlayer;
     public Game(int playerCount,int fieldCount,int diceCount){
         // erstelle Spieler Array mit angegebener Spieleranzahl
@@ -20,7 +21,7 @@ public class Game implements GameInterface{
         }
         activePlayer = 0;
         
-        /*
+        
         // erstelle Felder Array mit angegebener Felderanzahl
         this.fields = new Field[fieldCount];
         //Fülle den Felder Array mit Felder
@@ -32,9 +33,9 @@ public class Game implements GameInterface{
         this.dices = new Dice[diceCount];
         //Fülle den Felder Array mit Felder
         for (int i=0;i<diceCount;i++){
-            this.dices[i] = new Dice();
+            this.dices[i] = new NormalDice();
         }
-        */
+        
         
     }
     
@@ -44,11 +45,16 @@ public class Game implements GameInterface{
         Game g1 = new Game(3,40,2);
     }
     
-    /*
+    
     public int[] rollDices(){
-        for (Dice d : dices){
-            d.rollDice();
+        //Nehme alle Würfel, hole ihre Werte und gebe sie in einem Array zurück
+        int [] results = new int[dices.length];
+        for (int i = 0;i<dices.length;i++){
+            results[i] = dices[i].roll();
         }
+        //TODO: Spiellogik ausführen
+        
+        return results;
     }
-    */
+    
 }
