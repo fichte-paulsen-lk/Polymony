@@ -1,4 +1,4 @@
-package polymony.Main;
+package polymony.Gamelogic;
 
 public interface GameInterface {
     

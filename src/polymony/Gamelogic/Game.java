@@ -2,7 +2,6 @@ package polymony.Gamelogic;
 
 import polymony.Gamelogic.Player.HumanPlayer;
 import polymony.Gamelogic.Player.Player;
-import polymony.Main.GameInterface;
 
 public class Game implements GameInterface{
     Player[] players;
