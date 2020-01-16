@@ -15,6 +15,7 @@ public class Point {
         
         return this.y;
     }
+    
     /*
      * Takes the field index and the width of the game field(amount of fields / 4)
      * Returns (x,y) as int "coordinates" - top left is (0,0), bottom right (width, width)
@@ -34,9 +35,15 @@ public class Point {
         
     }
     
-    public static Point indexToPoint(int index /***TODO other parameters***/) {
-        
-        return null;
+    /*
+     * Takes the field index, the width of the game field(amount of fields / 4), the X and Y offset from the top left corner
+     * of the screen to the top left corner of the first field. The width (dimX) and height (dimY) of the individual fields
+     * should be given
+     * method returns the coordinates of the top left corner of the field at the n-th index
+     */
+    public static Point indexToPoint(int index, int width, double offsetX, double offsetY, double dimX, double dimY) {
+        IntPair pair = indexToPos(index, width);
+        return new Point(offsetX+pair.n0*dimX,offsetY+pair.n1*dimY);
     }
     private static class IntPair{
         public int n0,n1;
