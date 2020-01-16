@@ -3,6 +3,7 @@ package polymony.Gamelogic;
 import polymony.Gamelogic.Dice.Dice;
 import polymony.Gamelogic.Dice.NormalDice;
 import polymony.Gamelogic.Fields.Field;
+import polymony.Gamelogic.Fields.StartField;
 import polymony.Gamelogic.Fields.StreetField;
 import polymony.Gamelogic.Player.HumanPlayer;
 import polymony.Gamelogic.Player.Player;
@@ -26,9 +27,14 @@ public class Game implements GameInterface{
         // erstelle Felder Array mit angegebener Felderanzahl
         this.fields = new Field[fieldCount];
         //Fülle den Felder Array mit Felder
-        for (int i=0;i<fieldCount;i++){
-            this.fields[i] = new StreetField();
-        }
+//        for (int i=0;i<fieldCount;i++){
+//            this.fields[i] = new StreetField();
+//        }
+        
+        fields[0] = new StartField();
+        fields[1] = new StreetField("Straße",1,500);
+        fields[2] = null;
+        
         
         // erstelle Felder Array mit angegebener Felderanzahl
         this.dices = new Dice[diceCount];
@@ -67,13 +73,7 @@ public class Game implements GameInterface{
             gesamtZahl+=value;
         }
         System.out.println("GesamtZahl = "+gesamtZahl);
-        
-        
-        
-        
-        
-        
-        
+       
         //TODO: Spiellogik ausführen
         Player activePlayer = players[activePlayerIndex];
         System.out.println(activePlayer.getPosition());

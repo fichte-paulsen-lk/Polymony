@@ -7,8 +7,8 @@ package polymony.Gamelogic.Fields;
 
 /**
  *
- * @author manfr
+ * @author root
  */
-public abstract class SpecialField {
+public class ActionField extends SpecialField{
     
 }
