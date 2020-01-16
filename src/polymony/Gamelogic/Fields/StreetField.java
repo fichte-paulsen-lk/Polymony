@@ -1,14 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package polymony.Gamelogic.Fields;
 
-/**
- *
- * @author manfr
- */
-public class StreetField {
+public class StreetField extends OwnableField{
+     //Color color;
+     public StreetField(String nameset, int indexset, int priceset) { //Color colorset) 
+         name = nameset;
+         index = indexset;
+         price = priceset;
+        // Color = colorset;
+     } 
+
+   
      
+    
 }
