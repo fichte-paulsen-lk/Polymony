@@ -9,6 +9,6 @@ package polymony.Gamelogic.Fields;
  *
  * @author root
  */
-public class Prison {
+public class Prison extends SpecialField{
     
 }

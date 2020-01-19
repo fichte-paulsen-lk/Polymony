@@ -4,11 +4,13 @@ import polymony.Gamelogic.Player.Player;
 
 public class TaxField extends Field {
   int tax;
+  int index;
+  String name;
    
-  public TaxField(int taxset, int indexset, String nameset) { //Konstruktor
-      tax = taxset;
-      index = indexset;
-      name = nameset;
+  public TaxField(int tax,String name,int index) { //Konstruktor
+      this.tax = tax;
+      this.index = index;
+      this.name = name;
   }
   public void action (Player activePlayer){
       activePlayer.setBalance(activePlayer.getBalance()-tax);

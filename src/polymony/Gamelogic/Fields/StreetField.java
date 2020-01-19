@@ -3,9 +3,8 @@ package polymony.Gamelogic.Fields;
 
 public class StreetField extends OwnableField{
      //Color color;
-     public StreetField(String name, int index, int price) { //Color colorset) 
+     public StreetField(String name, int price) { //Color colorset)
          this.name = name;
-         this.index = index;
          this.price = price;
         // Color = colorset;
      }   

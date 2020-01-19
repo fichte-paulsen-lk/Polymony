@@ -9,6 +9,6 @@ package polymony.Gamelogic.Fields;
  *
  * @author manfr
  */
-public abstract class SpecialField {
+public abstract class SpecialField extends Field{
     
 }
