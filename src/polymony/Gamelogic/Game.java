@@ -1,8 +1,8 @@
 package polymony.Gamelogic;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONArray;
+//import org.json.JSONException;
+//import org.json.JSONObject;
 import polymony.Gamelogic.Dice.Dice;
 import polymony.Gamelogic.Dice.NormalDice;
 import polymony.Gamelogic.Fields.*;
@@ -23,12 +23,12 @@ public class Game implements GameInterface{
     int activePlayerIndex;
     public Game(int playerCount,int fieldCount,int diceCount){
 
-        try {
+/*        try {
             fields = readJson(fieldCount);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+*/
         // erstelle Spieler Array mit angegebener Spieleranzahl
         this.players = new Player[playerCount];
         //Fülle den Spieler Array mit Spielern
@@ -109,7 +109,7 @@ public class Game implements GameInterface{
         return true;
     }
 
-    Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+   /* Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
         Field[] temp = new Field[length];
@@ -166,4 +166,5 @@ public class Game implements GameInterface{
 
         return temp;
     }
+*/
 }
