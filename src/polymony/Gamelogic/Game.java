@@ -1,11 +1,19 @@
 package polymony.Gamelogic;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import polymony.Gamelogic.Dice.Dice;
 import polymony.Gamelogic.Dice.NormalDice;
-import polymony.Gamelogic.Fields.Field;
-import polymony.Gamelogic.Fields.StreetField;
+import polymony.Gamelogic.Fields.*;
 import polymony.Gamelogic.Player.HumanPlayer;
 import polymony.Gamelogic.Player.Player;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 
 public class Game implements GameInterface{
     Player[] players;
@@ -14,6 +22,13 @@ public class Game implements GameInterface{
     
     int activePlayerIndex;
     public Game(int playerCount,int fieldCount,int diceCount){
+
+        try {
+            fields = readJson(fieldCount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         // erstelle Spieler Array mit angegebener Spieleranzahl
         this.players = new Player[playerCount];
         //Fülle den Spieler Array mit Spielern
@@ -24,11 +39,16 @@ public class Game implements GameInterface{
         
         
         // erstelle Felder Array mit angegebener Felderanzahl
-        this.fields = new Field[fieldCount];
+//        this.fields = new Field[fieldCount];
         //Fülle den Felder Array mit Felder
-        for (int i=0;i<fieldCount;i++){
-            this.fields[i] = new StreetField();
-        }
+//        for (int i=0;i<fieldCount;i++){
+//            this.fields[i] = new StreetField();
+//        }
+        
+ //       fields[0] = new StartField();
+ //       fields[1] = new StreetField("Straße",1,500);
+ //       fields[2] = null;
+        
         
         // erstelle Felder Array mit angegebener Felderanzahl
         this.dices = new Dice[diceCount];
@@ -67,22 +87,16 @@ public class Game implements GameInterface{
             gesamtZahl+=value;
         }
         System.out.println("GesamtZahl = "+gesamtZahl);
-        
-        
-        
-        
-        
-        
-        
+       
         //TODO: Spiellogik ausführen
         Player activePlayer = players[activePlayerIndex];
         System.out.println(activePlayer.getPosition());
         int newPos = (activePlayer.getPosition()  + gesamtZahl) % fields.length;
         activePlayer.setPosition(newPos);
-        
+
         System.out.println(activePlayer.getPosition());
-        
-        
+
+
         return results;
     }
     
@@ -94,5 +108,62 @@ public class Game implements GameInterface{
         }
         return true;
     }
-    
+
+    Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+
+        //Array der später zurückgegeben wird-
+        Field[] temp = new Field[length];
+
+        //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
+        InputStream in = this.getClass().getResourceAsStream("/polymony/Gamelogic/fields.json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String jsonString = "";
+
+        String line = null;
+        while ( (line = reader.readLine()) != null) {
+            jsonString +=line;
+        }
+
+        //lade den String als JSONObject
+        JSONObject obj = new JSONObject(jsonString);
+
+        //öffne den fields array aus dem JSONObject
+        JSONArray jsonArray = obj.getJSONArray("fields");
+
+        //iteriere durch alle Einträge
+        for (int i = 0;i<jsonArray.length();i++){
+
+            //lade das JSONObject am Index i
+            JSONObject field = jsonArray.getJSONObject(i);
+            //Hole den Typen bzw. den Klassenbezeichner des Feldes
+            String fieldClassName = (String) field.get("type");
+
+            //Je nachdem welche Klasse es ist wird der Konstruktor mit den jeweils gewünschten Werten aufgerufen und das Objekt in temp an Stelle des Indizes i geschrieben
+            switch (fieldClassName){
+                case "StartField":
+                    temp[i] = new StartField();
+                    break;
+                case "StreetField":
+                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"));
+                    break;
+                case "ActionField":
+                    temp[i] = new ActionField();
+                    break;
+                case "TaxField":
+                    temp[i] = new TaxField((int)field.get("tax"),(String) field.get("name"),i);
+                    break;
+                case "TrafficField":
+                    temp[i] = new TrafficField();
+                    break;
+                case "Prison":
+                    temp[i] = new Prison();
+                    break;
+            }
+
+        }
+
+
+
+        return temp;
+    }
 }

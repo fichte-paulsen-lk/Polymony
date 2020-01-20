@@ -1,5 +1,6 @@
 package polymony.Gamelogic.Fields;
 
-public class StartField {
-    
+public class StartField extends Field{
+    public StartField(){
+    }
 }
