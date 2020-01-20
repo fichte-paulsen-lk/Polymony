@@ -2,7 +2,7 @@ package polymony.Gamelogic.Fields;
 
 import polymony.Gamelogic.Player.Player;
 
-public class TaxField extends Field {
+public class TaxField extends SpecialField {
   int tax;
    
   public TaxField(int taxset, int indexset, String nameset) { //Konstruktor
@@ -10,6 +10,7 @@ public class TaxField extends Field {
       index = indexset;
       name = nameset;
   }
+  @Override
   public void action (Player activePlayer){
       activePlayer.setBalance(activePlayer.getBalance()-tax);
   }

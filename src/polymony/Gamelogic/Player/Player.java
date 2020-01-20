@@ -5,33 +5,37 @@ public abstract class Player {
         
     }
     private int position;
-    
+    private int utilitiesOwned;
     private int balance;
+    private int trainstaitionOwned;
 
-    /**
-     * Get the value of balance
-     *
-     * @return the value of balance
-     */
+    public int getUtilitiesOwned() {
+        return utilitiesOwned;
+    }
+
+    public void setUtilitiesOwned(int utilitiesOwned) {
+        this.utilitiesOwned = utilitiesOwned;
+    }
+
+    public int getTrainstaitionOwned() {
+        return trainstaitionOwned;
+    }
+
+    public void setTrainstaitionOwned(int trainstaitionOwned) {
+        this.trainstaitionOwned = trainstaitionOwned;
+    }
+    
+    
+
     public int getBalance() {
         return balance;
     }
 
-    /**
-     * Set the value of balance
-     *
-     * @param balance new value of balance
-     */
+    
     public void setBalance(int balance) {
         this.balance = balance;
     }
 
-
-    /**
-     * Get the value of position
-     *
-     * @return the value of position
-     */
     public int getPosition() {
         return position;
     }

@@ -22,12 +22,4 @@ public abstract class OwnableField extends Field{
     public void setOwner(Player owner) {
         this.owner = owner;
     }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 }
