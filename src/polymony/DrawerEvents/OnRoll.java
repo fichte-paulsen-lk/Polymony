@@ -1,18 +1,16 @@
 package polymony.DrawerEvents;
-
 import javafx.stage.Stage;
 import polymony.Gamelogic.GameInterface;
 import polymony.Main.Drawer;
-
-public class OnNewGame implements Drawer {
+public class OnRoll implements Drawer{
     GameInterface spielLogik;
-    Stage s;
-       
-    public OnNewGame(Stage st,GameInterface sp) {
+    private Stage s;
+    public OnRoll(Stage st,GameInterface sp){
         this.s = st;
         this.spielLogik = sp;
     }
-    
-    public void handle () {
+    public void handle(){
+        
     }
+    
 }
