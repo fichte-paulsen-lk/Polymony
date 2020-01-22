@@ -1,12 +1,12 @@
 package com.fichtepaulsen.polymony;
 
-import javafx.scene.Group;
 import com.fichtepaulsen.polymony.DrawerEvents.OnNewGame;
+import javafx.stage.Stage;
 
 public class PolyMonyDrawer {
     OnNewGame onNewGame;
     
-    public PolyMonyDrawer(Group root) {
-        onNewGame = new OnNewGame(null, null);
+    public PolyMonyDrawer(Stage stage) {
+        onNewGame = new OnNewGame(stage);
     }
 }

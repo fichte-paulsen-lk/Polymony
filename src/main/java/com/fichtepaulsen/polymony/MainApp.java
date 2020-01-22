@@ -1,22 +1,37 @@
 package com.fichtepaulsen.polymony;
 
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
+    PolyMonyDrawer polyMonyDrawer;
+    
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/fxml/Gamefield.fxml"));
+        Group root = new Group();
+        this.polyMonyDrawer = new PolyMonyDrawer(stage);
+        VBox vbox = new VBox();
         
-        Scene scene = new Scene(root);
-        scene.getStylesheets().add("/styles/Styles.css");
-        
-        stage.setTitle("JavaFX and Maven");
-        stage.setScene(scene);
+        stage.setTitle("PolyMony");
+        Button btn = new Button();
+        btn.setText("Neues Spiel starten");
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+               polyMonyDrawer.onNewGame.handle();        
+            }
+        });
+        vbox.getChildren().add(btn);
+        root.getChildren().add(vbox);
+
+        stage.setScene(new Scene(root, 600, 600));
         stage.show();
     }
 
