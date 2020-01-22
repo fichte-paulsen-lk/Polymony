@@ -4,14 +4,12 @@ import javafx.stage.Stage;
 import com.fichtepaulsen.polymony.Gamelogic.GameInterface;
 import com.fichtepaulsen.polymony.Drawer;
 
-public class OnNextTurn implements Drawer{
-    GameInterface spielLogik;
-    private Stage s;
-    public OnNextTurn(Stage st,GameInterface sp){
-        this.s = st;
-        this.spielLogik = sp;
+public class OnNextTurn extends Drawer{
+
+    public OnNextTurn(GameInterface ga, Stage st) {
+        super(ga, st);
     }
-    public void handle(){
-        
+
+    public void handle() {
     }
 }

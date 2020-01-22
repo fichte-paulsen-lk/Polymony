@@ -2,6 +2,7 @@ package com.fichtepaulsen.polymony.DrawerEvents;
 
 import javafx.stage.Stage;
 import com.fichtepaulsen.polymony.Drawer;
+import com.fichtepaulsen.polymony.Gamelogic.GameInterface;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -9,11 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 
-public class OnNewGame implements Drawer {
-    Stage s;
-       
-    public OnNewGame(Stage st) {
-        this.s = st;
+public class OnNewGame extends Drawer {
+
+    public OnNewGame(GameInterface ga, Stage st) {
+        super(ga, st);
     }
     
     public void handle () {
@@ -28,7 +28,7 @@ public class OnNewGame implements Drawer {
         Scene scene = new Scene(parentRoot);
         scene.getStylesheets().add("/styles/Styles.css");
         
-        s.setScene(scene);
-        s.show();
+        this.stage.setScene(scene);
+        this.stage.show();
     }
 }

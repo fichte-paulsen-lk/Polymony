@@ -1,12 +1,17 @@
 package com.fichtepaulsen.polymony.Gamelogic;
 
-//import org.json.JSONArray;
-//import org.json.JSONException;
-//import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.NormalDice;
-import com.fichtepaulsen.polymony.Gamelogic.Fields.*;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.ActionField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.Prison;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.StartField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.TaxField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.TrafficField;
 import com.fichtepaulsen.polymony.Gamelogic.Player.HumanPlayer;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
@@ -15,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import javafx.scene.paint.Color;
 
 public class Game implements GameInterface{
     Player[] players;
@@ -39,16 +45,16 @@ public class Game implements GameInterface{
         activePlayerIndex = 0;
         
         
-        // erstelle Felder Array mit angegebener Felderanzahl
-//        this.fields = new Field[fieldCount];
+        //erstelle Felder Array mit angegebener Felderanzahl
+        this.fields = new Field[fieldCount];
         //Fülle den Felder Array mit Felder
-//        for (int i=0;i<fieldCount;i++){
-//            this.fields[i] = new StreetField();
-//        }
+        for (int i=0;i<fieldCount;i++){
+            this.fields[i] = null;
+        }
         
- //       fields[0] = new StartField();
- //       fields[1] = new StreetField("Straße",1,500);
- //       fields[2] = null;
+        fields[0] = new StartField();
+        fields[1] = new StreetField("Straße",1, Color.MEDIUMBLUE);
+        fields[2] = null;
         
         
         // erstelle Felder Array mit angegebener Felderanzahl
@@ -110,7 +116,7 @@ public class Game implements GameInterface{
         return true;
     }
 
-   /* Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
         Field[] temp = new Field[length];
@@ -145,7 +151,7 @@ public class Game implements GameInterface{
                     temp[i] = new StartField();
                     break;
                 case "StreetField":
-                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"));
+                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), null);
                     break;
                 case "ActionField":
                     temp[i] = new ActionField();
@@ -167,5 +173,5 @@ public class Game implements GameInterface{
 
         return temp;
     }
-*/
+
 }
