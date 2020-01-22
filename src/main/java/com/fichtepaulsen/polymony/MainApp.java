@@ -1,37 +1,32 @@
 package com.fichtepaulsen.polymony;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class MainApp extends Application {
-
-    PolyMonyDrawer polyMonyDrawer;
     
     @Override
     public void start(Stage stage) throws Exception {
-        Group root = new Group();
-        this.polyMonyDrawer = new PolyMonyDrawer(stage);
-        VBox vbox = new VBox();
+        PolyMonyDrawer.createInstance(stage);
+                
+        Parent parentRoot = null;
         
-        stage.setTitle("PolyMony");
-        Button btn = new Button();
-        btn.setText("Neues Spiel starten");
-        btn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-               polyMonyDrawer.onNewGame.handle();        
-            }
-        });
-        vbox.getChildren().add(btn);
-        root.getChildren().add(vbox);
-
-        stage.setScene(new Scene(root, 600, 600));
+        try {
+            parentRoot = FXMLLoader.load(getClass().getResource("/fxml/MainMenue.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        Scene scene = new Scene(parentRoot, 500, 500);
+        scene.getStylesheets().add("/styles/Styles.css");
+        
+        stage.setScene(scene);
         stage.show();
     }
 

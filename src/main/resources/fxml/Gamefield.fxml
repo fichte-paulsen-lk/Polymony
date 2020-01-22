@@ -5,6 +5,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane id="gp" fx:id="gp" fx:controller="com.fichtepaulsen.polymony.GamefieldController" xmlns:fx="http://javafx.com/fxml" prefHeight="500" prefWidth="500">
-    
-</GridPane>
+
+<VBox fx:controller="com.fichtepaulsen.polymony.DrawerController.GamefieldController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="8.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+        <GridPane id="gp" fx:id="gp"  xmlns:fx="http://javafx.com/fxml" prefHeight="500" prefWidth="500">
+
+        </GridPane>
+   </children>
+</VBox>

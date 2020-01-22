@@ -1,7 +1,6 @@
 package com.fichtepaulsen.polymony.DrawerEvents;
 
 import javafx.stage.Stage;
-import com.fichtepaulsen.polymony.Drawer;
 import com.fichtepaulsen.polymony.Gamelogic.GameInterface;
 import java.io.IOException;
 import java.util.logging.Level;

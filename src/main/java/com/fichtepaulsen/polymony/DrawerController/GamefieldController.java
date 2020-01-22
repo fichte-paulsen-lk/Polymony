@@ -1,4 +1,4 @@
-package com.fichtepaulsen.polymony;
+package com.fichtepaulsen.polymony.DrawerController;
 
 import java.net.URL;
 import java.util.ResourceBundle;

@@ -1,4 +1,4 @@
-package com.fichtepaulsen.polymony;
+package com.fichtepaulsen.polymony.DrawerEvents;
 
 import com.fichtepaulsen.polymony.Gamelogic.GameInterface;
 import javafx.stage.Stage;
