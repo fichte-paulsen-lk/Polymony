@@ -8,7 +8,15 @@ public abstract class Player {
     private int utilitiesOwned;
     private int balance;
     private int trainstaitionOwned;
+    private boolean incarcerated;
 
+    public boolean isIncarcerated() {
+        return incarcerated;
+    }
+
+    public void setIncarcerated(boolean incarcerated) {
+        this.incarcerated = incarcerated;
+    }
     public int getUtilitiesOwned() {
         return utilitiesOwned;
     }
