@@ -8,11 +8,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
+import javafx.scene.image.*;
 
 public class GamefieldController implements Initializable {
     
     @FXML
     private GridPane gp;
+    
+    @FXML
+    private ImageView showDice;
     
     
     @Override
@@ -99,5 +103,6 @@ public class GamefieldController implements Initializable {
             rec.setFill(Color.WHITE);
             gp.add(rec, i, 10);
         }   
-    }   
+    }
+    
 }
