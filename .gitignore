@@ -1,6 +1,2 @@
-.metadata
-build/
-dist/
-.idea/
-nbproject/private
+target/
 nbproject/private
