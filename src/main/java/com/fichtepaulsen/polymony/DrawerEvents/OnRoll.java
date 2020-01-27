@@ -6,7 +6,7 @@ import com.fichtepaulsen.polymony.DoublePair;
 
 public class OnRoll extends Drawer{
 
-    //Intervall, in der die x-Koordinaten der Spieler zu finden sind
+    //interval of the x coordinates of the players
     private final double minX = 0.1;
     private final double maxX = 0.9;
     
@@ -18,25 +18,21 @@ public class OnRoll extends Drawer{
         
     }
     
-    //calculates the position of the n-th player in a single field
-    //(0,0) is the top left corner the field
+    //gets: index of player whose position in a field should be calculated
+    //does: calculates the position of the n-th player in a single field
+    //      (0,0) is the top left corner the field and (1,1) the bottom right
     private DoublePair fieldPos(int player) {
-        //players always find themselves in the middle 
-        //of the y axis
-        double y = 0.5;
-
-        //the x coordinate depends on the index of the player and 
-        //the amount of players playing
-        //TODO get actual amount of players playing the game from the gameInterface
-        int numP = 4; 
-
+        //TODO hole Anzahl der Spieler vom GameInterface
+        int numP = 4;
+        
         //space between the x-coords of players
-        double space = (maxX - minX) / (double) (numP-1);
+        double xSpacing = (maxX - minX) / (double) (numP-1);
 
         //x coordinate of the player is the minimum x coordinate plus a certain spacing
-        double x     = minX + player*space;
+        double x        = minX + player*space;
         
-        return new DoublePair(x, y);
+        //Spieler steht immer in der Mitte des Feldes 
+        return new DoublePair(x, 0.5); 
     }
     
 }
