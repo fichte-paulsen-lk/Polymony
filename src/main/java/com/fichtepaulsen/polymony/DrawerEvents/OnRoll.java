@@ -3,21 +3,37 @@ package com.fichtepaulsen.polymony.DrawerEvents;
 import javafx.stage.Stage;
 import com.fichtepaulsen.polymony.Gamelogic.GameInterface;
 import com.fichtepaulsen.polymony.DoublePair;
+import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
 public class OnRoll extends Drawer{
 
     //Intervall, in der die x-Koordinaten der Spieler zu finden sind
     private final double minX = 0.1;
     private final double maxX = 0.9;
+    private final int width = 40;
+    private final double offX = 1;
+    private final double offY = 1;
+    private final double dimX = 50;
+    private final double dimY = 100;
     
     public OnRoll(GameInterface ga, Stage st) {
         super(ga, st);
     }
     
+    @Override
     public void handle() {
         
     }
-    
+    public void drawPlayers(Player p){
+       DoublePair dP = new DoublePair(0,0);
+       dP = dP.indexToPoint(p.getPosition(),width,offX,offY,dimX,dimY);
+       DoublePair pPos = fieldPos(gameLogic.getCurrentPlayerIndex());
+       getPlayerShape().translatePropertyX(dP.getX()+pPos.getX());
+       getPlayerShape().translatePropertyY(dP.getY()+pPos.getY()); 
+       
+       
+        
+    }
     //calculates the position of the n-th player in a single field
     //(0,0) is the top left corner the field
     private DoublePair fieldPos(int player) {
@@ -37,6 +53,10 @@ public class OnRoll extends Drawer{
         double x     = minX + player*space;
         
         return new DoublePair(x, y);
+    }
+
+    private Object getPlayerShape() {
+        
     }
     
 }
