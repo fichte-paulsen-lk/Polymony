@@ -24,10 +24,21 @@ public class OnRoll extends Drawer{
     public void handle() {
         
     }
+    
+    //gets: player that moved 
+    //does: changes players X and Y coordinates to his new field
     public void drawPlayers(Player p){
+        
+       //creates DoublePair to calculate the fields x and y coordinates
        DoublePair dP = new DoublePair(0,0);
+       
+       //calculates the fields x and y coordiantes
        dP = dP.indexToPoint(p.getPosition(),width,offX,offY,dimX,dimY);
+       
+       //calculates the position of the player in the field
        DoublePair pPos = fieldPos(gameLogic.getCurrentPlayerIndex());
+       
+       //aplies the new position
        getPlayerShape().translatePropertyX(dP.getX()+pPos.getX());
        getPlayerShape().translatePropertyY(dP.getY()+pPos.getY()); 
        
