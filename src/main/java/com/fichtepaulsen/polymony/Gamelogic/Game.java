@@ -37,41 +37,57 @@ public class Game implements GameInterface{
         }
 */
         // erstelle Spieler Array mit angegebener Spieleranzahl
-        this.players = new Player[playerCount];
-        //Fülle den Spieler Array mit Spielern
-        for(int i=0;i<playerCount;i++){
-            this.players[i] = new HumanPlayer();
-        }
-        activePlayerIndex = 0;
-        
-        
-        //erstelle Felder Array mit angegebener Felderanzahl
-        this.fields = new Field[fieldCount];
-        //Fülle den Felder Array mit Felder
-        for (int i=0;i<fieldCount;i++){
-            this.fields[i] = null;
-        }
-        
-        fields[0] = new StartField();
-        fields[1] = new StreetField("Straße",1, Color.MEDIUMBLUE);
-        fields[2] = null;
-        
-        
-        // erstelle Felder Array mit angegebener Felderanzahl
-        this.dices = new Dice[diceCount];
-        //Fülle den Felder Array mit Felder
-        for (int i=0;i<diceCount;i++){
-            this.dices[i] = new NormalDice();
-        }
-        rollDices();
-        
-        
-    }
-    
+    }   
     //Testmethode, um Spiellogik zu testen, ohne Verbindung zur Grafik
     public static void main(String[] args) {
         //rufe Konstruktor auf mit 3 Spielern und 40 Feldern
-        Game g1 = new Game(3,40,2);
+        //Game g1 = new Game(3,40,2);
+    }
+    
+    /*
+    requires: integer number of players. 
+    does: initializes players,fields and dice to start the game.
+    */
+    public void startGame(int playerCount){
+        // create 40 fields in a fieldArray.    
+        try {
+            fields = readJson(40);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//
+//        // create playerArray with given playerCount.
+//        this.players = new Player[playerCount];
+//        // fill playerArray with human players.
+//        for(int i = 0; i < playerCount; i++){
+//            this.players[i] = new HumanPlayer(0, 1500);
+//        }
+//        activePlayerIndex = 0;
+//        
+        
+//        //erstelle Felder Array mit angegebener Felderanzahl
+//        this.fields = new Field[fieldCount];
+//        //Fülle den Felder Array mit Felder
+//        for (int i=0;i<fieldCount;i++){
+//            this.fields[i] = null;
+//        }
+//        
+//        fields[0] = new StartField();
+//        fields[1] = new StreetField("Straße",1, Color.MEDIUMBLUE);
+//        fields[2] = null;
+//        
+//        
+//        // erstelle Felder Array mit angegebener Felderanzahl
+//        this.dices = new Dice[diceCount];
+//        //Fülle den Felder Array mit Felder
+//        for (int i=0;i<diceCount;i++){
+//  
+//        // create diceArray with 2 dices.
+//        this.dices = new Dice[2];
+//        //fills array with 2 normal dices.
+//        for (int i = 0; i < dices.length; i++){
+//            this.dices[i] = new NormalDice();
+//        }
     }
     
     
@@ -116,7 +132,7 @@ public class Game implements GameInterface{
         return true;
     }
 
-    Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
         Field[] temp = new Field[length];
@@ -138,7 +154,7 @@ public class Game implements GameInterface{
         JSONArray jsonArray = obj.getJSONArray("fields");
 
         //iteriere durch alle Einträge
-        for (int i = 0;i<jsonArray.length();i++){
+        for (int i = 0; i < jsonArray.length(); i++){
 
             //lade das JSONObject am Index i
             JSONObject field = jsonArray.getJSONObject(i);
