@@ -1,5 +1,9 @@
 package com.fichtepaulsen.polymony.Gamelogic;
 
+import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
+import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
+
 public interface GameInterface {
     /* 
     
@@ -19,5 +23,17 @@ public interface GameInterface {
     does: initializes players,fields and dice to start the game.
     */
     public void startGame(int playerCount);
+    
+    public Player getCurrentPlayer();
+    
+    public Player getNthPlayer(int index);
+    
+    public Player[] getAllPlayers();
+    
+    public Dice[] getAllDice();
+    
+    public Field[] getAllFields();
+    
+    public Field getNthField(int index);
 }
 
