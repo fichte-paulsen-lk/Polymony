@@ -176,7 +176,7 @@ public class Game implements GameInterface{
 
     @Override
     public Player getCurrentPlayer() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return players[activePlayerIndex];
     }
 
     @Override

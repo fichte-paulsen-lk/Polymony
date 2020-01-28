@@ -29,13 +29,10 @@ public abstract class Player {
     public void setTrainstaitionOwned(int trainstaitionOwned) {
         this.trainstaitionOwned = trainstaitionOwned;
     }
-    
-    
 
     public int getBalance() {
         return balance;
     }
-
     
     public void setBalance(int balance) {
         this.balance = balance;
@@ -48,4 +45,9 @@ public abstract class Player {
     public void setPosition(int position) {
         this.position = position;
     }
+    
+    public int getIndex(){
+        return playerIndex;
+    }
+    
 }

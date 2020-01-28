@@ -24,6 +24,11 @@ public interface GameInterface {
     */
     public void startGame(int playerCount);
     
+    /*
+    requires:
+    returns: player object from the active player.
+             to get the player index: getIndex().
+    */
     public Player getCurrentPlayer();
     
     public Player getNthPlayer(int index);
