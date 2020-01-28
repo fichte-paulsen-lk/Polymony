@@ -11,7 +11,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mainClass>com.fichtepaulsen.polymony.MainApp</mainClass>
+        <mainClass>com.fichtepaulsen.polymony.Gamelogic.Game</mainClass>
     </properties>
 
     <organization>

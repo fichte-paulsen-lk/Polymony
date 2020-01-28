@@ -241,4 +241,13 @@ public class Game implements GameInterface{
     }
     return array;
   }
+    
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public int getActivePlayerIndex() {
+        return activePlayerIndex;
+    }
+    
 }
