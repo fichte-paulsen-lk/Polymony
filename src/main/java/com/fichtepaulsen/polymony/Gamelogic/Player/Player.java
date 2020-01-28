@@ -6,10 +6,12 @@ public abstract class Player {
     private int utilitiesOwned;
     private int balance;
     private int trainstaitionOwned;
+    private int playerIndex;
 
-    public Player(int position, int balance){
+    public Player(int position, int balance, int index){
         this.position = position;
         this.balance = balance;
+        this.playerIndex = index;
     }
     
     public int getUtilitiesOwned() {

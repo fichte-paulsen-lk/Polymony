@@ -28,15 +28,8 @@ public class Game implements GameInterface{
     Dice[] dices;
     
     int activePlayerIndex;
-    public Game(int playerCount,int fieldCount,int diceCount){
+    public Game(){
 
-/*        try {
-            fields = readJson(fieldCount);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-*/
-        // erstelle Spieler Array mit angegebener Spieleranzahl
     }   
     //Testmethode, um Spiellogik zu testen, ohne Verbindung zur Grafik
     public static void main(String[] args) {
@@ -55,39 +48,32 @@ public class Game implements GameInterface{
         } catch (Exception e) {
             e.printStackTrace();
         }
-//
-//        // create playerArray with given playerCount.
-//        this.players = new Player[playerCount];
-//        // fill playerArray with human players.
-//        for(int i = 0; i < playerCount; i++){
-//            this.players[i] = new HumanPlayer(0, 1500);
-//        }
-//        activePlayerIndex = 0;
-//        
+
+        // create playerArray with given playerCount.
+        this.players = new Player[playerCount];
+        // fill playerArray with human players.
+        for(int i = 0; i < playerCount; i++){
+            this.players[i] = new HumanPlayer(0, 1500, i);
+        }
+        activePlayerIndex = 0;
         
-//        //erstelle Felder Array mit angegebener Felderanzahl
-//        this.fields = new Field[fieldCount];
-//        //Fülle den Felder Array mit Felder
-//        for (int i=0;i<fieldCount;i++){
-//            this.fields[i] = null;
-//        }
-//        
-//        fields[0] = new StartField();
-//        fields[1] = new StreetField("Straße",1, Color.MEDIUMBLUE);
-//        fields[2] = null;
-//        
-//        
-//        // erstelle Felder Array mit angegebener Felderanzahl
-//        this.dices = new Dice[diceCount];
-//        //Fülle den Felder Array mit Felder
-//        for (int i=0;i<diceCount;i++){
-//  
-//        // create diceArray with 2 dices.
-//        this.dices = new Dice[2];
-//        //fills array with 2 normal dices.
-//        for (int i = 0; i < dices.length; i++){
-//            this.dices[i] = new NormalDice();
-//        }
+        //erstelle Felder Array mit angegebener Felderanzahl
+        //this.fields = new Field[40];
+        //Fülle den Felder Array mit Felder
+        //for (int i = 0;i < fields.length; i++){
+            //this.fields[i] = null;
+        //}
+        
+        //fields[0] = new StartField();
+        //fields[1] = new StreetField("Straße",1, Color.MEDIUMBLUE);
+        //fields[2] = null;
+        
+        // create diceArray with 2 dices.
+        this.dices = new Dice[2];
+        //fills array with 2 normal dices.
+        for (int i = 0; i < dices.length; i++){
+            this.dices[i] = new NormalDice();
+        }
     }
     
     
@@ -123,10 +109,8 @@ public class Game implements GameInterface{
         return results;
     }
     
-    public static boolean isDoublets(int[] array)
-    {
-        for(int i = 1; i < array.length; i++)
-        {
+    public static boolean isDoublets(int[] array){
+        for(int i = 1; i < array.length; i++){
             if((array[0] != array[i])) return false;
         }
         return true;
@@ -137,8 +121,8 @@ public class Game implements GameInterface{
         //Array der später zurückgegeben wird-
         Field[] temp = new Field[length];
 
-        //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
-        InputStream in = this.getClass().getResourceAsStream("/polymony/Gamelogic/fields.json");
+        //Öffne die fields.json Datei und schreibegetResourceAsStream den Inhalt in jsonString
+        InputStream in = this.getClass().getResourceAsStream("fields.json");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String jsonString = "";
 
@@ -188,6 +172,36 @@ public class Game implements GameInterface{
 
 
         return temp;
+    }
+
+    @Override
+    public Player getCurrentPlayer() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Player getNthPlayer(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Player[] getAllPlayers() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Dice[] getAllDice() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Field[] getAllFields() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Field getNthField(int index) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
