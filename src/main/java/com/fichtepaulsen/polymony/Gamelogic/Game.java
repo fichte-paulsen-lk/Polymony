@@ -118,7 +118,7 @@ public class Game implements GameInterface{
 
         System.out.println(activePlayer.getPosition());
 
-
+        activePlayerIndex=(activePlayerIndex++)% players.length; //nehme den nächsten Spieler im Wertebereich und mach ihn zum aktiven Spieler 
         return results;
     }
     
