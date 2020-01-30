@@ -173,35 +173,61 @@ public class Game implements GameInterface{
 
         return temp;
     }
-
+    
     @Override
+    /*
+    requires:
+    returns: player object from the active player.
+             to get the player index: getIndex().
+             to get the player position: getPosition().
+    */
     public Player getCurrentPlayer() {
         return players[activePlayerIndex];
     }
 
     @Override
+    /*
+    requires: index from a player 
+    returns:  player object from players at the given index
+    */ 
     public Player getNthPlayer(int index) {
         return players[index];
     }
 
     @Override
+    /*
+    requires: 
+    returns: player array with all players
+    */
     public Player[] getAllPlayers() {
        return players; 
     }
 
     @Override
+    /*
+    requires: 
+    returns: dice array with all dices
+    */
     public Dice[] getAllDice() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return dices;
     }
 
     @Override
+    /*
+    requires: 
+    returns: field array with all fields
+    */
     public Field[] getAllFields() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return fields;
     }
 
     @Override
+    /*
+    requires: index from a field 
+    returns:  field object from fields at the given index
+    */ 
     public Field getNthField(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return fields[index];
     }
 
 }
