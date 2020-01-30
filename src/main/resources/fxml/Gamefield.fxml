@@ -11,7 +11,7 @@
    <children>
         <GridPane id="gp" fx:id="gp"  xmlns:fx="http://javafx.com/fxml">
 
-        </GridPane
-        
+        </GridPane>
+        <Button fx:id="rollDice" text="Würfeln" onAction="#rollDice" />
    </children>
 </VBox>
