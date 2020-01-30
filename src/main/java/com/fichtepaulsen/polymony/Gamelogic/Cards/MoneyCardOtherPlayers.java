@@ -1,3 +1,5 @@
+package com.fichtepaulsen.polymony.Gamelogic.Cards;
+
 import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import com.fichtepaulsen.polymony.Gamelogic.Game;
