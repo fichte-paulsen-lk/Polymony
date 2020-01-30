@@ -12,5 +12,7 @@
         <GridPane id="gp" fx:id="gp"  xmlns:fx="http://javafx.com/fxml">
 
         </GridPane>
+        <Button fx:id="rollDice" mnemonicParsing="false" text="Roll Dice" onAction="#rollDice" />
+        <Label fx:id="diceResult">5</Label>
    </children>
 </VBox>

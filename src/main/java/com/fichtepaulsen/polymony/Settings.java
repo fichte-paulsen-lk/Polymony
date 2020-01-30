@@ -1,5 +1,6 @@
 package com.fichtepaulsen.polymony;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 public class Settings {
@@ -22,6 +23,7 @@ public class Settings {
     
     // Public Settings
     public GridPane gameGridPane;
+    public Label diceResult;
     
 }
 
