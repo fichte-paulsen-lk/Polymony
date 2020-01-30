@@ -181,12 +181,12 @@ public class Game implements GameInterface{
 
     @Override
     public Player getNthPlayer(int index) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return players[index];
     }
 
     @Override
     public Player[] getAllPlayers() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       return players; 
     }
 
     @Override
