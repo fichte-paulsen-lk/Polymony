@@ -14,6 +14,7 @@ public class MainApp extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         PolyMonyDrawer.createInstance(stage);
+        Settings.createInstance();
                 
         Parent parentRoot = null;
         
@@ -23,7 +24,7 @@ public class MainApp extends Application {
             Logger.getLogger(MainApp.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Scene scene = new Scene(parentRoot, 500, 500);
+        Scene scene = new Scene(parentRoot, Settings.getInstance().WindowWidth, Settings.getInstance().WindowHeight);
         scene.getStylesheets().add("/styles/Styles.css");
         
         stage.setScene(scene);
