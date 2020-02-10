@@ -11,8 +11,10 @@ jobs:
     - uses: actions/checkout@v1
     - name: Update System
       run: sudo apt-get update
-    - name: Install javafx
-      run: sudo apt update sudo apt install openjdk-8-jdk \ openjdk-8-jre \ openjfx
+    - name: Uninstall javafx
+      run: sudo apt-get purge --auto-remove openjdk*
+    - name: Install Javafx
+      run: sudo add-apt-repository ppa:webupd8team/java; sudo apt update; sudo apt install oracle-java8-installer; sudo apt install oracle-java8-set-default
     - name: Java Version
       run: java -version
     - name: Build with Maven
