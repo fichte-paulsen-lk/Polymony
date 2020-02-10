@@ -13,6 +13,8 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Update System
+      run: sudo apt-get update
     - name: Install javafx
       run: sudo apt-get install openjfx
     - name: Build with Maven
