@@ -100,11 +100,20 @@ public class Game implements GameInterface{
         activePlayer.setPosition(newPos);
 
         System.out.println(activePlayer.getPosition());
-
+        
+        
+        int doubletsCounter = 0;
         boolean doublets =  isDoublets(results);           //tests for doublets
         if (doublets == false){                            //does not change the active player after doublets
-            activePlayerIndex=(activePlayerIndex++)%players.length;   
+            activePlayerIndex=(activePlayerIndex++)%players.length;
+            doubletsCounter=0;
         }
+        else{
+          doubletsCounter++;
+          if (doubletsCounter==3){
+              //TODO:Gehe ins Gefängnis Methode 
+          }
+        } 
         
         return results;
     }
