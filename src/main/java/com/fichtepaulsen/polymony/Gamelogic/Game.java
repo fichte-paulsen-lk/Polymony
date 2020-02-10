@@ -108,7 +108,8 @@ public class Game implements GameInterface{
 
         return results;
     }
-    
+    public boolean works(){
+    return true;}
     public static boolean isDoublets(int[] array){
         for(int i = 1; i < array.length; i++){
             if((array[0] != array[i])) return false;

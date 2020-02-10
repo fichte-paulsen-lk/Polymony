@@ -18,7 +18,9 @@ public interface GameInterface {
     */
     public int[] rollDices();
     
+    public boolean works();
     /*
+   
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
     */

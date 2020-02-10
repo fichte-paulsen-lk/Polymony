@@ -18,7 +18,12 @@ public class GamefieldController implements Initializable {
     
     @FXML
     private GridPane gp;
-    private Label diceResult; 
+    
+    @FXML
+    private Label diceResult1;
+    
+    @FXML
+    private Label diceResult2;
     
    //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 25.0;
@@ -31,7 +36,8 @@ public class GamefieldController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        Settings.getInstance().diceResult = this.diceResult;
+        Settings.getInstance().diceResult1 = this.diceResult1;
+        Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
         //Every rectangle is added to a GridPane and is equal to one field
         //creates corner square (c1) (top left)
@@ -113,8 +119,12 @@ public class GamefieldController implements Initializable {
             rec.setStroke(Color.BLACK);
             rec.setFill(Color.WHITE);
             gp.add(rec, i, 10);
-        }   
+        }  
+        
+       
     }
+    
+   
     
      public void rollDice(Event e) {
         PolyMonyDrawer.getInstance().onRoll.handle();
