@@ -23,7 +23,8 @@ public class Settings {
     
     // Public Settings
     public GridPane gameGridPane;
-    public Label diceResult;
+    public Label diceResult1;
+    public Label diceResult2;
     
 }
 
