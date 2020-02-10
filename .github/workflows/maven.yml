@@ -12,7 +12,7 @@ jobs:
     - name: Update System
       run: sudo apt-get update
     - name: Install javafx
-      run: sudo apt update sudo apt install openjdk-8-jdk openjdk-8-jre openjfx
+      run: sudo apt update sudo apt install openjdk-8-jdk \ openjdk-8-jre \ openjfx
     - name: Java Version
       run: java -version
     - name: Build with Maven
