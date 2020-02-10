@@ -1,18 +1,30 @@
 package com.fichtepaulsen.polymony.DrawerController;
 
 import com.fichtepaulsen.polymony.PolyMonyDrawer;
+import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.image.*;
+import javafx.scene.shape.Circle;
 
 public class GamefieldController implements Initializable {
+    
+    //static here because logic concerns implementation of this class
+    //requires: index of the player that we want the shape of
+    //returns : node for display of the index-th player
+    public static Node getPlayerNode(GridPane gp, int index) {
+        //returns the index + (number of fields) - th child of the GridPane
+        return gp.getChildren().get(index + 4*Settings.getInstance().rowLength);
+    }
     
     @FXML
     private GridPane gp;
@@ -20,6 +32,7 @@ public class GamefieldController implements Initializable {
    //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 25.0;
     private double defaultFieldWidth = 50.0;
+    
     //height and width of cornerfield are equal to the value of defaultFieldWidth 
     //if you change the defaultFieldWidth you should also resize the cornerFieldLength
     private double cornerFieldLength = 50.0;
@@ -108,7 +121,14 @@ public class GamefieldController implements Initializable {
             rec.setStroke(Color.BLACK);
             rec.setFill(Color.WHITE);
             gp.add(rec, i, 10);
-        }   
+        } 
+        
+        //a probably temporary solution to add all players' shapes at 
+        //the start of the game
+        for (int i = 0; i < Settings.getInstance().numberOfPlayers; i++) {
+            //add a circle with radius 8
+            gp.add(new Circle(8), 0, 0);
+        }
     }
     
     
