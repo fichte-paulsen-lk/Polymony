@@ -84,10 +84,6 @@ public class Game implements GameInterface{
             results[i] = dices[i].roll();
         }
         //System.out.println("n0 = "+results[0]+ " n1 = "+results[1]);
-        
-        //Guck ob es ein Pasch ist
-        
-        boolean doublets =  isDoublets(results);
 
         
         //Gesamtzahl der Würfel holen
@@ -105,13 +101,18 @@ public class Game implements GameInterface{
 
         System.out.println(activePlayer.getPosition());
 
-
+        boolean doublets =  isDoublets(results);           //tests for doublets
+        if (doublets == false){                            //does not change the active player after doublets
+            activePlayerIndex=(activePlayerIndex++)%players.length;   
+        }
+        
         return results;
     }
     
     public static boolean isDoublets(int[] array){
         for(int i = 1; i < array.length; i++){
-            if((array[0] != array[i])) return false;
+            if((array[0] != array[i])) 
+            return false;
         }
         return true;
     }
