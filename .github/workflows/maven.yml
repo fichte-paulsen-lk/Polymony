@@ -16,6 +16,8 @@ jobs:
     - name: Update System
       run: sudo apt-get update
     - name: Install javafx
-      run: sudo apt-get install openjfx
+      run: sudo apt install \ openjfx=8u161-b12-1ubuntu2 \ libopenjfx-java=8u161-b12-1ubuntu2 \ libopenjfx-jni=8u161-b12-1ubuntu2
+    - name: Verify Installation
+      run: sudo apt-mark hold openjfx \ libopenjfx-java \ libopenjfx-jni
     - name: Build with Maven
       run: mvn jfx:jar
