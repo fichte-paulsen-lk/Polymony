@@ -1,11 +1,13 @@
 package com.fichtepaulsen.polymony.Gamelogic.Cards;
 
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
-public class MoneyCardBank  extends Card{
+public class MoneyCard  extends Card{
     int value;
-    public MoneyCard(String text,int value){
-        super(text);
+    
+    public MoneyCard(String settext,int value){
+        super(settext);
         this.value = value;
     }
 

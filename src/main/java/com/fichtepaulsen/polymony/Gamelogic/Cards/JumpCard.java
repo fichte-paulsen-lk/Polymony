@@ -1,15 +1,20 @@
 package com.fichtepaulsen.polymony.Gamelogic.Cards;
+import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 
-/**
- *
- * @author manfr
- */
-public class JumpCard {
+public class JumpCard extends Card {
+    int value; //value on how much the player moves from a field to another field
+    Player [] players;
     
+    public JumpCard (int valueset, String settext) {
+      super(settext);
+      value=valueset;
+    }
+
+    @Override
+    public void action(Game game) {
+       players=game.getPlayers();
+       players[game.getActivePlayerIndex()].setPosition(players[game.getActivePlayerIndex()].getPosition()+value);
+    }         //activePlayer is set forward to a field
 }

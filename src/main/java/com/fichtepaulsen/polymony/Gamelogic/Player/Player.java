@@ -9,6 +9,15 @@ public abstract class Player {
     private int balance;
     private int trainstaitionOwned;
     private boolean incarcerated;
+    private int amountPrisonFreeCard; 
+
+    public int getAmountPrisonFreeCard() {
+        return amountPrisonFreeCard;
+    }
+
+    public void setAmountPrisonFreeCard(int amountPrisonFreeCard) {
+        this.amountPrisonFreeCard = amountPrisonFreeCard;
+    }
 
     public boolean isIncarcerated() {
         return incarcerated;
