@@ -4,13 +4,9 @@ import javafx.scene.paint.Color;
 
 public class StreetField extends OwnableField{
      //Color color;
-     public StreetField(String name, int price){//, Color colorset) {
+     public StreetField(String name, int price, Color colorset) {
          this.name = name;
          this.price = price;
         // Color = colorset;
      }
-      public static void main(String[] args){
-          StreetField test = new StreetField("hallo", 12);
-          test.freehypothek();
-      }
 }

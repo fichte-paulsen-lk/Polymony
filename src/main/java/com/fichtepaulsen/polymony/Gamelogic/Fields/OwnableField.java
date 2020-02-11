@@ -3,9 +3,9 @@ package com.fichtepaulsen.polymony.Gamelogic.Fields;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
 public abstract class OwnableField extends Field{
-  int price;
+  private int price;
   private Player owner;
-  String name;
+  private String name;
   private int houseamount;
   private boolean ishypothek;
   private int hypothekamount;
@@ -24,7 +24,10 @@ public abstract class OwnableField extends Field{
     }
     
     public void freehypothek(){
-        owner.setBalance(owner.getBalance()-(hypothek+hapothek*1/10));
+        if(ishypothek==true){
+            owner.setBalance(owner.getBalance()-(hypothekamount+hypothekamount*1/10));
+            ishypothek=false;
+        }
     }
     
     public String getName() {
