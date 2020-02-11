@@ -151,7 +151,7 @@ public class Game implements GameInterface{
                     temp[i] = new StartField();
                     break;
                 case "StreetField":
-                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), null);
+                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), getColor((int)field.get("color")));
                     break;
                 case "ActionField":
                     temp[i] = new ActionField();
@@ -228,6 +228,19 @@ public class Game implements GameInterface{
     */ 
     public Field getNthField(int index) {
         return fields[index];
+    }
+
+    public static Color getColor(int n){
+        switch (n){
+            case 1:
+                return Color.PURPLE;
+            case 2:
+                return Color.BLUE;
+            case 3:
+                return Color.ORANGE;
+             //TODO: CONTINUE
+
+        }
     }
 
 }
