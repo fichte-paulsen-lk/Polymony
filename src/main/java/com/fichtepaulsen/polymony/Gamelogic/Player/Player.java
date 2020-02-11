@@ -42,8 +42,6 @@ public abstract class Player {
         this.trainstaitionOwned = trainstaitionOwned;
     }
     
-    
-
     public int getBalance() {
         return balance;
     }
