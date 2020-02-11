@@ -105,7 +105,7 @@ public class Game implements GameInterface{
 
         System.out.println(activePlayer.getPosition());
 
-
+        System.out.println(results[0] + " " + results[1]);
         return results;
     }
     public boolean works(){
@@ -123,7 +123,7 @@ public class Game implements GameInterface{
         Field[] temp = new Field[length];
 
         //Öffne die fields.json Datei und schreibegetResourceAsStream den Inhalt in jsonString
-        InputStream in = this.getClass().getResourceAsStream("fields.json");
+        InputStream in = this.getClass().getClassLoader().getResourceAsStream("fields.json");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String jsonString = "";
 

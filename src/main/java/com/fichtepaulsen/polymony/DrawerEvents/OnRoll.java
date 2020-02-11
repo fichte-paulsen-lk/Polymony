@@ -22,16 +22,16 @@ public class OnRoll extends Drawer{
     }
     
     public void showDice(){
-        Label diceLabel1 = Settings.getInstance().diceResult1;
-        Label diceLabel2 = Settings.getInstance().diceResult1;
+        //Label diceLabel1 = Settings.getInstance().diceResult1;
+        //Label diceLabel2 = Settings.getInstance().diceResult1;
         
         int[] diceResult = gameLogic.rollDices();
         
         Image diceFace1 = new Image(getClass().getResourceAsStream("/img/Alea_" +  diceResult[0] + ".png"));
         Image diceFace2 = new Image(getClass().getResourceAsStream("/img/Alea_" +  diceResult[1] + ".png"));
         
-        diceLabel1.setGraphic(new ImageView(diceFace1));
-        diceLabel2.setGraphic(new ImageView(diceFace2));
+        //diceLabel1.setGraphic(new ImageView(diceFace1));
+        //diceLabel2.setGraphic(new ImageView(diceFace2));
 
     }
     
