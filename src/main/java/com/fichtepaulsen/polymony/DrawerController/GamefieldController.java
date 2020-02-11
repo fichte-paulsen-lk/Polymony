@@ -36,8 +36,8 @@ public class GamefieldController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        //Settings.getInstance().diceResult1 = this.diceResult1;
-        //Settings.getInstance().diceResult2 = this.diceResult2;
+        Settings.getInstance().diceResult1 = this.diceResult1;
+        Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
         //Every rectangle is added to a GridPane and is equal to one field
         //creates corner square (c1) (top left)

@@ -13,6 +13,7 @@
 
         </GridPane>
         <Button fx:id="rollDice" mnemonicParsing="false" text="Roll Dice" onAction="#rollDice" />
-        <Label fx:id="diceResult"></Label>
+        <Label fx:id="diceResult1"></Label>
+        <Label fx:id="diceResult2"></Label>
    </children>
 </VBox>
