@@ -91,19 +91,33 @@ public class Game implements GameInterface{
         for (int value : results){
             gesamtZahl+=value;
         }
-        System.out.println("GesamtZahl = "+gesamtZahl);
+        //System.out.println("GesamtZahl = "+gesamtZahl);
        
         //TODO: Spiellogik ausführen
         Player activePlayer = players[activePlayerIndex];
-        System.out.println(activePlayer.getPosition());
+        boolean doublets =  isDoublets(results);           //tests for doublets
+        int doubletsCounter = 0;
+        if(activePlayer.getIsInPrison()==true){
+           
+            if (doublets == false){                            //does not change the active player after doublets
+                activePlayerIndex=(activePlayerIndex++)%players.length;
+             doubletsCounter=0;
+          }
+           else{
+             doubletsCounter++;
+             if (doubletsCounter==3){
+                activePlayer.setIsInPrison(true);
+              }  
+        }   
+        }
+           
+        //System.out.println(activePlayer.getPosition());
         int newPos = (activePlayer.getPosition()  + gesamtZahl) % fields.length;
         activePlayer.setPosition(newPos);
 
-        System.out.println(activePlayer.getPosition());
+       // System.out.println(activePlayer.getPosition());
         
         
-        int doubletsCounter = 0;
-        boolean doublets =  isDoublets(results);           //tests for doublets
         if (doublets == false){                            //does not change the active player after doublets
             activePlayerIndex=(activePlayerIndex++)%players.length;
             doubletsCounter=0;
@@ -111,8 +125,8 @@ public class Game implements GameInterface{
         else{
           doubletsCounter++;
           if (doubletsCounter==3){
-              //TODO:Gehe ins Gefängnis Methode 
-          }
+            activePlayer.setIsInPrison(true);
+          }  
         } 
         
         return results;

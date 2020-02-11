@@ -7,11 +7,14 @@ public abstract class Player {
     private int balance;
     private int trainstaitionOwned;
     private int playerIndex;
+    private boolean isInPrison;
+    
 
     public Player(int position, int balance, int index){
         this.position = position;
         this.balance = balance;
         this.playerIndex = index;
+        this.isInPrison = false;
     }
     
     public int getUtilitiesOwned() {
@@ -48,6 +51,14 @@ public abstract class Player {
     
     public int getIndex(){
         return playerIndex;
+    }
+    
+    public void setIsInPrison(boolean p){
+       this.isInPrison=p; 
+    } 
+    
+    public boolean getIsInPrison(){
+        return this.isInPrison;
     }
     
 }
