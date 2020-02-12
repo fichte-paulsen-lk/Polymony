@@ -31,10 +31,11 @@ public class Game implements GameInterface{
     public Game(){
 
     }   
-    //Testmethode, um Spiellogik zu testen, ohne Verbindung zur Grafik
+    //test method to test gamelogic without graphics
     public static void main(String[] args) {
-        //rufe Konstruktor auf mit 3 Spielern und 40 Feldern
+        //constructor with 3 players and 40 fields
         //Game g1 = new Game(3,40,2);
+
     }
     
     /*
@@ -78,7 +79,7 @@ public class Game implements GameInterface{
     
     
     public int[] rollDices(){
-        //Nehme alle Würfel, hole ihre Werte und gebe sie in einem Array zurück
+        //Returns an array of roll results
         int [] results = new int[dices.length];
         for (int i = 0;i<dices.length;i++){
             results[i] = dices[i].roll();
@@ -86,7 +87,7 @@ public class Game implements GameInterface{
         //System.out.println("n0 = "+results[0]+ " n1 = "+results[1]);
 
         
-        //Gesamtzahl der Würfel holen
+        //Calculates the sum of roll results
         int gesamtZahl = 0;
         for (int value : results){
             gesamtZahl+=value;
@@ -95,39 +96,43 @@ public class Game implements GameInterface{
        
         //TODO: Spiellogik ausführen
         Player activePlayer = players[activePlayerIndex];
-        boolean doublets =  isDoublets(results);           //tests for doublets
-        int doubletsCounter = 0;
-        if(activePlayer.getIsInPrison()==true){
-           
-            if (doublets == false){                            //does not change the active player after doublets
-                activePlayerIndex=(activePlayerIndex++)%players.length;
-             doubletsCounter=0;
+        boolean doublets =  isDoublets(results);                                //Tests for doublets
+        int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;           //Calculates next position after rolling the dices
+        //Case where the player is in prison:
+          if(activePlayer.getIsInPrison()==true){   
+              if (doublets == false){                           
+                  activePlayer.incrementPrisonAttemptCounter();
+                if(activePlayer.getPrisonAttemptCounter()==3){                  //When the player doesn't roll doublets for 3 rounds 
+                  activePlayer.setIsInPrison(false);                            //he comes out of prison and moves
+                  activePlayer.setPosition(newPos);
+                  activePlayer.setPrisonAttemptCounter(0);
+                }  
+                activePlayerIndex=(activePlayerIndex+1)%players.length;
+              }
+              else{                                                             //If the player rolls doublets during one of his 3 attempts
+                activePlayer.setIsInPrison(false);                              //he comes out of prison and moves by the amount he rolled  
+                activePlayer.setPosition(newPos);                               //(no additional move after these doublets)
+                activePlayerIndex=(activePlayerIndex+1)%players.length;
+              }    
           }
-           else{
-             doubletsCounter++;
-             if (doubletsCounter==3){
-                activePlayer.setIsInPrison(true);
-              }  
-        }   
+          //Normal case:
+          else{                                                     
+            activePlayer.setPosition(newPos);                                   
+            if (doublets == false){                                             //Normal roll(player moves, activePlayerIndex increments,            
+              activePlayerIndex=(activePlayerIndex+1)%players.length;           //doubletsCounter resets)
+              activePlayer.setDoubletsCounter(0);
+            }
+            else{                                                               //Doublet roll(doubletCounter increments, activePlayerIndex stays untouched)
+              activePlayer.incrementDoubletsCounter();
+                if (activePlayer.getDoubletsCounter()==3){                      //When doubletCounter reaches 3, the player will be automatically moved to 
+                  activePlayer.setIsInPrison(true);                             //the prison field and activePlayerIndex increments
+                  activePlayer.setDoubletsCounter(0);
+                  activePlayer.setPrisonAttemptCounter(0);
+                  activePlayer.setPosition(10);
+                  activePlayerIndex=(activePlayerIndex+1)%players.length;
+                }
+            }
         }
-           
-        //System.out.println(activePlayer.getPosition());
-        int newPos = (activePlayer.getPosition()  + gesamtZahl) % fields.length;
-        activePlayer.setPosition(newPos);
-
-       // System.out.println(activePlayer.getPosition());
-        
-        
-        if (doublets == false){                            //does not change the active player after doublets
-            activePlayerIndex=(activePlayerIndex++)%players.length;
-            doubletsCounter=0;
-        }
-        else{
-          doubletsCounter++;
-          if (doubletsCounter==3){
-            activePlayer.setIsInPrison(true);
-          }  
-        } 
         
         return results;
     }
