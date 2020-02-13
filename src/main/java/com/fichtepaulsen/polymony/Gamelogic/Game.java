@@ -258,6 +258,9 @@ public class Game implements GameInterface{
                 return Color.GREEN;
             case 8:
                 return Color.BLUE;
+            default:
+                //should never happen, maybe throw an exception
+                return Color.BLACK;
 
         }
     }
