@@ -1,5 +1,6 @@
 package com.fichtepaulsen.polymony.DrawerController;
 
+import com.fichtepaulsen.polymony.DrawerEvents.OnRoll;
 import com.fichtepaulsen.polymony.PolyMonyDrawer;
 import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
@@ -129,6 +130,8 @@ public class GamefieldController implements Initializable {
             //add a circle with radius 8
             gp.add(new Circle(8), 0, 0);
         }
+        
+        PolyMonyDrawer.getInstance().onRoll.drawPlayerAt(0);
     }
     
     

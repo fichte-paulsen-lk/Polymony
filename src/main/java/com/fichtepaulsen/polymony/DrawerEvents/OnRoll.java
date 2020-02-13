@@ -29,12 +29,15 @@ public class OnRoll extends Drawer{
     @Override
     public void handle() {
         //move the current player to the new position
-        drawPlayers(gameLogic.getCurrentPlayer());
+        drawPlayer(gameLogic.getCurrentPlayer());
     }
     
+    public void drawPlayerAt(int index) {
+        drawPlayer(gameLogic.getAllPlayers()[index]);
+    }
     //gets: player that moved 
     //does: changes players X and Y coordinates to his new field
-    public void drawPlayers(Player p){
+    public void drawPlayer(Player p){
         
        //creates DoublePair to calculate the fields x and y coordinates
        DoublePair dP = new DoublePair(0,0);
