@@ -233,12 +233,21 @@ public class Game implements GameInterface{
     public static Color getColor(int n){
         switch (n){
             case 1:
-                return Color.PURPLE;
+                return Color.BROWN;
             case 2:
-                return Color.BLUE;
+                return Color.LIGHTBLUE;
             case 3:
+                return Color.PINK;
+            case 4:
                 return Color.ORANGE;
-             //TODO: CONTINUE
+            case 5:
+                return Color.RED;
+            case 6:
+                return Color.YELLOW;
+            case 7:
+                return Color.GREEN;
+            case 8:
+                return Color.BLUE;
 
         }
     }
