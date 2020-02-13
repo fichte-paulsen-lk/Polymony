@@ -75,8 +75,11 @@ public class Game implements GameInterface{
             this.dices[i] = new NormalDice();
         }
     }
-    
-    
+
+
+    /* requires: -
+    returns: results of dices being rolled
+    */
     public int[] rollDices(){
         //Nehme alle Würfel, hole ihre Werte und gebe sie in einem Array zurück
         int [] results = new int[dices.length];
@@ -108,7 +111,10 @@ public class Game implements GameInterface{
 
         return results;
     }
-    
+
+    /* requires: the results of the dice roll
+        returns: Was it a doublet?
+     */
     public static boolean isDoublets(int[] array){
         for(int i = 1; i < array.length; i++){
             if((array[0] != array[i])) return false;
@@ -226,11 +232,15 @@ public class Game implements GameInterface{
     requires: index from a field 
     returns:  field object from fields at the given index
     */ 
-    public Field getNthField(int index) {
-        return fields[index];
+    public Field getNthField(int n) {
+        return fields[n];
     }
-
+    /*
+    requires: Color index from json file
+    returns:  Color object for the corresponding index
+    */
     public static Color getColor(int n){
+        // return a
         switch (n){
             case 1:
                 return Color.BROWN;
