@@ -54,9 +54,14 @@ public abstract class Player {
         return playerIndex;
     }
     
-    public void setIsInPrison(boolean p){
-       this.isInPrison=p; 
+    public void setInPrison(){
+       this.isInPrison=true; 
+       this.position=10;
     } 
+    
+    public void setOutOfPrison(){
+       this.isInPrison=false; 
+    }
     
     public boolean getIsInPrison(){
         return this.isInPrison;
