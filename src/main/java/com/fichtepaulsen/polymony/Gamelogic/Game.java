@@ -24,6 +24,7 @@ import javafx.scene.paint.Color;
 
 public class Game implements GameInterface{
     Player[] players;
+    
     Field[] fields;
     Dice[] dices;
     

@@ -23,6 +23,10 @@ public class GamefieldController implements Initializable {
     //requires: index of the player that we want the shape of
     //returns : node for display of the index-th player
     public static Node getPlayerNode(GridPane gp, int index) {
+        //TODO fix NPE here
+        if (gp == null) {
+            System.out.println("GridPane is NULL");
+        }
         //returns the index + (number of fields) - th child of the GridPane
         return gp.getChildren().get(index + 4*Settings.getInstance().rowLength);
     }
@@ -41,6 +45,8 @@ public class GamefieldController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
+        Settings.getInstance().gameGridPane = gp;
     
         //Every rectangle is added to a GridPane and is equal to one field
         //creates corner square (c1) (top left)

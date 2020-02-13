@@ -16,5 +16,6 @@ public class MainMenueController implements Initializable {
     
     public void startNewGame (Event e) {
         PolyMonyDrawer.getInstance().onNewGame.handle();
+        
     }
 }

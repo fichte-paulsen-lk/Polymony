@@ -33,7 +33,12 @@ public class OnRoll extends Drawer{
     }
     
     public void drawPlayerAt(int index) {
-        drawPlayer(gameLogic.getAllPlayers()[index]);
+        if (gameLogic.getAllPlayers()[index] == null) {
+            System.out.println("NULLLLLLLLLLLLLL");
+        }
+        else {
+            drawPlayer(gameLogic.getAllPlayers()[index]);
+        }
     }
     //gets: player that moved 
     //does: changes players X and Y coordinates to his new field
@@ -53,6 +58,10 @@ public class OnRoll extends Drawer{
        Node playerShape = GamefieldController.getPlayerNode(Settings.getInstance().gameGridPane, 
                p.getIndex());
        
+       if (playerShape == null) {
+           System.out.println("Couldn't get the player's shape from the controller");
+       }
+       
        GridPane.setMargin(playerShape, new Insets(pPos.getX(), 0, 0, pPos.getY()));
        
        //calculate the row and column of the player's new position
@@ -60,6 +69,8 @@ public class OnRoll extends Drawer{
        
         //aplies the new position
        GridPane.setConstraints(playerShape, playerGridCoordinates.getX(), playerGridCoordinates.getY());
+       
+       System.out.println("Tried to draw the player's new position");
     }
     
     //gets: index of player whose position in a field should be calculated
