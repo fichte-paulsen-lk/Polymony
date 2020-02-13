@@ -28,15 +28,10 @@ public class Game implements GameInterface{
     Dice[] dices;
     
     int activePlayerIndex;
+    
     public Game(){
 
     }   
-    //test method to test gamelogic without graphics
-    public static void main(String[] args) {
-        //constructor with 3 players and 40 fields
-        //Game g1 = new Game(3,40,2);
-
-    }
     
     /*
     requires: integer number of players. 
@@ -146,7 +141,9 @@ public class Game implements GameInterface{
     public static boolean isDoublets(int[] array){
         for(int i = 1; i < array.length; i++){
             if((array[0] != array[i])) 
-            return false;
+            {
+                return false;
+            }
         }
         return true;
     }
