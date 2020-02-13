@@ -8,14 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
-    - name: Update System
-      run: sudo apt-get update
-    - name: Uninstall javafx
-      run: sudo apt-get purge --auto-remove openjdk*
-    - name: Install Javafx
-      run: sudo apt-get install software-properties-common; sudo add-apt-repository ppa:webupd8team/java; sudo apt-get update; sudo apt-get install oracle-java8-installer; sudo apt-get install oracle-java8-set-default
-    - name: Java Version
-      run: java -version
+    - uses: actions/checkout@v2
+    - name: Setup Java JDK
+      uses: actions/setup-java@v1.3.0
+      with:
+        # The Java version to make available on the path. Takes a whole or semver Java version, or 1.x syntax (e.g. 1.8 => Java 8.x)
+        java-version: 1.8
+        # The package type (jre, jdk, jdk+fx)
+        java-package: jdk+fx
     - name: Build with Maven
-      run: mvn jfx:jar
+      run: mvn -B package --file pom.xml
