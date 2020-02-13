@@ -40,7 +40,6 @@ public class Game implements GameInterface{
         
         
       try {
-            fields = readFieldsJson(fieldCount);
             cards = shuffle(readCardsJson(cardCount));
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,10 +67,7 @@ public class Game implements GameInterface{
             this.players[i] = new HumanPlayer(0, 1500, i);
         }
         activePlayerIndex = 0;
-        
-        //teste Karte:
-        cards[0].action(players[0]);
-        
+                
         //erstelle Felder Array mit angegebener Felderanzahl
         //this.fields = new Field[40];
         //Fülle den Felder Array mit Felder

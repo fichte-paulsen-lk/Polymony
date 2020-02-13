@@ -3,9 +3,9 @@ package com.fichtepaulsen.polymony.Gamelogic.Fields;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
 public abstract class OwnableField extends Field{
-  private int price;
+  public int price;
   private Player owner;
-  private String name;
+  public String name;
   private int houseamount;
   private boolean ishypothek;
   private int hypothekamount;
