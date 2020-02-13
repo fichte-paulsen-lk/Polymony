@@ -33,9 +33,9 @@ public class Game implements GameInterface{
     Card[] cards;
     
     int activePlayerIndex;
-    public Game(int playerCount,int fieldCount,int diceCount,int cardCount){
+    public Game(){
        
-        
+        /*
         cards = new Card[cardCount];
         
         
@@ -44,7 +44,7 @@ public class Game implements GameInterface{
         } catch (Exception e) {
             e.printStackTrace();
         }
-      
+      */
       
     } 
 
@@ -85,15 +85,7 @@ public class Game implements GameInterface{
         for (int i = 0; i < dices.length; i++){
             this.dices[i] = new NormalDice();
         }
-    }
-    
-    //Testmethode, um Spiellogik zu testen, ohne Verbindung zur Grafik
-    public static void main(String[] args) {
-        //rufe Konstruktor auf mit 3 Spielern und 40 Feldern
-        Game g1 = new Game(3,40,2,3);
-    }
-    
-    
+    }   
 
 
     /* requires: -
