@@ -39,16 +39,13 @@
         {"type":"ActionField"},
         {"type":"StreetField","name" : "Parkstraße","price":7000, "color": 8},
         {"type":"TaxField","tax": 2000,"name": "Zusatzsteuer"},
-<<<<<<< HEAD:src/main/resources/setup.json
-        {"type":"StreetField","name" : "Schloßallee","price":8000, "Colortype": 8}
+        {"type":"StreetField","name" : "Schloßallee","price":8000, "color": 8}
     ],
     
    "cards":[
         {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1},
         {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10},
-        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100}
-=======
+        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100},
         {"type":"StreetField","name" : "Schloßallee","price":8000, "color": 8}
->>>>>>> master:src/main/java/com/fichtepaulsen/polymony/Gamelogic/fields.json
     ]
 }
