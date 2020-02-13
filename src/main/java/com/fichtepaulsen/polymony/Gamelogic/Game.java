@@ -47,13 +47,25 @@ public class Game implements GameInterface{
         }
       
       
-      
-      
-        // erstelle Spieler Array mit angegebener Spieleranzahl
+    } 
+
+    /*
+    requires: integer number of players. 
+    does: initializes players,fields and dice to start the game.
+    */
+    public void startGame(int playerCount){
+        // create 40 fields in a fieldArray.    
+        try {
+            fields = readJson(40);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // create playerArray with given playerCount.
         this.players = new Player[playerCount];
-        //Fülle den Spieler Array mit Spielern
-        for(int i=0;i<playerCount;i++){
-            this.players[i] = new HumanPlayer();
+        // fill playerArray with human players.
+        for(int i = 0; i < playerCount; i++){
+            this.players[i] = new HumanPlayer(0, 1500, i);
         }
         activePlayerIndex = 0;
         
@@ -61,26 +73,22 @@ public class Game implements GameInterface{
         cards[0].action(players[0]);
         
         //erstelle Felder Array mit angegebener Felderanzahl
-        this.fields = new Field[fieldCount];
+        //this.fields = new Field[40];
         //Fülle den Felder Array mit Felder
-        for (int i=0;i<fieldCount;i++){
-            this.fields[i] = null;
-        }
+        //for (int i = 0;i < fields.length; i++){
+            //this.fields[i] = null;
+        //}
         
-        fields[0] = new StartField();
-        fields[1] = new StreetField("Straße",1, Color.MEDIUMBLUE);
-        fields[2] = null;
+        //fields[0] = new StartField();
+        //fields[1] = new StreetField("Straße",1, Color.MEDIUMBLUE);
+        //fields[2] = null;
         
-        
-        // erstelle Felder Array mit angegebener Felderanzahl
-        this.dices = new Dice[diceCount];
-        //Fülle den Felder Array mit Felder
-        for (int i=0;i<diceCount;i++){
+        // create diceArray with 2 dices.
+        this.dices = new Dice[2];
+        //fills array with 2 normal dices.
+        for (int i = 0; i < dices.length; i++){
             this.dices[i] = new NormalDice();
         }
-        rollDices();
-        
-        
     }
     
     //Testmethode, um Spiellogik zu testen, ohne Verbindung zur Grafik
@@ -90,6 +98,11 @@ public class Game implements GameInterface{
     }
     
     
+
+
+    /* requires: -
+    returns: results of dices being rolled
+    */
     public int[] rollDices(){
         //Nehme alle Würfel, hole ihre Werte und gebe sie in einem Array zurück
         int [] results = new int[dices.length];
@@ -121,17 +134,18 @@ public class Game implements GameInterface{
         activePlayerIndex=(activePlayerIndex++)% players.length; //nehme den nächsten Spieler im Wertebereich und mach ihn zum aktiven Spieler 
         return results;
     }
-    
-    public static boolean isDoublets(int[] array)
-    {
-        for(int i = 1; i < array.length; i++)
-        {
+
+    /* requires: the results of the dice roll
+        returns: Was it a doublet?
+     */
+    public static boolean isDoublets(int[] array){
+        for(int i = 1; i < array.length; i++){
             if((array[0] != array[i])) return false;
         }
         return true;
     }
 
-    Field[] readFieldsJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
         Field[] temp = new Field[length];
@@ -153,7 +167,7 @@ public class Game implements GameInterface{
         JSONArray jsonArray = obj.getJSONArray("fields");
 
         //iteriere durch alle Einträge
-        for (int i = 0;i<jsonArray.length();i++){
+        for (int i = 0; i < jsonArray.length(); i++){
 
             //lade das JSONObject am Index i
             JSONObject field = jsonArray.getJSONObject(i);
@@ -166,7 +180,7 @@ public class Game implements GameInterface{
                     temp[i] = new StartField();
                     break;
                 case "StreetField":
-                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), null);
+                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), getColor((int)field.get("color")));
                     break;
                 case "ActionField":
                     temp[i] = new ActionField();
@@ -187,6 +201,91 @@ public class Game implements GameInterface{
 
 
         return temp;
+    }
+    
+    @Override
+    /*
+    requires:
+    returns: player object from the active player.
+             to get the player index: getIndex().
+             to get the player position: getPosition().
+    */
+    public Player getCurrentPlayer() {
+        return players[activePlayerIndex];
+    }
+
+    @Override
+    /*
+    requires: index from a player 
+    returns:  player object from players at the given index
+    */ 
+    public Player getNthPlayer(int index) {
+        return players[index];
+    }
+
+    @Override
+    /*
+    requires: 
+    returns: player array with all players
+    */
+    public Player[] getAllPlayers() {
+       return players; 
+    }
+
+    @Override
+    /*
+    requires: 
+    returns: dice array with all dices
+    */
+    public Dice[] getAllDice() {
+        return dices;
+    }
+
+    @Override
+    /*
+    requires: 
+    returns: field array with all fields
+    */
+    public Field[] getAllFields() {
+        return fields;
+    }
+
+    @Override
+    /*
+    requires: index from a field 
+    returns:  field object from fields at the given index
+    */ 
+    public Field getNthField(int n) {
+        return fields[n];
+    }
+    /*
+    requires: Color index from json file
+    returns:  Color object for the corresponding index
+    */
+    public static Color getColor(int n){
+        // return a
+        switch (n){
+            case 1:
+                return Color.BROWN;
+            case 2:
+                return Color.LIGHTBLUE;
+            case 3:
+                return Color.PINK;
+            case 4:
+                return Color.ORANGE;
+            case 5:
+                return Color.RED;
+            case 6:
+                return Color.YELLOW;
+            case 7:
+                return Color.GREEN;
+            case 8:
+                return Color.BLUE;
+            default:
+                //should never happen, maybe throw an exception
+                return Color.BLACK;
+
+        }
     }
 
     Card[] readCardsJson(int length) throws IOException{
