@@ -7,6 +7,7 @@ public class StreetField extends OwnableField{
      public StreetField(String name, int price, Color color) {
          this.name = name;
          this.price = price;
+        // Color = colorset;
          this.color = color;
      }
      //returns the color of the street field

@@ -40,5 +40,12 @@
         {"type":"StreetField","name" : "Parkstraße","price":7000, "color": 8},
         {"type":"TaxField","tax": 2000,"name": "Zusatzsteuer"},
         {"type":"StreetField","name" : "Schloßallee","price":8000, "color": 8}
+    ],
+    
+   "cards":[
+        {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1},
+        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10},
+        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100},
+        
     ]
 }
