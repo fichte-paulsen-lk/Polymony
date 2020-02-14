@@ -5,7 +5,6 @@ import com.fichtepaulsen.polymony.Gamelogic.Player.*;
 public class TaxField extends SpecialField {
   int tax;
   int index;
-  String name;
    
   public TaxField(int tax,String name,int index) { //Konstruktor
       this.tax = tax;

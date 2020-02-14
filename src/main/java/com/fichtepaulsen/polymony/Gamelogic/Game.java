@@ -1,5 +1,7 @@
 package com.fichtepaulsen.polymony.Gamelogic;
 
+import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
+import com.fichtepaulsen.polymony.Gamelogic.Cards.MoneyCard;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,19 +22,38 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import javafx.scene.paint.Color;
 
 public class Game implements GameInterface{
     Player[] players;
     Field[] fields;
     Dice[] dices;
+    Card[] cards;
     
     int activePlayerIndex;
     
     public Game(){
+       
+        /*
+        cards = new Card[cardCount];
+        
+        
+      try {
+            cards = shuffle(readCardsJson(cardCount));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      */
+      
+    } 
+
 
     }   
     
+
+
     /*
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
@@ -52,7 +73,7 @@ public class Game implements GameInterface{
             this.players[i] = new HumanPlayer(0, 1500, i);
         }
         activePlayerIndex = 0;
-        
+                
         //erstelle Felder Array mit angegebener Felderanzahl
         //this.fields = new Field[40];
         //Fülle den Felder Array mit Felder
@@ -70,7 +91,7 @@ public class Game implements GameInterface{
         for (int i = 0; i < dices.length; i++){
             this.dices[i] = new NormalDice();
         }
-    }
+    }   
 
 
     /* requires: -
@@ -94,6 +115,7 @@ public class Game implements GameInterface{
        
         //TODO: Spiellogik ausführen
         Player activePlayer = players[activePlayerIndex];
+
         boolean doublets =  isDoublets(results);                                //Tests for doublets
         int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;           //Calculates next position after rolling the dices
         //Case where the player is in prison:
@@ -132,6 +154,12 @@ public class Game implements GameInterface{
             }
         }
         
+
+        
+        
+
+
+
         return results;
     }
 
@@ -153,8 +181,8 @@ public class Game implements GameInterface{
         //Array der später zurückgegeben wird-
         Field[] temp = new Field[length];
 
-        //Öffne die fields.json Datei und schreibegetResourceAsStream den Inhalt in jsonString
-        InputStream in = this.getClass().getResourceAsStream("fields.json");
+        //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
+        InputStream in = this.getClass().getResourceAsStream("/setup.json");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String jsonString = "";
 
@@ -291,4 +319,65 @@ public class Game implements GameInterface{
         }
     }
 
+    Card[] readCardsJson(int length) throws IOException{
+                //Array der später zurückgegeben wird-
+        Card[] temp = new Card[length];
+
+        //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
+        InputStream in = this.getClass().getResourceAsStream("/setup.json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String jsonString = "";
+
+        String line = null;
+        while ( (line = reader.readLine()) != null) {
+            jsonString +=line;
+        }
+
+        //lade den String als JSONObject
+        JSONObject obj = new JSONObject(jsonString);
+
+        //öffne den fields array aus dem JSONObject
+        JSONArray jsonArray = obj.getJSONArray("cards");
+
+        //iteriere durch alle Einträge
+        for (int i = 0;i<jsonArray.length();i++){
+
+            //lade das JSONObject am Index i
+            JSONObject card = jsonArray.getJSONObject(i);
+            //Hole den Typen bzw. den Klassenbezeichner des Feldes
+            String cardClassName = (String) card.get("type");
+            
+            switch (cardClassName){
+                case "MoneyCard": 
+                      System.out.println("money card");
+                      temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"));
+                      break;
+                default: temp[i] = null;
+            }
+        }
+        return temp;
+    }
+    
+    private static Card[] shuffle(Card[] array){
+    
+    Random rnd = ThreadLocalRandom.current();
+    for (int i = array.length - 1; i > 0; i--)
+    {
+      int index = rnd.nextInt(i + 1);
+      // Simple swap
+      Card a = array[index];
+      array[index] = array[i];
+      array[i] = a;
+    }
+    return array;
+  }
+    
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public int getActivePlayerIndex() {
+        return activePlayerIndex;
+    }
+    
 }

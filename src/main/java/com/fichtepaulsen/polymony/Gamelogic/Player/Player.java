@@ -6,6 +6,24 @@ public abstract class Player {
     private int utilitiesOwned;
     private int balance;
     private int trainstaitionOwned;
+    private boolean incarcerated;
+    private int amountPrisonFreeCard; 
+
+    public int getAmountPrisonFreeCard() {
+        return amountPrisonFreeCard;
+    }
+
+    public void setAmountPrisonFreeCard(int amountPrisonFreeCard) {
+        this.amountPrisonFreeCard = amountPrisonFreeCard;
+    }
+
+    public boolean isIncarcerated() {
+        return incarcerated;
+    }
+
+    public void setIncarcerated(boolean incarcerated) {
+        this.incarcerated = incarcerated;
+    }
     private int playerIndex;
     private boolean isInPrison;
     private int prisonAttemptCounter;                                           //Counts doublet attempts in prison
