@@ -15,6 +15,7 @@ public class OnNewGame extends Drawer {
         super(ga, st);
     }
     
+    @Override
     public void handle () {
         Parent parentRoot = null;
         

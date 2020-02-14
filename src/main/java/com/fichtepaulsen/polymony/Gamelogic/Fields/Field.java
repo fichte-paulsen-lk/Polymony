@@ -2,8 +2,8 @@ package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
 public abstract class Field {
     
-    int index;
-    String name;
+    protected int index;
+    protected String name;
 
     public String getName() {
         return name;

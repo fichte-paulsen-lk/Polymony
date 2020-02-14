@@ -4,15 +4,15 @@ import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import com.fichtepaulsen.polymony.Gamelogic.Game;
 
 public class PrisonFreeCards extends Card{
-    Player [] players;
-    public PrisonFreeCards (String settext){
-        super(settext);
+    private Player [] players;
+    
+    public PrisonFreeCards (String title){
+        super(title);
     }
     
     @Override
     public void action (Game game){
             players=game.getPlayers();
             players[game.getActivePlayerIndex()].setAmountPrisonFreeCard(players[game.getActivePlayerIndex()].getAmountPrisonFreeCard()+1);
-            //sets the amount of PrisonFreeCards that one player has one higher
     }
 }

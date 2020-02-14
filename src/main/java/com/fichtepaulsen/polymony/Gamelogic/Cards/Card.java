@@ -1,16 +1,17 @@
 package com.fichtepaulsen.polymony.Gamelogic.Cards;
 
 import com.fichtepaulsen.polymony.Gamelogic.Game;
-import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
 public abstract class Card {
-    private String text;
-    public Card(String text){
-       this.text = text;
+    private String title;
+    
+    public Card(String title){
+       this.title = title;
     }
+    
     public abstract void action(Game game);
     
-    public String getText(){
-        return text;
+    public String getTitle(){
+        return title;
     }
 }

@@ -4,12 +4,12 @@ import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import com.fichtepaulsen.polymony.Gamelogic.Game;
 
 public class JumpCard extends Card {
-    int value; //value on how much the player moves from a field to another field
-    Player [] players;
+    private int value; //value on how much the player moves from a field to another field
+    private Player [] players;
     
-    public JumpCard (int valueset, String settext) {
-      super(settext);
-      value=valueset;
+    public JumpCard (int value, String title) {
+      super(title);
+      this.value = value;
     }
 
     @Override

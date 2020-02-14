@@ -110,6 +110,4 @@ public class GamefieldController implements Initializable {
             gp.add(rec, i, 10);
         }   
     }
-    
-    
 }

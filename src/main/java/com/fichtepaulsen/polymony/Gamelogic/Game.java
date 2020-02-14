@@ -9,7 +9,7 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.NormalDice;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.ActionField;
-import com.fichtepaulsen.polymony.Gamelogic.Fields.Prison;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.PrisonField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StartField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.TaxField;
@@ -27,12 +27,12 @@ import java.util.concurrent.ThreadLocalRandom;
 import javafx.scene.paint.Color;
 
 public class Game implements GameInterface{
-    Player[] players;
-    Field[] fields;
-    Dice[] dices;
-    Card[] cards;
+    private Player[] players;
+    private Field[] fields;
+    private Dice[] dices;
+    private Card[] cards;
     
-    int activePlayerIndex;
+    private int activePlayerIndex;
     
     public Game(){
        
@@ -97,14 +97,13 @@ public class Game implements GameInterface{
     /* requires: -
     returns: results of dices being rolled
     */
+    @Override
     public int[] rollDices(){
         //Returns an array of roll results
         int [] results = new int[dices.length];
         for (int i = 0;i<dices.length;i++){
             results[i] = dices[i].roll();
         }
-        //System.out.println("n0 = "+results[0]+ " n1 = "+results[1]);
-
         
         //Calculates the sum of roll results
         int gesamtZahl = 0;
@@ -153,13 +152,7 @@ public class Game implements GameInterface{
                 }
             }
         }
-        
-
-        
-        
-
-
-
+          
         return results;
     }
 
@@ -206,7 +199,8 @@ public class Game implements GameInterface{
             String fieldClassName = (String) field.get("type");
 
             //Je nachdem welche Klasse es ist wird der Konstruktor mit den jeweils gewünschten Werten aufgerufen und das Objekt in temp an Stelle des Indizes i geschrieben
-            switch (fieldClassName){
+            switch (fieldClassName)
+            {
                 case "StartField":
                     temp[i] = new StartField();
                     break;
@@ -223,69 +217,65 @@ public class Game implements GameInterface{
                     temp[i] = new TrafficField();
                     break;
                 case "Prison":
-                    temp[i] = new Prison();
+                    temp[i] = new PrisonField();
                     break;
             }
-
         }
-
-
-
         return temp;
     }
     
-    @Override
     /*
-    requires:
-    returns: player object from the active player.
-             to get the player index: getIndex().
-             to get the player position: getPosition().
+        requires:
+        returns: player object from the active player.
+                 to get the player index: getIndex().
+                 to get the player position: getPosition().
     */
+    @Override
     public Player getCurrentPlayer() {
         return players[activePlayerIndex];
     }
 
-    @Override
     /*
-    requires: index from a player 
-    returns:  player object from players at the given index
+        requires: index from a player 
+        returns:  player object from players at the given index
     */ 
+    @Override
     public Player getNthPlayer(int index) {
         return players[index];
     }
 
-    @Override
     /*
-    requires: 
-    returns: player array with all players
+        requires: 
+        returns: player array with all players
     */
+    @Override
     public Player[] getAllPlayers() {
        return players; 
     }
 
-    @Override
     /*
-    requires: 
-    returns: dice array with all dices
+        requires: 
+        returns: dice array with all dices
     */
+    @Override
     public Dice[] getAllDice() {
         return dices;
     }
 
-    @Override
     /*
-    requires: 
-    returns: field array with all fields
+        requires: 
+        returns: field array with all fields
     */
+    @Override
     public Field[] getAllFields() {
         return fields;
     }
 
-    @Override
     /*
     requires: index from a field 
     returns:  field object from fields at the given index
     */ 
+    @Override
     public Field getNthField(int n) {
         return fields[n];
     }
@@ -358,19 +348,19 @@ public class Game implements GameInterface{
         return temp;
     }
     
-    private static Card[] shuffle(Card[] array){
-    
-    Random rnd = ThreadLocalRandom.current();
-    for (int i = array.length - 1; i > 0; i--)
-    {
-      int index = rnd.nextInt(i + 1);
-      // Simple swap
-      Card a = array[index];
-      array[index] = array[i];
-      array[i] = a;
+    private Card[] shuffle(Card[] array) {
+        Random rnd = ThreadLocalRandom.current();
+        
+        for (int i = array.length - 1; i > 0; i--)
+        {
+          int index = rnd.nextInt(i + 1);
+          // Simple swap
+          Card a = array[index];
+          array[index] = array[i];
+          array[i] = a;
+        }
+        return array;
     }
-    return array;
-  }
     
     public Player[] getPlayers() {
         return players;
