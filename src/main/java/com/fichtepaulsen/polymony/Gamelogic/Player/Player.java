@@ -103,5 +103,4 @@ public abstract class Player {
     public void setDoubletsCounter(int dc){
         this.doubletsCounter=dc; 
     }
-    
 }
