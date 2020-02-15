@@ -17,10 +17,8 @@ public interface GameInterface {
     *           the indices 0 and 1 are the normal dices.
     */
     public int[] rollDices();
-    
-    public boolean works();
+  
     /*
-   
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
     */
