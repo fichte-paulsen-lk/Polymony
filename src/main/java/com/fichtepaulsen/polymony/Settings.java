@@ -21,6 +21,8 @@ public class Settings {
     public final int WindowWidth = 500;
     public final int WindowHeight = 500;
     
+    public final String ApplicationVersion = "1.2";
+    
     // Public Settings
     public GridPane gameGridPane;
     public Label diceResult1;

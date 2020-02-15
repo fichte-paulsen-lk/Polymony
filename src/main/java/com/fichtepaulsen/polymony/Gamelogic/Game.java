@@ -103,8 +103,6 @@ public class Game implements GameInterface{
         for (int i = 0;i<dices.length;i++){
             results[i] = dices[i].roll();
         }
-        //System.out.println("n0 = "+results[0]+ " n1 = "+results[1]);
-
         
         //Calculates the sum of roll results
         int gesamtZahl = 0;

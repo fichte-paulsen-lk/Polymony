@@ -124,13 +124,15 @@ public class GamefieldController implements Initializable {
        
     }
     
-   
-    
-     public void rollDice(Event e) {
-        PolyMonyDrawer.getInstance().onRoll.handle();
-       
+    public void rollDice(Event e) {
+        PolyMonyDrawer.getInstance().onRoll.handle(); 
+    }
+     
+    public void onMenuGameQuit(Event e) {
         
     }
     
-    
+    public void onMenuHelpAbout(Event e) {
+        System.out.println("Version: " + Settings.getInstance().ApplicationVersion);
+    }
 }
