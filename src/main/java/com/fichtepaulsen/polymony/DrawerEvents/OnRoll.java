@@ -23,7 +23,7 @@ public class OnRoll extends Drawer{
     
     public void showDice(){
         Label diceLabel1 = Settings.getInstance().diceResult1;
-        Label diceLabel2 = Settings.getInstance().diceResult1;
+        Label diceLabel2 = Settings.getInstance().diceResult2;
         
         int[] diceResult = gameLogic.rollDices();
         System.out.println(diceResult[0] + " " + diceResult[1]);

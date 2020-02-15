@@ -13,7 +13,14 @@
 
         </GridPane>
         <Button fx:id="rollDice" mnemonicParsing="false" text="Roll Dice" onAction="#rollDice" />
-        <Label fx:id="diceResult1"></Label>
-        <Label fx:id="diceResult2"></Label>
+     
+        <HBox alignment="CENTER"  >
+            <children>
+                <Label fx:id="diceResult1" alignment="BOTTOM_RIGHT"></Label>
+                <Label fx:id="diceResult2" alignment="BOTTOM_LEFT"></Label>
+            </children>
+        </HBox> 
+        
+              
    </children>
 </VBox>
