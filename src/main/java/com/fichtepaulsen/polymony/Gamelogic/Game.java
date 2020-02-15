@@ -154,12 +154,6 @@ public class Game implements GameInterface{
             }
         }
         
-
-        
-        
-
-
-        System.out.println(results[0] + " " + results[1]);
         return results;
     }
 
