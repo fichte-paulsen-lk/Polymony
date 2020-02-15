@@ -1,5 +1,7 @@
 package com.fichtepaulsen.polymony.Gamelogic;
 
+import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
+import com.fichtepaulsen.polymony.Gamelogic.Cards.MoneyCard;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -20,23 +22,38 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 import javafx.scene.paint.Color;
 
 public class Game implements GameInterface{
     Player[] players;
     Field[] fields;
     Dice[] dices;
+    Card[] cards;
     
     int activePlayerIndex;
-    public Game(){
-
-    }   
-    //Testmethode, um Spiellogik zu testen, ohne Verbindung zur Grafik
-    public static void main(String[] args) {
-        //rufe Konstruktor auf mit 3 Spielern und 40 Feldern
-        //Game g1 = new Game(3,40,2);
-    }
     
+    public Game(){
+       
+        /*
+        cards = new Card[cardCount];
+        
+        
+      try {
+            cards = shuffle(readCardsJson(cardCount));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+      */
+      
+    } 
+
+
+
+    
+
+
     /*
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
@@ -56,7 +73,7 @@ public class Game implements GameInterface{
             this.players[i] = new HumanPlayer(0, 1500, i);
         }
         activePlayerIndex = 0;
-        
+                
         //erstelle Felder Array mit angegebener Felderanzahl
         //this.fields = new Field[40];
         //Fülle den Felder Array mit Felder
@@ -74,45 +91,84 @@ public class Game implements GameInterface{
         for (int i = 0; i < dices.length; i++){
             this.dices[i] = new NormalDice();
         }
-    }
-    
-    
+    }   
+
+
+    /* requires: -
+    returns: results of dices being rolled
+    */
     public int[] rollDices(){
-        //Nehme alle Würfel, hole ihre Werte und gebe sie in einem Array zurück
+        //Returns an array of roll results
         int [] results = new int[dices.length];
         for (int i = 0;i<dices.length;i++){
             results[i] = dices[i].roll();
         }
         //System.out.println("n0 = "+results[0]+ " n1 = "+results[1]);
-        
-        //Guck ob es ein Pasch ist
-        
-        boolean doublets =  isDoublets(results);
 
         
-        //Gesamtzahl der Würfel holen
+        //Calculates the sum of roll results
         int gesamtZahl = 0;
         for (int value : results){
             gesamtZahl+=value;
         }
-        System.out.println("GesamtZahl = "+gesamtZahl);
+        //System.out.println("GesamtZahl = "+gesamtZahl);
        
         //TODO: Spiellogik ausführen
         Player activePlayer = players[activePlayerIndex];
-        System.out.println(activePlayer.getPosition());
-        int newPos = (activePlayer.getPosition()  + gesamtZahl) % fields.length;
-        activePlayer.setPosition(newPos);
 
-        System.out.println(activePlayer.getPosition());
+        boolean doublets =  isDoublets(results);                                //Tests for doublets
+        int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;           //Calculates next position after rolling the dices
+        //Case where the player is in prison:
+          if(activePlayer.getIsInPrison()==true){   
+              if (doublets == false){                           
+                  activePlayer.incrementPrisonAttemptCounter();
+                if(activePlayer.getPrisonAttemptCounter()==3){                  //When the player doesn't roll doublets for 3 rounds 
+                  activePlayer.setIsInPrison(false);                            //he comes out of prison and moves
+                  activePlayer.setPosition(newPos);
+                  activePlayer.setPrisonAttemptCounter(0);
+                }  
+                activePlayerIndex=(activePlayerIndex+1)%players.length;
+              }
+              else{                                                             //If the player rolls doublets during one of his 3 attempts
+                activePlayer.setIsInPrison(false);                              //he comes out of prison and moves by the amount he rolled  
+                activePlayer.setPosition(newPos);                               //(no additional move after these doublets)
+                activePlayerIndex=(activePlayerIndex+1)%players.length;
+              }    
+          }
+          //Normal case:
+          else{                                                     
+            activePlayer.setPosition(newPos);                                   
+            if (doublets == false){                                             //Normal roll(player moves, activePlayerIndex increments,            
+              activePlayerIndex=(activePlayerIndex+1)%players.length;           //doubletsCounter resets)
+              activePlayer.setDoubletsCounter(0);
+            }
+            else{                                                               //Doublet roll(doubletCounter increments, activePlayerIndex stays untouched)
+              activePlayer.incrementDoubletsCounter();
+                if (activePlayer.getDoubletsCounter()==3){                      //When doubletCounter reaches 3, the player will be automatically moved to 
+                  activePlayer.setIsInPrison(true);                             //the prison field and activePlayerIndex increments
+                  activePlayer.setDoubletsCounter(0);
+                  activePlayer.setPrisonAttemptCounter(0);
+                  activePlayer.setPosition(10);
+                  activePlayerIndex=(activePlayerIndex+1)%players.length;
+                }
+            }
+        }
+        
+
+        
+        
+
 
         System.out.println(results[0] + " " + results[1]);
         return results;
     }
-    public boolean works(){
-    return true;}
+
     public static boolean isDoublets(int[] array){
         for(int i = 1; i < array.length; i++){
-            if((array[0] != array[i])) return false;
+            if((array[0] != array[i])) 
+            {
+                return false;
+            }
         }
         return true;
     }
@@ -122,8 +178,8 @@ public class Game implements GameInterface{
         //Array der später zurückgegeben wird-
         Field[] temp = new Field[length];
 
-        //Öffne die fields.json Datei und schreibegetResourceAsStream den Inhalt in jsonString
-        InputStream in = this.getClass().getClassLoader().getResourceAsStream("fields.json");
+        //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
+        InputStream in = this.getClass().getResourceAsStream("/setup.json");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         String jsonString = "";
 
@@ -152,7 +208,7 @@ public class Game implements GameInterface{
                     temp[i] = new StartField();
                     break;
                 case "StreetField":
-                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), null);
+                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), getColor((int)field.get("color")));
                     break;
                 case "ActionField":
                     temp[i] = new ActionField();
@@ -227,8 +283,98 @@ public class Game implements GameInterface{
     requires: index from a field 
     returns:  field object from fields at the given index
     */ 
-    public Field getNthField(int index) {
-        return fields[index];
+    public Field getNthField(int n) {
+        return fields[n];
+    }
+    /*
+    requires: Color index from json file
+    returns:  Color object for the corresponding index
+    */
+    public static Color getColor(int n){
+        // return a
+        switch (n){
+            case 1:
+                return Color.BROWN;
+            case 2:
+                return Color.LIGHTBLUE;
+            case 3:
+                return Color.PINK;
+            case 4:
+                return Color.ORANGE;
+            case 5:
+                return Color.RED;
+            case 6:
+                return Color.YELLOW;
+            case 7:
+                return Color.GREEN;
+            case 8:
+                return Color.BLUE;
+            default:
+                //should never happen, maybe throw an exception
+                return Color.BLACK;
+
+        }
     }
 
+    Card[] readCardsJson(int length) throws IOException{
+                //Array der später zurückgegeben wird-
+        Card[] temp = new Card[length];
+
+        //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
+        InputStream in = this.getClass().getResourceAsStream("/setup.json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String jsonString = "";
+
+        String line = null;
+        while ( (line = reader.readLine()) != null) {
+            jsonString +=line;
+        }
+
+        //lade den String als JSONObject
+        JSONObject obj = new JSONObject(jsonString);
+
+        //öffne den fields array aus dem JSONObject
+        JSONArray jsonArray = obj.getJSONArray("cards");
+
+        //iteriere durch alle Einträge
+        for (int i = 0;i<jsonArray.length();i++){
+
+            //lade das JSONObject am Index i
+            JSONObject card = jsonArray.getJSONObject(i);
+            //Hole den Typen bzw. den Klassenbezeichner des Feldes
+            String cardClassName = (String) card.get("type");
+            
+            switch (cardClassName){
+                case "MoneyCard": 
+                      System.out.println("money card");
+                      temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"));
+                      break;
+                default: temp[i] = null;
+            }
+        }
+        return temp;
+    }
+    
+    private static Card[] shuffle(Card[] array){
+    
+    Random rnd = ThreadLocalRandom.current();
+    for (int i = array.length - 1; i > 0; i--)
+    {
+      int index = rnd.nextInt(i + 1);
+      // Simple swap
+      Card a = array[index];
+      array[index] = array[i];
+      array[i] = a;
+    }
+    return array;
+  }
+    
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public int getActivePlayerIndex() {
+        return activePlayerIndex;
+    }
+    
 }
