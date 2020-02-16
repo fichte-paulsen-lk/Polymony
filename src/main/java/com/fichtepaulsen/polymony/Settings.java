@@ -1,5 +1,6 @@
 package com.fichtepaulsen.polymony;
 
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -7,6 +8,7 @@ import javafx.scene.layout.GridPane;
 public class Settings {
       
     private static Settings instance;    
+
     private Settings() { }
     
     public static synchronized Settings getInstance () {
@@ -21,6 +23,8 @@ public class Settings {
     public final int WindowWidth = 500;
     public final int WindowHeight = 500;
     
+    public final int GameFields = 40;
+    
     public final String ApplicationVersion = "1.2";
     
     // Public Settings
@@ -30,5 +34,6 @@ public class Settings {
     public Label playerLabel;
     public Button nextButton;
     public Button rollDice;
+    public Game gameInteface;
 }
 

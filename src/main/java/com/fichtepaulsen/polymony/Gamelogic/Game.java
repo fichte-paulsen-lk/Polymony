@@ -35,24 +35,13 @@ public class Game implements GameInterface{
     int activePlayerIndex;
     
     public Game(){
-       
-        /*
-        cards = new Card[cardCount];
-        
-        
-      try {
-            cards = shuffle(readCardsJson(cardCount));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-      */
-      
+//        cards = new Card[Settings.getInstance().GameFields]; 
+//        try {
+//            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
+//        } catch (IOException e) {
+//           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
+//        }
     } 
-
-
-
-    
-
 
     /*
     requires: integer number of players. 
