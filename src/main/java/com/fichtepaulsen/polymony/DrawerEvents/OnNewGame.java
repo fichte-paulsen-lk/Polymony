@@ -17,6 +17,8 @@ public class OnNewGame extends Drawer {
     
     @Override
     public void handle () {
+        gameLogic.startGame(2);
+
         Parent parentRoot = null;
         
         try {

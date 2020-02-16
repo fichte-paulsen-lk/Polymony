@@ -1,11 +1,14 @@
 package com.fichtepaulsen.polymony.DrawerController;
 
 import com.fichtepaulsen.polymony.PolyMonyDrawer;
+import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -17,6 +20,21 @@ public class GamefieldController implements Initializable {
     @FXML
     private GridPane gp;
     
+    @FXML
+    private Label diceResult1;
+    
+    @FXML
+    private Label diceResult2;
+    
+    @FXML
+    private Label currentplayer;
+    
+    @FXML
+    private Button nextButton;
+    
+    @FXML
+    private Button rollDice;
+    
    //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 25.0;
     private double defaultFieldWidth = 50.0;
@@ -27,7 +45,14 @@ public class GamefieldController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-    
+        
+        Settings.getInstance().diceResult1 = this.diceResult1;
+        Settings.getInstance().diceResult2 = this.diceResult2;
+        Settings.getInstance().gameGridPane = this.gp;
+        Settings.getInstance().playerLabel = this.currentplayer;
+        Settings.getInstance().nextButton = this.nextButton;
+        Settings.getInstance().rollDice = this.rollDice;
+
         //Every rectangle is added to a GridPane and is equal to one field
         //creates corner square (c1) (top left)
         Rectangle c1 = new Rectangle(cornerFieldLength, cornerFieldLength);
@@ -108,6 +133,24 @@ public class GamefieldController implements Initializable {
             rec.setStroke(Color.BLACK);
             rec.setFill(Color.WHITE);
             gp.add(rec, i, 10);
-        }   
+        }  
+        
+       
+    }
+    
+    public void rollDice(Event e) {
+        PolyMonyDrawer.getInstance().onRoll.handle(); 
+    }
+     
+    public void onMenuGameQuit(Event e) {
+        
+    }
+    
+    public void onMenuHelpAbout(Event e) {
+        System.out.println("Version: " + Settings.getInstance().ApplicationVersion);
+    }
+    
+    public void onNextMove(Event e) {
+        PolyMonyDrawer.getInstance().onNextTurn.handle(); 
     }
 }
