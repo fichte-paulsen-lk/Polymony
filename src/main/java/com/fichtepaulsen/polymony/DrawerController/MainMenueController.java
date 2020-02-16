@@ -1,6 +1,7 @@
 package com.fichtepaulsen.polymony.DrawerController;
 
 import com.fichtepaulsen.polymony.PolyMonyDrawer;
+import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.Event;
@@ -15,6 +16,8 @@ public class MainMenueController implements Initializable {
     }   
     
     public void startNewGame (Event e) {
+        Settings.getInstance().gameInteface.startGame(2);
+                
         PolyMonyDrawer.getInstance().onNewGame.handle();
     }
 }

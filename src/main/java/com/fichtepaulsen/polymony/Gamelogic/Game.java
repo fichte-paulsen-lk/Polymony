@@ -14,6 +14,7 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.StartField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.TaxField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.TrafficField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.UtilityField;
 import com.fichtepaulsen.polymony.Gamelogic.Player.HumanPlayer;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
@@ -24,6 +25,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 
 public class Game implements GameInterface{
@@ -52,9 +55,9 @@ public class Game implements GameInterface{
         try {
             fields = readJson(40);
         } catch (Exception e) {
-            e.printStackTrace();
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());        
         }
-
+    
         // create playerArray with given playerCount.
         this.players = new Player[playerCount];
         // fill playerArray with human players.
@@ -181,9 +184,10 @@ public class Game implements GameInterface{
 
             //lade das JSONObject am Index i
             JSONObject field = jsonArray.getJSONObject(i);
+            
             //Hole den Typen bzw. den Klassenbezeichner des Feldes
             String fieldClassName = (String) field.get("type");
-
+            
             //Je nachdem welche Klasse es ist wird der Konstruktor mit den jeweils gewünschten Werten aufgerufen und das Objekt in temp an Stelle des Indizes i geschrieben
             switch (fieldClassName)
             {
@@ -205,8 +209,15 @@ public class Game implements GameInterface{
                 case "Prison":
                     temp[i] = new PrisonField();
                     break;
+                case "Utility":
+                    temp[i] = new UtilityField((String)field.get("name"),(int)field.get("price"));
+                    break;
+                default:
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "JSON Import does not work!");
+                    break;
             }
         }
+
         return temp;
     }
     
@@ -325,10 +336,10 @@ public class Game implements GameInterface{
             
             switch (cardClassName){
                 case "MoneyCard": 
-                      System.out.println("money card");
-                      temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"));
-                      break;
-                default: temp[i] = null;
+                    temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"));
+                    break;
+                default: 
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
             }
         }
         return temp;

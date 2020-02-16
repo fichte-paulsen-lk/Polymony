@@ -1,5 +1,7 @@
 package com.fichtepaulsen.polymony.DrawerController;
 
+import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
 import com.fichtepaulsen.polymony.PolyMonyDrawer;
 import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
@@ -52,6 +54,8 @@ public class GamefieldController implements Initializable {
         Settings.getInstance().playerLabel = this.currentplayer;
         Settings.getInstance().nextButton = this.nextButton;
         Settings.getInstance().rollDice = this.rollDice;
+        
+        Field[] gameFields = Settings.getInstance().gameInteface.getAllFields();
 
         //Every rectangle is added to a GridPane and is equal to one field
         //creates corner square (c1) (top left)
@@ -86,52 +90,77 @@ public class GamefieldController implements Initializable {
         c4.setFill(Color.WHITE);
         gp.add(c4, 10, 10);
         
-        //creates upper horizontal fields
+        //creates upper horizontal fields (LEFT)
         for(int i = 1; i<=9; i++) {
-                Rectangle rec = new Rectangle();
-                rec.setHeight(defaultFieldHeight);
-                rec.setWidth(defaultFieldWidth);
-                rec.setStrokeWidth(1.0);
-                rec.setStrokeType(StrokeType.OUTSIDE);
-                rec.setStroke(Color.BLACK);
-                rec.setFill(Color.WHITE);
-          
-                gp.add(rec, 0, i);
-        }
-        
-        //creates left vertical fields
-        for(int i = 1; i<=9; i++){
-            Rectangle rec = new Rectangle();
-            rec.setHeight(defaultFieldWidth);
-            rec.setWidth(defaultFieldHeight);
-            rec.setStrokeWidth(1.0);
-            rec.setStrokeType(StrokeType.OUTSIDE);
-            rec.setStroke(Color.BLACK);
-            rec.setFill(Color.WHITE);
-            gp.add(rec, i, 0);
-        }
-        
-        //creates lower horizontal fields
-        for(int i = 1; i<=9; i++) {
+            
+            Color c = Color.WHITE;
+            
+            if (gameFields[(20 - i)] instanceof StreetField) {
+                c = ((StreetField)gameFields[(20 - i)]).getColor();
+            }
+            
             Rectangle rec = new Rectangle();
             rec.setHeight(defaultFieldHeight);
             rec.setWidth(defaultFieldWidth);
             rec.setStrokeWidth(1.0);
             rec.setStrokeType(StrokeType.OUTSIDE);
             rec.setStroke(Color.BLACK);
-            rec.setFill(Color.WHITE);
-            gp.add(rec, 10, i);
+            rec.setFill(c);
+
+            gp.add(rec, 0, i);
         }
         
-        //creates right vertical fields
+        //creates left vertical fields (UP)
         for(int i = 1; i<=9; i++){
+            Color c = Color.WHITE;
+            
+            if (gameFields[(20 + i)] instanceof StreetField) {
+                c = ((StreetField)gameFields[(20 + i)]).getColor();
+            }
+            
             Rectangle rec = new Rectangle();
             rec.setHeight(defaultFieldWidth);
             rec.setWidth(defaultFieldHeight);
             rec.setStrokeWidth(1.0);
             rec.setStrokeType(StrokeType.OUTSIDE);
             rec.setStroke(Color.BLACK);
-            rec.setFill(Color.WHITE);
+            rec.setFill(c);
+            gp.add(rec, i, 0);
+        }
+        
+        //creates lower horizontal fields (RIGHT)
+        for(int i = 1; i<=9; i++) {
+            Color c = Color.WHITE;
+            
+            if (gameFields[(30 + i)] instanceof StreetField) {
+                c = ((StreetField)gameFields[(30 + i)]).getColor();
+            }
+            
+            Rectangle rec = new Rectangle();
+            rec.setHeight(defaultFieldHeight);
+            rec.setWidth(defaultFieldWidth);
+            rec.setStrokeWidth(1.0);
+            rec.setStrokeType(StrokeType.OUTSIDE);
+            rec.setStroke(Color.BLACK);
+            rec.setFill(c);
+            gp.add(rec, 10, i);
+        }
+        
+        //creates right vertical fields (DOWN)
+        for(int i = 1; i<=9; i++){
+            Color c = Color.WHITE;
+            
+            if (gameFields[(10-i)] instanceof StreetField) {
+                c = ((StreetField)gameFields[(10-i)]).getColor();
+            }
+            
+            Rectangle rec = new Rectangle();
+            rec.setHeight(defaultFieldWidth);
+            rec.setWidth(defaultFieldHeight);
+            rec.setStrokeWidth(1.0);
+            rec.setStrokeType(StrokeType.OUTSIDE);
+            rec.setStroke(Color.BLACK);
+            rec.setFill(c);
             gp.add(rec, i, 10);
         }  
         
