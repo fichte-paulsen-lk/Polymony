@@ -22,11 +22,17 @@ public class OnRoll extends Drawer{
         
         int[] diceResult = gameLogic.rollDices();
         
+        Label playerLabel = Settings.getInstance().playerLabel;
+        playerLabel.setText(this.gameLogic.getCurrentPlayer().toString());
+        
         Image diceFace1 = new Image(getClass().getResourceAsStream("/img/Alea_" +  diceResult[0] + ".png"));
         Image diceFace2 = new Image(getClass().getResourceAsStream("/img/Alea_" +  diceResult[1] + ".png"));
         
         diceLabel1.setGraphic(new ImageView(diceFace1));
         diceLabel2.setGraphic(new ImageView(diceFace2));
+        
+        Settings.getInstance().rollDice.setDisable(true);
+        Settings.getInstance().nextButton.setVisible(true);
 
     } 
 }

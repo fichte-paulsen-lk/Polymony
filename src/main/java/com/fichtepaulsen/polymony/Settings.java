@@ -1,12 +1,12 @@
 package com.fichtepaulsen.polymony;
 
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 public class Settings {
       
-    private static Settings instance;
-    
+    private static Settings instance;    
     private Settings() { }
     
     public static synchronized Settings getInstance () {
@@ -27,6 +27,8 @@ public class Settings {
     public GridPane gameGridPane;
     public Label diceResult1;
     public Label diceResult2;
-    
+    public Label playerLabel;
+    public Button nextButton;
+    public Button rollDice;
 }
 

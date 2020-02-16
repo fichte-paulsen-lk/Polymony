@@ -16,8 +16,10 @@ public class OnNewGame extends Drawer {
     }
     
     public void handle () {
-        Parent parentRoot = null;
         gameLogic.startGame(2);
+
+        Parent parentRoot = null;
+        
         try {
             parentRoot = FXMLLoader.load(getClass().getResource("/fxml/Gamefield.fxml"));
         } catch (IOException ex) {
