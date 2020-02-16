@@ -35,24 +35,13 @@ public class Game implements GameInterface{
     int activePlayerIndex;
     
     public Game(){
-       
-        /*
-        cards = new Card[cardCount];
-        
-        
-      try {
-            cards = shuffle(readCardsJson(cardCount));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-      */
-      
+//        cards = new Card[Settings.getInstance().GameFields]; 
+//        try {
+//            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
+//        } catch (IOException e) {
+//           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
+//        }
     } 
-
-
-
-    
-
 
     /*
     requires: integer number of players. 
@@ -103,8 +92,6 @@ public class Game implements GameInterface{
         for (int i = 0;i<dices.length;i++){
             results[i] = dices[i].roll();
         }
-        //System.out.println("n0 = "+results[0]+ " n1 = "+results[1]);
-
         
         //Calculates the sum of roll results
         int gesamtZahl = 0;
@@ -154,18 +141,9 @@ public class Game implements GameInterface{
             }
         }
         
-
-        
-        
-
-
-
         return results;
     }
 
-    /* requires: the results of the dice roll
-        returns: Was it a doublet?
-     */
     public static boolean isDoublets(int[] array){
         for(int i = 1; i < array.length; i++){
             if((array[0] != array[i])) 

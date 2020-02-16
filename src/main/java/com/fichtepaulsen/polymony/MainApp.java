@@ -13,9 +13,9 @@ public class MainApp extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        PolyMonyDrawer.createInstance(stage);
         Settings.createInstance();
-                
+        PolyMonyDrawer.createInstance(stage);
+
         Parent parentRoot = null;
         
         try {
