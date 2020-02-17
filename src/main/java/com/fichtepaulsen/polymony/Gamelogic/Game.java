@@ -367,8 +367,13 @@ public class Game implements GameInterface{
     */
     public void buyStreet(){
         Player activePlayer = getCurrentPlayer();
-        if(activePlayer.getBalance() >= ((OwnableField)fields[activePlayer.getPosition()]).getPrice()){
-        
+        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
+        //if the player has enough money to buy the field
+        if(activePlayer.getBalance() >= currentField.getPrice()){
+            //player becomes owner of the ownableField
+            currentField.setOwner(activePlayer);
+            //Player loses as much money as the price of the ownableField 
+            activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
         }
     }
 }

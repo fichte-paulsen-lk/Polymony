@@ -73,5 +73,11 @@ public interface GameInterface {
     returns:  Color object for the corresponding index
     */
     //public static Color getColor(int n);
+    
+    /*
+    requires: 
+    does:  current player buys the ownableField he stands on
+    */
+    public void buyStreet();
 }
 
