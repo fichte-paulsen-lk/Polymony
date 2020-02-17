@@ -16,6 +16,7 @@ public class OnNewGame extends Drawer {
         super(ga, st);
     }
     
+    @Override
     public void handle () {
         
         //actually start the game with the set amount of players from the settings

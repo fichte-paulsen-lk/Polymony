@@ -1,11 +1,14 @@
 package com.fichtepaulsen.polymony;
 
+import com.fichtepaulsen.polymony.Gamelogic.Game;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
 public class Settings {
       
-    private static Settings instance;
-    
+    private static Settings instance;    
+
     private Settings() { }
     
     public static synchronized Settings getInstance () {
@@ -14,6 +17,10 @@ public class Settings {
     
     public static void createInstance() {
         instance = new Settings();
+    }
+    
+    public static void destroyInstance() {
+        instance = null;
     }
     
     // Const Settings 
@@ -28,9 +35,19 @@ public class Settings {
     //non final if we want to change the number of 
     //players during runtime
     public final int numberOfPlayers = 4;
+
+    public final int GameFields = 40;
+    
+    public final String ApplicationVersion = "1.2";
+
     
     // Public Settings
     public GridPane gameGridPane;
-    
+    public Label diceResult1;
+    public Label diceResult2;
+    public Label playerLabel;
+    public Button nextButton;
+    public Button rollDice;
+    public Game gameInteface;
 }
 
