@@ -152,7 +152,6 @@ public class GamefieldController implements Initializable {
             box.setOnMouseClicked( ( e ) ->
             {
               this.onCardClick(gameFields[fac]);
-              System.out.println(fac + "clicked");
             } );
 
             gp.add(box, ((x==-1) ? i : x), ((y==-1) ? i : y));
