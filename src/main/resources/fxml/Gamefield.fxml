@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" spacing="8.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fichtepaulsen.polymony.DrawerController.GamefieldController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" spacing="8.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fichtepaulsen.polymony.DrawerController.GamefieldController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -37,11 +37,11 @@
             </ContextMenu>
          </contextMenu>
     </MenuBar>
-    <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="600.0" minWidth="900.0" prefHeight="600.0" prefWidth="900.0">
+    <VBox alignment="TOP_CENTER" fillWidth="false" minHeight="600.0" minWidth="900.0" prefHeight="771.0" prefWidth="1280.0">
         <children>
-            <HBox alignment="CENTER" fillHeight="false" prefHeight="347.0" prefWidth="900.0">
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="798.0" prefWidth="1280.0">
                <children>
-                  <GridPane prefHeight="443.0" prefWidth="900.0">
+                  <GridPane prefHeight="762.0" prefWidth="1279.0">
                     <columnConstraints>
                         <ColumnConstraints hgrow="SOMETIMES" maxWidth="468.5" minWidth="10.0" prefWidth="441.0" />
                       <ColumnConstraints hgrow="SOMETIMES" maxWidth="468.5" minWidth="10.0" prefWidth="441.0" />
@@ -58,37 +58,35 @@
                   </GridPane>
                            </children>
                         </HBox>
-                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
+                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" />
+                        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
-                              <Button fx:id="nextButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNextMove" prefHeight="25.0" prefWidth="156.0" text="Next Turn" visible="false">
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                 </VBox.margin>
-                              </Button>
+                              <VBox>
+                                 <children>
+                        
+                                                                              <Button fx:id="rollDice" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </Button>
+                                    <Button fx:id="nextButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNextTurn" text="Next Turn">
+                                       <padding>
+                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                       </padding>
+                                    </Button>
+                                 </children>
+                              </VBox>
+                              <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="315.0">
+                                 <children>
+                                    <Label fx:id="diceResult2" alignment="BOTTOM_LEFT" />
+                        
+                                                      <Label fx:id="diceResult1" alignment="BOTTOM_RIGHT" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </children>
                   </GridPane>
-               </children>
-            </HBox>
-
-            <Button fx:id="rollDice" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice">
-               <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-               </VBox.margin></Button>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="diceResult2" alignment="BOTTOM_LEFT" />
-      
-                  <Label fx:id="diceResult1" alignment="BOTTOM_RIGHT" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="0.0" prefWidth="900.0">
-               <children>
-                  <Label fx:id="currentplayer" text="" />
                </children>
             </HBox>
         </children>
