@@ -68,17 +68,33 @@
                            <children>
                               <VBox>
                                  <children>
-
-                                                                              <Button fx:id="rollDice" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice">
-                                       <padding>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Button fx:id="rollDice" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                             <opaqueInsets>
+                                                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                                             </opaqueInsets>
+                                          </Button>
+                                       </children>
+                                       <opaqueInsets>
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </Button>
-                                    <Button fx:id="nextButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNextTurn" text="Next Turn">
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </Button>
+                                       </opaqueInsets>
+                                    </HBox>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Button fx:id="nextButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNextTurn" text="Next Turn">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                             <opaqueInsets>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </opaqueInsets>
+                                          </Button>
+                                       </children>
+                                    </HBox>
                                  </children>
                               </VBox>
                               <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="315.0">
