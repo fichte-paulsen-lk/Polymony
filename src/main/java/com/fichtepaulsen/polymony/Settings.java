@@ -38,7 +38,7 @@ public class Settings {
     public Label playerLabel;
     public Button rollDice;
     public Game gameInteface;
-    
+
     public static boolean isNextTurnButton = false;
 
     public static void toggleRollDiceButton() {  
