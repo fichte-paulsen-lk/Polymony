@@ -17,6 +17,11 @@ public interface GameInterface {
     *           the indices 0 and 1 are the normal dices.
     */
     public int[] rollDices();
+
+    /* requires: -
+       returns: - (makes the next player active)
+    */
+    public void nextTurn();
   
     /*
     requires: integer number of players. 
