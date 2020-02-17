@@ -60,5 +60,12 @@ public interface GameInterface {
     returns:  field object from fields at the given index
     */ 
     public Field getNthField(int index);
+   
+    /*
+    requires: index from a field 
+    returns:  nothing
+    effect: buys a house on the given field if the active player owns the Field
+    */ 
+     public void buyHouse (int fieldIndex);
 }
 

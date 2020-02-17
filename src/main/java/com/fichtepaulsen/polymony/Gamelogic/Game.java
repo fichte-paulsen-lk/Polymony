@@ -33,7 +33,9 @@ public class Game implements GameInterface{
     private Player[] players;
     private Field[] fields;
     private Dice[] dices;
-    private Card[] cards;
+    private Card[] cards; 
+    private int housesAvaible;
+    private int hotelsAvaible; 
     
     private int activePlayerIndex;
     
@@ -156,8 +158,25 @@ public class Game implements GameInterface{
             }
         }
         return true;
+    
     }
 
+    public int getHousesAvaible() {
+        return housesAvaible;
+    }
+
+    public void setHousesAvaible(int housesAvaible) {
+        this.housesAvaible = housesAvaible;
+    }
+
+    public int getHotelsAvaible() {
+        return hotelsAvaible;
+    }
+
+    public void setHotelsAvaible(int hotelsAvaible) {
+        this.hotelsAvaible = hotelsAvaible;
+    }
+    
     public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
@@ -365,6 +384,11 @@ public class Game implements GameInterface{
 
     public int getActivePlayerIndex() {
         return activePlayerIndex;
+    }
+    @Override
+    public void buyHouse (int fieldIndex) {
+        fields[fieldIndex].setOwner(players[activePlayerIndex]);
+        players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance()-fields[fieldIndex].getPrice());
     }
     
 }
