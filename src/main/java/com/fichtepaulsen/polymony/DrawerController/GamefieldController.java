@@ -89,27 +89,34 @@ public class GamefieldController implements Initializable {
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
         for(int i = 1; i<=9; i++){
             Color c = Color.LIGHTGREEN;
+            boolean isStreetField = false;
             
             int fac = subtract ? (factor - i) : (factor + i);
             if (gameFields[fac] instanceof StreetField) {
                 c = ((StreetField)gameFields[fac]).getColor();
+                isStreetField = true;
             }
             
             Rectangle rec = new Rectangle();
-            rec.setHeight(horizontal ? defaultFieldWidth * 3/4 : defaultFieldHeight);
-            rec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth * 3/4);
+            //rec.setHeight(horizontal ? defaultFieldWidth * 3/4 : defaultFieldHeight);
+            rec.setHeight(horizontal ? (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth) : (defaultFieldHeight));
+            //rec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth * 3/4);
+            rec.setWidth(horizontal ? (defaultFieldHeight) : (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth));
             rec.setStrokeWidth(1.0);
             rec.setStrokeType(StrokeType.INSIDE);
             rec.setStroke(Color.BLACK);
             rec.setFill(Color.LIGHTGREEN);
             
             Rectangle colorRec = new Rectangle();
-            colorRec.setHeight(horizontal ? defaultFieldWidth/4 : defaultFieldHeight);
-            colorRec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth/4);
-            colorRec.setStrokeWidth(1.0);
-            colorRec.setStrokeType(StrokeType.INSIDE);
-            colorRec.setStroke(Color.BLACK);
-            colorRec.setFill(c);  
+            if(isStreetField){
+                colorRec.setHeight(horizontal ? defaultFieldWidth/4 : defaultFieldHeight);
+                colorRec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth/4);
+                colorRec.setStrokeWidth(1.0);
+                colorRec.setStrokeType(StrokeType.INSIDE);
+                colorRec.setStroke(Color.BLACK);
+                colorRec.setFill(c);  
+            }
+            
             Pane box; 
            
             if(!horizontal){
