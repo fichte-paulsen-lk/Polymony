@@ -34,6 +34,7 @@ public class Game implements GameInterface{
     private Field[] fields;
     private Dice[] dices;
     private Card[] cards;
+    private boolean keepActivePlayer;
     
     private int activePlayerIndex;
     
@@ -83,8 +84,17 @@ public class Game implements GameInterface{
         for (int i = 0; i < dices.length; i++){
             this.dices[i] = new NormalDice();
         }
-    }   
+    }
 
+    /* requires: -
+    returns: - (makes the next player active)
+    */
+    public void nextTurn(){
+        if (!keepActivePlayer){
+            activePlayerIndex=(activePlayerIndex+1)%players.length;
+        }
+
+    }
 
     /* requires: -
     returns: results of dices being rolled
@@ -111,36 +121,37 @@ public class Game implements GameInterface{
         int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;           //Calculates next position after rolling the dices
         //Case where the player is in prison:
           if(activePlayer.getIsInPrison()==true){   
-              if (doublets == false){                           
+              if (doublets == false){
+
                   activePlayer.incrementPrisonAttemptCounter();
                 if(activePlayer.getPrisonAttemptCounter()==3){                  //When the player doesn't roll doublets for 3 rounds 
                   activePlayer.setIsInPrison(false);                            //he comes out of prison and moves
                   activePlayer.setPosition(newPos);
                   activePlayer.setPrisonAttemptCounter(0);
                 }  
-                activePlayerIndex=(activePlayerIndex+1)%players.length;
+
               }
               else{                                                             //If the player rolls doublets during one of his 3 attempts
                 activePlayer.setIsInPrison(false);                              //he comes out of prison and moves by the amount he rolled  
                 activePlayer.setPosition(newPos);                               //(no additional move after these doublets)
-                activePlayerIndex=(activePlayerIndex+1)%players.length;
               }    
           }
           //Normal case:
           else{                                                     
             activePlayer.setPosition(newPos);                                   
-            if (doublets == false){                                             //Normal roll(player moves, activePlayerIndex increments,            
-              activePlayerIndex=(activePlayerIndex+1)%players.length;           //doubletsCounter resets)
+            if (doublets == false){                                             //Normal roll(player moves, activePlayerIndex increments,
+                keepActivePlayer = false;
+                //doubletsCounter resets)
               activePlayer.setDoubletsCounter(0);
             }
             else{                                                               //Doublet roll(doubletCounter increments, activePlayerIndex stays untouched)
               activePlayer.incrementDoubletsCounter();
+                keepActivePlayer = true;
                 if (activePlayer.getDoubletsCounter()==3){                      //When doubletCounter reaches 3, the player will be automatically moved to 
                   activePlayer.setIsInPrison(true);                             //the prison field and activePlayerIndex increments
                   activePlayer.setDoubletsCounter(0);
                   activePlayer.setPrisonAttemptCounter(0);
                   activePlayer.setPosition(10);
-                  activePlayerIndex=(activePlayerIndex+1)%players.length;
                 }
             }
         }
