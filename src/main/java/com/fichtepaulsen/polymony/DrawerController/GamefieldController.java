@@ -98,9 +98,7 @@ public class GamefieldController implements Initializable {
             }
             
             Rectangle rec = new Rectangle();
-            //rec.setHeight(horizontal ? defaultFieldWidth * 3/4 : defaultFieldHeight);
             rec.setHeight(horizontal ? (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth) : (defaultFieldHeight));
-            //rec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth * 3/4);
             rec.setWidth(horizontal ? (defaultFieldHeight) : (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth));
             rec.setStrokeWidth(1.0);
             rec.setStrokeType(StrokeType.INSIDE);
