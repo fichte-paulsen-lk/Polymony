@@ -46,58 +46,83 @@ public class OnRoll extends Drawer{
             System.out.println("NULLLLLLLLLLLLLL");
         }
         else {
+            System.out.println("Drawing player at " + index);
             drawPlayer(gameLogic.getAllPlayers()[index]);
         }
     }
+    
+    
     //gets: player that moved 
     //does: changes players X and Y coordinates to his new field
     public void drawPlayer(Player p){
         
-       //creates DoublePair to calculate the fields x and y coordinates
-       DoublePair dP = new DoublePair(0,0);
+        int position = p.getPosition();
+        System.out.println("Position = " + position);
        
-       //calculates the fields x and y coordiantes
-       dP = dP.indexToPoint(p.getPosition(), width, offX, offY, dimX, dimY);
-       
-       //calculates the position of the player in the field
-       DoublePair pPos = fieldPos(p.getIndex());
-       
-       //get the player's shape that should be moved from the global gridpane in settings
-       //using getPlayerNode from the controller 
-       Node playerShape = GamefieldController.getPlayerNode(Settings.getInstance().gameGridPane, 
-               p.getIndex());
-       
-       if (playerShape == null) {
-           System.out.println("Couldn't get the player's shape from the controller");
-       }
-       
-       GridPane.setMargin(playerShape, new Insets(pPos.getX(), 0, 0, pPos.getY()));
-       
-       //calculate the row and column of the player's new position
-       IntPair playerGridCoordinates = IntPair.indexToPos(p.getIndex(), Settings.getInstance().rowLength);
-       
-        //aplies the new position
-       GridPane.setConstraints(playerShape, playerGridCoordinates.getX(), playerGridCoordinates.getY());
-       
-       System.out.println("Tried to draw the player's new position");
-    }
-    
-    //gets: index of player whose position in a field should be calculated
-    //does: calculates the position of the n-th player in a single field
-    //      (0,0) is the top left corner the field and (1,1) the bottom right
-    private DoublePair fieldPos(int player) {
-        
-        //number of players playing the game
-        int numP = gameLogic.getAllPlayers().length;
-        
-        //space between the x-coords of players
-        double spacing = (maxX - minX) / (double) (numP - 1);
+        //creates DoublePair to calculate the fields x and y coordinates
+        DoublePair dP = new DoublePair(0,0);
 
-        //x coordinate of the player is the minimum x coordinate plus a certain spacing
-        double x       = minX + player * spacing;
-       
-        //the players are on the middle vertical axis with the calculated x coordinate
-        return new DoublePair(x, 0.5f);
+        //calculates the fields x and y coordiantes
+        dP = dP.indexToPoint(position, width, offX, offY, dimX, dimY);
+
+        System.out.println("Top left of new field: " + dP.getX() + " , " + dP.getY());
+
+        //calculates the position of the player in the field
+        DoublePair pPos = fieldPos(p.getIndex());
+
+        System.out.println("Position inside the field: " + pPos.getX() + ", " + pPos.getY() + " of " + p.getIndex());
+        //get the player's shape that should be moved from the global gridpane in settings
+        //using getPlayerNode from the controller 
+        Node playerShape = GamefieldController.getPlayerNode(Settings.getInstance().gameGridPane, 
+                p.getIndex());
+
+        if (playerShape == null) {
+            System.out.println("Couldn't get the player's shape from the controller");
+        }
+
+
+        //calculate the row and column of the player's new position
+        IntPair playerGridCoordinates = IntPair.indexToPos(position, Settings.getInstance().rowLength);
+
+        System.out.println("new grid coordinates: " + playerGridCoordinates.getX() + ", " + playerGridCoordinates.getY());
+         //applies the new position
+        GridPane.setConstraints(playerShape, playerGridCoordinates.getX(), playerGridCoordinates.getY());
+
+        double yInset = pPos.getY();
+        double xInset = pPos.getX();
+        
+        //if the player is on a row 
+        if (playerGridCoordinates.getY() == 0 || playerGridCoordinates.getY() == Settings.getInstance().rowLength) {
+            yInset = pPos.getY() * Settings.getInstance().fieldWidth;
+            xInset = pPos.getX() * Settings.getInstance().fieldHeight;
+        }
+        else {
+            yInset = pPos.getX() * Settings.getInstance().fieldHeight;
+            xInset = pPos.getY() * Settings.getInstance().fieldWidth;
+        }
+      
+        //set the margins for the playe's position inside the field
+        GridPane.setMargin(playerShape, new Insets(pPos.getY(), 0, 0, pPos.getX()));
+
+        System.out.println("Tried to draw the player's new position");
+        }
+
+        //gets: index of player whose position in a field should be calculated
+        //does: calculates the position of the n-th player in a single field
+        //      (0,0) is the top left corner the field and (1,1) the bottom right
+        private DoublePair fieldPos(int player) {
+
+         //number of players playing the game
+         int numP = Settings.getInstance().numberOfPlayers;
+
+         //space between the x-coords of players
+         double spacing = (maxX - minX) / (double) (numP - 1);
+
+         //x coordinate of the player is the minimum x coordinate plus a certain spacing
+         double x       = minX + player * spacing;
+
+         //the players are on the middle vertical axis with the calculated x coordinate
+         return new DoublePair(x, 0.5f);
     }
 
     //private Object getPlayerShape() {}

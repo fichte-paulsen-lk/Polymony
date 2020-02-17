@@ -40,6 +40,11 @@ public class Settings {
     
     public final String ApplicationVersion = "1.2";
 
+    //defaults for the height and the width of a normal field
+    //note that width and heigh are for a field on the right or 
+    //left rows, not the top or buttom
+    public final double fieldHeight = 50f;
+    public final double fieldWidth = 100f;
     
     // Public Settings
     public GridPane gameGridPane;

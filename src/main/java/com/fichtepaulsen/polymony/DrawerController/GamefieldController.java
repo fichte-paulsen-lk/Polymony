@@ -10,7 +10,9 @@ import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -105,10 +107,22 @@ public class GamefieldController implements Initializable {
         //the start of the game
         for (int i = 0; i < Settings.getInstance().numberOfPlayers; i++) {
             //add a circle with radius 8
-            gp.add(new Circle(8), 0, 0);
+            Circle c = new Circle(8);
+           
+            gp.add(c, 0, 0);
+            
+            //all margins are defined from the top left
+            GridPane.setValignment(c, VPos.TOP);
+            GridPane.setHalignment(c, HPos.LEFT);
+          
         }
         
-        PolyMonyDrawer.getInstance().onRoll.drawPlayerAt(0);
+        //PolyMonyDrawer.getInstance().onRoll.drawPlayerAt(2);
+        //Node player = GamefieldController.getPlayerNode(gp, 2);
+        //GridPane.setConstraints(player, 3, 0);
+        //GridPane.setValignment(player, VPos.TOP);
+        //GridPane.setMargin(player, new Insets(10, 0, 0, 0.5));
+       
     }
     
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
