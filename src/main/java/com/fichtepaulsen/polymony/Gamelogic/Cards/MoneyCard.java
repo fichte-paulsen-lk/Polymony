@@ -13,8 +13,8 @@ public class MoneyCard  extends Card{
 
     @Override
     public void action(Game game) {
-        Player[] players = game.getPlayers();
-        int activePlayerIndex = game.getActivePlayerIndex();
+        Player[] players = game.getAllPlayers();
+        int activePlayerIndex = game.getCurrentPlayer().getIndex();
         players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() + value);
     }
 }

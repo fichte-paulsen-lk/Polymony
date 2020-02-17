@@ -12,7 +12,7 @@ public class PrisonFreeCards extends Card{
     
     @Override
     public void action (Game game){
-            players=game.getPlayers();
-            players[game.getActivePlayerIndex()].setAmountPrisonFreeCard(players[game.getActivePlayerIndex()].getAmountPrisonFreeCard()+1);
+            players=game.getAllPlayers();
+            players[game.getCurrentPlayer().getIndex()].setAmountPrisonFreeCard(players[game.getCurrentPlayer().getIndex()].getAmountPrisonFreeCard()+1);
     }
 }

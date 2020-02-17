@@ -3,6 +3,7 @@ package com.fichtepaulsen.polymony.Gamelogic;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
+import javafx.scene.paint.Color;
 
 public interface GameInterface {
     
@@ -60,5 +61,23 @@ public interface GameInterface {
     returns:  field object from fields at the given index
     */ 
     public Field getNthField(int index);
+    
+    /*
+    requires: 
+    does: switches the activePlayerIndex to the next player
+    */
+    public void endTurn();
+    
+    /*
+    requires: Color index from json file
+    returns:  Color object for the corresponding index
+    */
+    //public static Color getColor(int n);
+    
+    /*
+    requires: 
+    does:  current player buys the ownableField he stands on
+    */
+    public void buyField();
 }
 
