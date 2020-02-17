@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
@@ -22,6 +23,7 @@ import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 
 public class GamefieldController implements Initializable {
 
@@ -188,7 +190,14 @@ public class GamefieldController implements Initializable {
         colorRec.setFill(color);
 
         vbox.getChildren().addAll(colorRec, rec);
-        this.cardGridPane.getChildren().add(vbox);
+        Label streetName = new Label(name);
+        streetName.setStyle("-fx-font-weight: bold;");
+        Label streetPrice = new Label(price + "$");
+        streetPrice.setStyle("-fx-font-weight: bold;");
+        StackPane stack = new StackPane(vbox, streetName, streetPrice);
+        stack.setAlignment(streetName, Pos.CENTER);
+        stack.setAlignment(streetPrice, Pos.BOTTOM_CENTER);
+        this.cardGridPane.getChildren().add(stack);
     }
 
     private void setupCorner(int x, int y) {
