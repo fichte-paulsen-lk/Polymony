@@ -298,7 +298,7 @@ public class Game implements GameInterface{
         }
     }
 
-    private Card[] readCardsJson(int length) throws IOException{
+    public Card[] readCardsJson(int length) throws IOException{
                 //Array der später zurückgegeben wird-
         Card[] temp = new Card[length];
 
@@ -365,7 +365,7 @@ public class Game implements GameInterface{
     requires: 
     does:  current player buys the ownableField he stands on
     */
-    public void buyStreet(){
+    public void buyField(){
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
         //if the player has enough money to buy the field

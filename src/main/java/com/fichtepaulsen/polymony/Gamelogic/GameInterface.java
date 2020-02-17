@@ -78,6 +78,6 @@ public interface GameInterface {
     requires: 
     does:  current player buys the ownableField he stands on
     */
-    public void buyStreet();
+    public void buyField();
 }
 
