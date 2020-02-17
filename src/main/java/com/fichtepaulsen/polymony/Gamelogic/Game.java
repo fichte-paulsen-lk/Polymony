@@ -180,7 +180,7 @@ public class Game implements GameInterface{
 
         //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
         InputStream in = this.getClass().getResourceAsStream("/setup.json");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
         String jsonString = "";
 
         String line = null;
