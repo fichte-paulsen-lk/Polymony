@@ -19,6 +19,7 @@ import javafx.scene.image.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.Group;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 
 public class GamefieldController implements Initializable {
@@ -87,7 +88,7 @@ public class GamefieldController implements Initializable {
     
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
         for(int i = 1; i<=9; i++){
-            Color c = Color.WHITE;
+            Color c = Color.LIGHTGREEN;
             
             int fac = subtract ? (factor - i) : (factor + i);
             if (gameFields[fac] instanceof StreetField) {
@@ -95,33 +96,64 @@ public class GamefieldController implements Initializable {
             }
             
             Rectangle rec = new Rectangle();
-            rec.setHeight(horizontal ? defaultFieldWidth : defaultFieldHeight);
-            rec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth);
+            rec.setHeight(horizontal ? defaultFieldWidth * 3/4 : defaultFieldHeight);
+            rec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth * 3/4);
             rec.setStrokeWidth(1.0);
-            rec.setStrokeType(StrokeType.OUTSIDE);
+            rec.setStrokeType(StrokeType.INSIDE);
             rec.setStroke(Color.BLACK);
-            rec.setFill(c);
-            HBox hbox = new HBox();
+            rec.setFill(Color.LIGHTGREEN);
             
+            Rectangle colorRec = new Rectangle();
+            colorRec.setHeight(horizontal ? defaultFieldWidth/4 : defaultFieldHeight);
+            colorRec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth/4);
+            colorRec.setStrokeWidth(1.0);
+            colorRec.setStrokeType(StrokeType.INSIDE);
+            colorRec.setStroke(Color.BLACK);
+            colorRec.setFill(c);  
+            Pane box; 
+           
+            if(!horizontal){
+                box = new HBox();
+                if(factor == 20){
+                    box.getChildren().add(rec);
+                    box.getChildren().add(colorRec);
+                }
+                else{
+                box.getChildren().add(colorRec);
+                box.getChildren().add(rec);
+                }
+            }
+            
+            else{
+                box = new VBox();
+                if(factor == 20){
+                    box.getChildren().add(rec);
+                    box.getChildren().add(colorRec);
+                    
+                }
+                else{
+                    box.getChildren().add(colorRec);
+                    box.getChildren().add(rec);}
+            }
             /*
             hbox.setStyle("-fx-background-color: " + this.toRGBCode(c) + ";" +
                       "-fx-border-style: solid inside;" + 
                       "-fx-border-width: 1 2 1 2;" +
                       "-fx-border-color: black;");     
             */       
-                   
-            hbox.getChildren().add(rec);
+                  
+            
                         
-            gp.add(hbox, ((x==-1) ? i : x), ((y==-1) ? i : y));
+            gp.add(box, ((x==-1) ? i : x), ((y==-1) ? i : y));
         }  
     }
     
     private void setupCorner(int x, int y) {
         Rectangle c = new Rectangle(cornerFieldLength, cornerFieldLength);
         c.setStrokeWidth(1.0);
-        c.setStrokeType(StrokeType.OUTSIDE);
+        c.setStrokeType(StrokeType.INSIDE);
         c.setStroke(Color.BLACK);
-        c.setFill(Color.WHITE);
+        c.setFill(Color.LIGHTGREEN);
         gp.add(c, x, y);
     }
     
