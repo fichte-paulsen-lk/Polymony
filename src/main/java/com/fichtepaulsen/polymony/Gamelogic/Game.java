@@ -157,7 +157,20 @@ public class Game implements GameInterface{
         }
         return true;
     }
-
+    public boolean isAbleToBuyOutOfPrison(){                                    //checks if the player is able to pay the bail
+        Player activePlayer = players[activePlayerIndex];                       
+        if(activePlayer.getIsInPrison()==true && activePlayer.getBalance()>=50){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public void prisonPayment(){                                                //pays the bail and frees the player
+        Player activePlayer = players[activePlayerIndex];
+        activePlayer.setIsInPrison(false);
+        activePlayer.setBalance(activePlayer.getBalance()-50);    
+    } 
     public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
