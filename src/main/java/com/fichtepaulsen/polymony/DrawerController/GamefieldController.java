@@ -37,9 +37,6 @@ public class GamefieldController implements Initializable {
     private Label diceResult2;
 
     @FXML
-    private Button nextButton;
-
-    @FXML
     private Button rollDice;
 
     @FXML
@@ -53,8 +50,7 @@ public class GamefieldController implements Initializable {
     private double cornerFieldLength = 100.0;
 
     private Field[] gameFields = null;
-
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -62,7 +58,6 @@ public class GamefieldController implements Initializable {
         Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
         Settings.getInstance().rollDice = this.rollDice;
-        Settings.getInstance().nextButton = this.nextButton;
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
 
@@ -102,9 +97,7 @@ public class GamefieldController implements Initializable {
                 c = ((StreetField)gameFields[fac]).getColor();
                 isStreetField = true;
             }
-
-
-
+            
             Rectangle rec = new Rectangle();
             rec.setHeight(horizontal ? (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth) : (defaultFieldHeight));
             rec.setWidth(horizontal ? (defaultFieldHeight) : (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth));
@@ -209,7 +202,11 @@ public class GamefieldController implements Initializable {
     }
 
     public void rollDice(Event e) {
-        PolyMonyDrawer.getInstance().onRoll.handle();
+        if (Settings.isNextTurnButton) {
+            PolyMonyDrawer.getInstance().onNextTurn.handle();
+        } else {
+            PolyMonyDrawer.getInstance().onRoll.handle(); 
+        }
     }
 
     public void onMenuGameQuit(Event e) {
@@ -218,9 +215,5 @@ public class GamefieldController implements Initializable {
 
     public void onMenuHelpAbout(Event e) {
         System.out.println("Version: " + Settings.getInstance().ApplicationVersion);
-    }
-
-    public void onNextTurn(Event e) {
-        PolyMonyDrawer.getInstance().onNextTurn.handle();
     }
 }

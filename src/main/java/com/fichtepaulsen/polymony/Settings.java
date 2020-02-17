@@ -36,8 +36,15 @@ public class Settings {
     public Label diceResult1;
     public Label diceResult2;
     public Label playerLabel;
-    public Button nextButton;
     public Button rollDice;
     public Game gameInteface;
+    
+    public static boolean isNextTurnButton = false;
+
+    public static void toggleRollDiceButton() {  
+        String buttonText = isNextTurnButton ? "Roll Dice" : "Next Turn";
+        Settings.getInstance().rollDice.setText(buttonText);
+        isNextTurnButton = !isNextTurnButton;
+    }
 }
 

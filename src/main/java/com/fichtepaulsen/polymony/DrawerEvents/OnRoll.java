@@ -30,8 +30,6 @@ public class OnRoll extends Drawer{
         diceLabel1.setGraphic(new ImageView(diceFace1));
         diceLabel2.setGraphic(new ImageView(diceFace2));
         
-        Settings.getInstance().rollDice.setDisable(false);
-        Settings.getInstance().nextButton.setVisible(true);
-
+        Settings.toggleRollDiceButton();
     } 
 }

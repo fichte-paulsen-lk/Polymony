@@ -12,8 +12,7 @@ public class OnNextTurn extends Drawer{
 
     @Override
     public void handle() {
-        Settings.getInstance().rollDice.setVisible(true);
-        Settings.getInstance().nextButton.setDisable(false);
+        Settings.toggleRollDiceButton();
         gameLogic.nextTurn();
     }
 }
