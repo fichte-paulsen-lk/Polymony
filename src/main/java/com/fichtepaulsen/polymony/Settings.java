@@ -19,6 +19,10 @@ public class Settings {
         instance = new Settings();
     }
     
+    public static void destroyInstance() {
+        instance = null;
+    }
+    
     // Const Settings 
     public final int WindowWidth = 500;
     public final int WindowHeight = 500;

@@ -45,7 +45,6 @@
    "cards":[
         {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1},
         {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10},
-        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100},
-        
+        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100}
     ]
 }

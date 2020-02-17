@@ -5,16 +5,19 @@ import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import com.fichtepaulsen.polymony.Gamelogic.Game;
 
 public class MoneyCardOtherPlayers extends Card{
-    int value;
-    public MoneyCardOtherPlayers(String settext){
-        super(settext);
+    private int value;
+    
+    public MoneyCardOtherPlayers(String title, int value){
+        super(title);
+        this.value = value;
     }
+    
     @Override
     public void action(Game game){
         Player [] players = game.getPlayers();
         int activePlayerIndex = game.getActivePlayerIndex();
-        for (int i=0;i<players.length;i++){
-            players[i].setBalance(players[i].getBalance()-(value));
+        for (Player player : players) {
+            player.setBalance(player.getBalance() - (value));
             players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance()+value);
         }
      }

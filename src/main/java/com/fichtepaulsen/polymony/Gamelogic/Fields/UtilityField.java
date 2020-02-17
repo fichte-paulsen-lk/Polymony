@@ -1,10 +1,9 @@
 package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
-public class Utility extends OwnableField {
+public class UtilityField extends OwnableField {
     
-    public Utility(String nameset, int indexset, int priceset){
+    public UtilityField(String nameset, int priceset){
         name=nameset;
-        index=indexset;
         price=priceset;
     }
     

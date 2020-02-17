@@ -8,7 +8,18 @@ public abstract class Player {
     private int trainstaitionOwned;
     private boolean incarcerated;
     private int amountPrisonFreeCard; 
+    private int playerIndex;
+    private boolean isInPrison;
+    private int prisonAttemptCounter;                                           //Counts doublet attempts in prison
+    private int doubletsCounter;                                                
 
+    public Player(int position, int balance, int index){
+        this.position = position;
+        this.balance = balance;
+        this.playerIndex = index;
+        this.isInPrison = false;
+    }
+    
     public int getAmountPrisonFreeCard() {
         return amountPrisonFreeCard;
     }
@@ -24,18 +35,7 @@ public abstract class Player {
     public void setIncarcerated(boolean incarcerated) {
         this.incarcerated = incarcerated;
     }
-    private int playerIndex;
-    private boolean isInPrison;
-    private int prisonAttemptCounter;                                           //Counts doublet attempts in prison
-    private int doubletsCounter;                                                
 
-    public Player(int position, int balance, int index){
-        this.position = position;
-        this.balance = balance;
-        this.playerIndex = index;
-        this.isInPrison = false;
-    }
-    
     public int getUtilitiesOwned() {
         return utilitiesOwned;
     }
@@ -79,23 +79,28 @@ public abstract class Player {
     public boolean getIsInPrison(){
         return this.isInPrison;
     }
+    
     public void incrementPrisonAttemptCounter(){
         prisonAttemptCounter++;
     }
+    
     public int getPrisonAttemptCounter(){
         return prisonAttemptCounter;
     }
+    
     public void setPrisonAttemptCounter(int ac){
         this.prisonAttemptCounter=ac; 
     }
+    
     public void incrementDoubletsCounter(){
         doubletsCounter++;
     }
+    
     public int getDoubletsCounter(){
         return doubletsCounter;
     }
+    
     public void setDoubletsCounter(int dc){
         this.doubletsCounter=dc; 
     }
-    
 }

@@ -5,9 +5,8 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
 public interface GameInterface {
+    
     /* 
-    
-    
     constructor: public Game()
     */
     
