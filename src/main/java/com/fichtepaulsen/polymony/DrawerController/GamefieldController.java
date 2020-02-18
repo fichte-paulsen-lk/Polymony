@@ -107,7 +107,7 @@ public class GamefieldController implements Initializable {
         //the start of the game
         for (int i = 0; i < Settings.getInstance().numberOfPlayers; i++) {
             //add a circle with radius 8
-            Circle c = new Circle(8);
+            Circle c = new Circle(Settings.getInstance().playerRadius);
            
             gp.add(c, 0, 0);
             

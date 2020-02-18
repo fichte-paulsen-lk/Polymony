@@ -30,7 +30,7 @@ public class IntPair {
         return 
             (strip == 0) ? new IntPair(index, 0) : 
             (strip == 1) ? new IntPair(width, index-width) : 
-            (strip == 2) ? new IntPair(width-((index-width)%index), width) :
-                           new IntPair(0, width-((index-width)%index));  
+            (strip == 2) ? new IntPair(width-((index-width)%width), width) :
+                           new IntPair(0, width-((index-width)%width));  
     }
 }

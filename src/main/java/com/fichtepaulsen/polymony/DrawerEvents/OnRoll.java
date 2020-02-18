@@ -19,8 +19,8 @@ import javafx.scene.image.ImageView;
 public class OnRoll extends Drawer{
 
     //interval of the x coordinates of the players
-    private final double minX = 0.1;
-    private final double maxX = 0.9;
+    private final double minX = 0.2;
+    private final double maxX = 0.8;
     private final int width = 40;
     private final double offX = 1;
     private final double offY = 1;
@@ -34,10 +34,12 @@ public class OnRoll extends Drawer{
     @Override
     public void handle() {
         //show the dice
+        System.out.println("=================================================");
         showDice();
         
         //move the current player to the new position
         drawPlayer(gameLogic.getCurrentPlayer());
+        System.out.println("=================================================");
         
     }
     
@@ -57,6 +59,8 @@ public class OnRoll extends Drawer{
     public void drawPlayer(Player p){
         
         int position = p.getPosition();
+        
+        System.out.println("Player = " + p.getIndex());
         System.out.println("Position = " + position);
        
         //creates DoublePair to calculate the fields x and y coordinates
@@ -80,7 +84,6 @@ public class OnRoll extends Drawer{
             System.out.println("Couldn't get the player's shape from the controller");
         }
 
-
         //calculate the row and column of the player's new position
         IntPair playerGridCoordinates = IntPair.indexToPos(position, Settings.getInstance().rowLength);
 
@@ -88,21 +91,28 @@ public class OnRoll extends Drawer{
          //applies the new position
         GridPane.setConstraints(playerShape, playerGridCoordinates.getX(), playerGridCoordinates.getY());
 
-        double yInset = pPos.getY();
-        double xInset = pPos.getX();
+        double yInset;
+        double xInset;
+        
+        double longSide = Settings.getInstance().fieldWidth;
+        double shortSide = Settings.getInstance().fieldHeight;
+        
+        double radius = Settings.getInstance().playerRadius;
         
         //if the player is on a row 
         if (playerGridCoordinates.getY() == 0 || playerGridCoordinates.getY() == Settings.getInstance().rowLength) {
-            yInset = pPos.getY() * Settings.getInstance().fieldWidth;
-            xInset = pPos.getX() * Settings.getInstance().fieldHeight;
+            xInset = pPos.getX() * shortSide - radius;
+            yInset = pPos.getY() * longSide  - radius;
         }
         else {
-            yInset = pPos.getX() * Settings.getInstance().fieldHeight;
-            xInset = pPos.getY() * Settings.getInstance().fieldWidth;
+            xInset = pPos.getY() * longSide  - radius;
+            yInset = pPos.getX() * shortSide - radius;
         }
+        
+        System.out.println("xInset = " + xInset + "yInset = " + yInset);
       
         //set the margins for the playe's position inside the field
-        GridPane.setMargin(playerShape, new Insets(pPos.getY(), 0, 0, pPos.getX()));
+        GridPane.setMargin(playerShape, new Insets(yInset, 0, 0, xInset));
 
         System.out.println("Tried to draw the player's new position");
         }
@@ -119,10 +129,10 @@ public class OnRoll extends Drawer{
          double spacing = (maxX - minX) / (double) (numP - 1);
 
          //x coordinate of the player is the minimum x coordinate plus a certain spacing
-         double x       = minX + player * spacing;
+         double y       = minX + player * spacing;
 
          //the players are on the middle vertical axis with the calculated x coordinate
-         return new DoublePair(x, 0.5f);
+         return new DoublePair(0.5f, y);
     }
 
     //private Object getPlayerShape() {}
