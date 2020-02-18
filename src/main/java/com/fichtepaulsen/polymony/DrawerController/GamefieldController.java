@@ -93,11 +93,13 @@ public class GamefieldController implements Initializable {
             boolean isStreetField = false;
 
             int fac = subtract ? (factor - i) : (factor + i);
+            //checks whether or not a field is a streetField and sets isStreetField accordingly
+            //furthermore it determines the appropriate color for the streetField
             if (gameFields[fac] instanceof StreetField) {
                 c = ((StreetField)gameFields[fac]).getColor();
                 isStreetField = true;
             }
-            
+            //draws the base fields based on it's properties (StreetField, not StreetField etc.) 
             Rectangle rec = new Rectangle();
             rec.setHeight(horizontal ? (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth) : (defaultFieldHeight));
             rec.setWidth(horizontal ? (defaultFieldHeight) : (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth));
@@ -105,8 +107,9 @@ public class GamefieldController implements Initializable {
             rec.setStrokeType(StrokeType.INSIDE);
             rec.setStroke(Color.BLACK);
             rec.setFill(Color.LIGHTGREEN);
-
+            
             Rectangle colorRec = new Rectangle();
+            //StreetFields also receive there specific color, that is shown an upper rectangle
             if(isStreetField){
                 colorRec.setHeight(horizontal ? defaultFieldWidth/4 : defaultFieldHeight);
                 colorRec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth/4);
@@ -115,9 +118,10 @@ public class GamefieldController implements Initializable {
                 colorRec.setStroke(Color.BLACK);
                 colorRec.setFill(c);
             }
-
+            
             Pane box;
-
+            //adds the base rectangle & topper one (for the streets) according to it's orientation 
+            //decides if a HBox or Vbox is necessary
             if(!horizontal) {
                 box = new HBox();
                 if(factor == 20) {
@@ -141,7 +145,7 @@ public class GamefieldController implements Initializable {
                     box.getChildren().add(rec);
                 }
             }
-
+            //OnMouseClick Event that shows details about Fields
             box.setOnMouseClicked( ( e ) ->
             {
               this.onCardClick(gameFields[fac]);
@@ -150,14 +154,14 @@ public class GamefieldController implements Initializable {
             gp.add(box, ((x==-1) ? i : x), ((y==-1) ? i : y));
         }
     }
-
+    
     private void onCardClick(Field field) {
         if (field instanceof StreetField) {
             StreetField f = (StreetField)field;
             showStreetCard(f);
         }
     }
-
+    //shows a detailed view of a streetCard with specific information
     private void showStreetCard(StreetField field){
         int price = field.getPrice();
         Color color = field.getColor();
@@ -182,14 +186,29 @@ public class GamefieldController implements Initializable {
         colorRec.setFill(color);
 
         vbox.getChildren().addAll(colorRec, rec);
+        
         Label streetName = new Label(name);
-        streetName.setStyle("-fx-font-weight: bold;");
         Label streetPrice = new Label(price + "$");
+        streetName.setStyle("-fx-font-weight: bold;");
         streetPrice.setStyle("-fx-font-weight: bold;");
+        
+        
+        
         StackPane stack = new StackPane(vbox, streetName, streetPrice);
+        
         stack.setAlignment(streetName, Pos.CENTER);
         stack.setAlignment(streetPrice, Pos.BOTTOM_CENTER);
+        
+        stack.setOnMouseClicked( ( e ) ->
+            {
+              this.onDetailsCard(stack);
+            } );
+        
         this.cardGridPane.getChildren().add(stack);
+    }
+    
+    public void onDetailsCard(StackPane stack) {
+        this.cardGridPane.getChildren().clear();
     }
 
     private void setupCorner(int x, int y) {
