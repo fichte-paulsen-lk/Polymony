@@ -48,12 +48,12 @@ public class GamefieldController implements Initializable {
     //height and width of cornerfield are equal to the value of defaultFieldWidth
     //if you change the defaultFieldWidth you should also resize the cornerFieldLength
     private double cornerFieldLength = 100.0;
-
+   
     private Field[] gameFields = null;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        //get vars from Singleton
         Settings.getInstance().diceResult1 = this.diceResult1;
         Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
