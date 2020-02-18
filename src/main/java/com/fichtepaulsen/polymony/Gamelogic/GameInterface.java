@@ -84,5 +84,23 @@ public interface GameInterface {
     does:  current player buys the ownableField he stands on
     */
     public void buyField();
+    
+    /*
+    requires: 
+    returns: boolean if the current player is able to buy the street he stands on
+    */
+    public boolean isAbleToBuyStreet();
+    
+    /*
+    requires: 
+    does:  current player buys himself out of prison
+    */
+    public void prisonPayment();
+    
+    /*
+    requires: 
+    returns: boolean if the current player is able to buy himself out of prison
+    */
+    public boolean isAbleToBuyOutOfPrison();
 }
 

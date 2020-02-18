@@ -41,13 +41,8 @@ public class Game implements GameInterface{
     private int activePlayerIndex;
     
     public Game(){
-    /*    cards = new Card[Settings.getInstance().GameFields]; 
-        try {
-            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
-      } catch (IOException e) {
-           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
-        }
-    */ }
+    
+    }
 
     /*
     requires: integer number of players. 
@@ -75,6 +70,15 @@ public class Game implements GameInterface{
         for (int i = 0; i < dices.length; i++){
             this.dices[i] = new NormalDice();
         }
+        
+        //create cards and shuffle them
+        /*    cards = new Card[Settings.getInstance().GameFields]; 
+        try {
+            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
+        } catch (IOException e) {
+           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
+        }
+        */
     }
 
     /* requires: -
@@ -87,7 +91,8 @@ public class Game implements GameInterface{
 
     }
 
-    /* requires: -
+    /* 
+    requires: -
     returns: results of dices being rolled
     */
     @Override
@@ -159,20 +164,31 @@ public class Game implements GameInterface{
         }
         return true;
     }
-    public boolean isAbleToBuyOutOfPrison(){                                    //checks if the player is able to pay the bail
+    
+    /*
+    requires: 
+    returns: boolean if the current player is able to buy himself out of prison
+    */
+    public boolean isAbleToBuyOutOfPrison(){                                    
         Player activePlayer = players[activePlayerIndex];                       
-        if(activePlayer.getIsInPrison()==true && activePlayer.getBalance()>=50){
+        if(activePlayer.getIsInPrison()==true && activePlayer.getBalance()>=1000){
             return true;
         }
         else{
             return false;
         }
     }
-    public void prisonPayment(){                                                //pays the bail and frees the player
+    
+    /*
+    requires: 
+    does:  current player buys himself out of prison
+    */
+    public void prisonPayment(){                                                
         Player activePlayer = players[activePlayerIndex];
         activePlayer.setIsInPrison(false);
-        activePlayer.setBalance(activePlayer.getBalance()-50);    
+        activePlayer.setBalance(activePlayer.getBalance()-1000);    
     } 
+    
     public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
@@ -392,12 +408,24 @@ public class Game implements GameInterface{
     public void buyField(){
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
-        //if the player has enough money to buy the field
-        if(activePlayer.getBalance() >= currentField.getPrice()){
-            //player becomes owner of the ownableField
-            currentField.setOwner(activePlayer);
-            //Player loses as much money as the price of the ownableField 
-            activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
-        }
+        //player becomes owner of the ownableField
+        currentField.setOwner(activePlayer);
+        //Player loses as much money as the price of the ownableField 
+        activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
+        
     }
+    
+    /*
+    requires: 
+    returns: boolean if the current player is able to buy the street he stands on
+    */
+    public boolean isAbleToBuyStreet(){                                    
+        Player activePlayer = getCurrentPlayer();
+        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];                       
+        if(activePlayer.getBalance() >= currentField.getPrice()){
+            return true;
+        }
+        else{
+            return false;
+        }
 }
