@@ -43,8 +43,8 @@
     ],
     
    "cards":[
-        {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1},
-        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10},
-        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100}
+        {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,community:true},
+        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,community:false},
+        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,community:true}
     ]
 }

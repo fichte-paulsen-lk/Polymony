@@ -7,8 +7,8 @@ import com.fichtepaulsen.polymony.Gamelogic.Game;
 public class MoneyCardOtherPlayers extends Card{
     private int value;
     
-    public MoneyCardOtherPlayers(String title, int value){
-        super(title);
+    public MoneyCardOtherPlayers(String title, int value,boolean community){
+        super(title,community);
         this.value = value;
     }
     

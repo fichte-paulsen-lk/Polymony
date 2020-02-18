@@ -352,7 +352,7 @@ public class Game implements GameInterface{
             
             switch (cardClassName){
                 case "MoneyCard": 
-                    temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"));
+                    temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"),(boolean) card.get("community"));
                     break;
                 default: 
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
