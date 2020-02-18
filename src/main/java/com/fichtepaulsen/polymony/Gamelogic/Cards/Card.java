@@ -17,6 +17,10 @@ public abstract class Card {
         return title;
     }
     
+    /*
+    requires: -
+    returns: is it a Community Card?
+    */
     public boolean isCommunityCard(){
         return isCommunityCard;
     }//use cardType() function
