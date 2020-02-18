@@ -16,8 +16,8 @@ public class PolyMonyDrawer {
     
     private PolyMonyDrawer(Stage stage) {
         gameInterface = new Game();
-        
         Settings.getInstance().gameInteface = this.gameInterface;
+
         onNewGame = new OnNewGame(gameInterface, stage);
         onNextTurn = new OnNextTurn(gameInterface, stage);
         onRoll = new OnRoll(gameInterface, stage);

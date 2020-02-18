@@ -9,6 +9,7 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.NormalDice;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.ActionField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.OwnableField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.PrisonField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StartField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
@@ -17,6 +18,7 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.TrafficField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.UtilityField;
 import com.fichtepaulsen.polymony.Gamelogic.Player.HumanPlayer;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
+import com.fichtepaulsen.polymony.Settings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,16 +39,18 @@ public class Game implements GameInterface{
     private Card[] cards;
     private Player activePlayer;
     int [] results;
+    private boolean keepActivePlayer;
+    
     private int activePlayerIndex;
     
     public Game(){
-//        cards = new Card[Settings.getInstance().GameFields]; 
-//        try {
-//            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
-//        } catch (IOException e) {
-//           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
-//        }
-    } 
+    /*    cards = new Card[Settings.getInstance().GameFields]; 
+        try {
+            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
+      } catch (IOException e) {
+           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
+        }
+    */ }
 
     /*
     requires: integer number of players. 
@@ -68,17 +72,6 @@ public class Game implements GameInterface{
             this.players[i] = new HumanPlayer(0, 1500, i);
         }
         activePlayerIndex = 0;
-                
-        //erstelle Felder Array mit angegebener Felderanzahl
-        //this.fields = new Field[40];
-        //Fülle den Felder Array mit Felder
-        //for (int i = 0;i < fields.length; i++){
-            //this.fields[i] = null;
-        //}
-        
-        //fields[0] = new StartField();
-        //fields[1] = new StreetField("Straße",1, Color.MEDIUMBLUE);
-        //fields[2] = null;
         
         // create diceArray with 2 dices.
         this.dices = new Dice[2];
@@ -86,19 +79,18 @@ public class Game implements GameInterface{
         for (int i = 0; i < dices.length; i++){
             this.dices[i] = new NormalDice();
         }
-    }   
-
+    }
 
     /* requires: -
-    returns: results of dices being rolled
+    returns: - (makes the next player active)
     */
-    @Override
-    public void next(){
-        if(!isDoublets(results)){
+    public void nextTurn(){
+        if (!keepActivePlayer){
             activePlayerIndex=(activePlayerIndex+1)%players.length;
-            
         }
+
     }
+
     @Override
     public int[] rollDices(){
         //Returns an array of roll results
@@ -121,13 +113,15 @@ public class Game implements GameInterface{
         int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;           //Calculates next position after rolling the dices
         //Case where the player is in prison:
           if(activePlayer.getIsInPrison()==true){   
-              if (doublets == false){                           
+              if (doublets == false){
+
                   activePlayer.incrementPrisonAttemptCounter();
                 if(activePlayer.getPrisonAttemptCounter()==3){                  //When the player doesn't roll doublets for 3 rounds 
                   activePlayer.setIsInPrison(false);                            //he comes out of prison and moves
                   activePlayer.setPosition(newPos);
                   activePlayer.setPrisonAttemptCounter(0);
                 }  
+
               }
               else{                                                             //If the player rolls doublets during one of his 3 attempts
                 activePlayer.setIsInPrison(false);                              //he comes out of prison and moves by the amount he rolled  
@@ -137,12 +131,15 @@ public class Game implements GameInterface{
           //Normal case:
           else{                                                     
             activePlayer.setPosition(newPos);                                   
-            if (doublets == false){                                             //Normal roll(player moves, activePlayerIndex increments,            
-                         //doubletsCounter resets)
+
+            if (doublets == false){                                             //Normal roll(player moves, activePlayerIndex increments,
+                keepActivePlayer = false;
+                //doubletsCounter resets)
               activePlayer.setDoubletsCounter(0);
             }
             else{                                                               //Doublet roll(doubletCounter increments, activePlayerIndex stays untouched)
-                activePlayer.incrementDoubletsCounter();
+              activePlayer.incrementDoubletsCounter();
+                keepActivePlayer = true;
                 if (activePlayer.getDoubletsCounter()==3){                      //When doubletCounter reaches 3, the player will be automatically moved to 
                   activePlayer.setIsInPrison(true);                             //the prison field and activePlayerIndex increments
                   activePlayer.setDoubletsCounter(0);
@@ -165,7 +162,20 @@ public class Game implements GameInterface{
         }
         return true;
     }
-
+    public boolean isAbleToBuyOutOfPrison(){                                    //checks if the player is able to pay the bail
+        Player activePlayer = players[activePlayerIndex];                       
+        if(activePlayer.getIsInPrison()==true && activePlayer.getBalance()>=50){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    public void prisonPayment(){                                                //pays the bail and frees the player
+        Player activePlayer = players[activePlayerIndex];
+        activePlayer.setIsInPrison(false);
+        activePlayer.setBalance(activePlayer.getBalance()-50);    
+    } 
     public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
@@ -173,7 +183,7 @@ public class Game implements GameInterface{
 
         //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
         InputStream in = this.getClass().getResourceAsStream("/setup.json");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
         String jsonString = "";
 
         String line = null;
@@ -284,6 +294,7 @@ public class Game implements GameInterface{
     public Field getNthField(int n) {
         return fields[n];
     }
+    
     /*
     requires: Color index from json file
     returns:  Color object for the corresponding index
@@ -314,7 +325,7 @@ public class Game implements GameInterface{
         }
     }
 
-    Card[] readCardsJson(int length) throws IOException{
+    public Card[] readCardsJson(int length) throws IOException{
                 //Array der später zurückgegeben wird-
         Card[] temp = new Card[length];
 
@@ -367,12 +378,29 @@ public class Game implements GameInterface{
         return array;
     }
     
-    public Player[] getPlayers() {
-        return players;
-    }
-
-    public int getActivePlayerIndex() {
-        return activePlayerIndex;
+    @Override
+    /*
+    requires: 
+    does: switches the activePlayerIndex to the next player
+    */
+    public void endTurn(){
+        activePlayerIndex = (activePlayerIndex++)%players.length;
     }
     
+    @Override
+    /*
+    requires: 
+    does:  current player buys the ownableField he stands on
+    */
+    public void buyField(){
+        Player activePlayer = getCurrentPlayer();
+        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
+        //if the player has enough money to buy the field
+        if(activePlayer.getBalance() >= currentField.getPrice()){
+            //player becomes owner of the ownableField
+            currentField.setOwner(activePlayer);
+            //Player loses as much money as the price of the ownableField 
+            activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
+        }
+    }
 }

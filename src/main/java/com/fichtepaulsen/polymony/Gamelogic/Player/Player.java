@@ -5,7 +5,7 @@ public abstract class Player {
     private int position;
     private int utilitiesOwned;
     private int balance;
-    private int trainstaitionOwned;
+    private int trainstationOwned;
     private boolean incarcerated;
     private int amountPrisonFreeCard; 
     private int playerIndex;
@@ -44,12 +44,12 @@ public abstract class Player {
         this.utilitiesOwned = utilitiesOwned;
     }
 
-    public int getTrainstaitionOwned() {
-        return trainstaitionOwned;
+    public int getTrainstationOwned() {
+        return trainstationOwned;
     }
 
-    public void setTrainstaitionOwned(int trainstaitionOwned) {
-        this.trainstaitionOwned = trainstaitionOwned;
+    public void setTrainstationOwned(int trainstationOwned) {
+        this.trainstationOwned = trainstationOwned;
     }
 
     public int getBalance() {

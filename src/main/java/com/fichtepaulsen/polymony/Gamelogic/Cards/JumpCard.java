@@ -14,7 +14,7 @@ public class JumpCard extends Card {
 
     @Override
     public void action(Game game) {
-       players=game.getPlayers();
-       players[game.getActivePlayerIndex()].setPosition(players[game.getActivePlayerIndex()].getPosition()+value);
+       players=game.getAllPlayers();
+       players[game.getCurrentPlayer().getIndex()].setPosition(players[game.getCurrentPlayer().getIndex()].getPosition()+value);
     }         //activePlayer is set forward to a field
 }
