@@ -43,7 +43,8 @@ public class Game implements GameInterface{
     public Game(){
     
     }
-
+    
+    @Override
     /*
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
@@ -80,9 +81,11 @@ public class Game implements GameInterface{
         }
         */
     }
-
-    /* requires: -
-    returns: - (makes the next player active)
+    
+    @Override
+    /* 
+    requires: -
+    does: makes the next player active
     */
     public void nextTurn(){
         if (!keepActivePlayer){
@@ -97,6 +100,8 @@ public class Game implements GameInterface{
     */
     @Override
     public int[] rollDices(){
+        int lastPosition = getCurrentPlayer().getPosition();
+        Player currentPlayer = getCurrentPlayer();
         //Returns an array of roll results
         int [] results = new int[dices.length];
         for (int i = 0;i<dices.length;i++){
@@ -110,7 +115,6 @@ public class Game implements GameInterface{
         }
         //System.out.println("GesamtZahl = "+gesamtZahl);
        
-        //TODO: Spiellogik ausführen
         Player activePlayer = players[activePlayerIndex];
 
         boolean doublets =  isDoublets(results);                                //Tests for doublets
@@ -151,7 +155,11 @@ public class Game implements GameInterface{
                 }
             }
         }
-      
+        
+        if(pastStart(lastPosition, newPos)){
+            currentPlayer.setBalance(currentPlayer.getBalance() + 4000);
+        }
+        
         return results;
     }
 
@@ -165,6 +173,7 @@ public class Game implements GameInterface{
         return true;
     }
     
+    @Override
     /*
     requires: 
     returns: boolean if the current player is able to buy himself out of prison
@@ -179,6 +188,7 @@ public class Game implements GameInterface{
         }
     }
     
+    @Override
     /*
     requires: 
     does:  current player buys himself out of prison
@@ -248,7 +258,6 @@ public class Game implements GameInterface{
                     break;
             }
         }
-
         return temp;
     }
     
@@ -394,15 +403,6 @@ public class Game implements GameInterface{
     @Override
     /*
     requires: 
-    does: switches the activePlayerIndex to the next player
-    */
-    public void endTurn(){
-        activePlayerIndex = (activePlayerIndex++)%players.length;
-    }
-    
-    @Override
-    /*
-    requires: 
     does:  current player buys the ownableField he stands on
     */
     public void buyField(){
@@ -415,11 +415,12 @@ public class Game implements GameInterface{
         
     }
     
+    @Override
     /*
     requires: 
     returns: boolean if the current player is able to buy the street he stands on
     */
-    public boolean isAbleToBuyStreet(){                                    
+    public boolean isAbleToBuyField(){                                    
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];                       
         if(activePlayer.getBalance() >= currentField.getPrice()){
@@ -428,4 +429,20 @@ public class Game implements GameInterface{
         else{
             return false;
         }
+    }
+    
+    @Override
+    /*
+    requires: integer for the last position of a player
+              integer for the current position of a player
+    returns:  boolean if a player past start in the last turn
+    */
+    public boolean pastStart(int lastPosition, int newPosition){
+        if((newPosition - lastPosition) < 0){
+            return true;
+        }
+        else{ 
+            return false;
+        }
+    }
 }
