@@ -69,7 +69,8 @@ public class Game implements GameInterface{
         this.players = new Player[playerCount];
         // fill playerArray with human players.
         for(int i = 0; i < playerCount; i++){
-            this.players[i] = new HumanPlayer(0, 1500, i);
+            
+            this.players[i] = new HumanPlayer(0 , 1500, i);
         }
         activePlayerIndex = 0;
         

@@ -24,6 +24,9 @@ public class DoublePair {
      */
     public static DoublePair indexToPoint(int index, int width, double offsetX, double offsetY, double dimX, double dimY) {
         IntPair pair = IntPair.indexToPos(index, width);
-        return new DoublePair(offsetX + pair.getX()*dimX, offsetY + pair.getY()*dimY);
+        
+        System.out.println("Indices: " + pair.getFirst() + ", " +  pair.getSecond());
+        
+        return new DoublePair(offsetX + pair.getFirst()*dimX, offsetY + pair.getSecond()*dimY);
     }
 } 

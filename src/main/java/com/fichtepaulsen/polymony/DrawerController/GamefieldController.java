@@ -3,6 +3,7 @@ package com.fichtepaulsen.polymony.DrawerController;
 import com.fichtepaulsen.polymony.DrawerEvents.OnRoll;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.PolyMonyDrawer;
 import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
@@ -105,14 +106,24 @@ public class GamefieldController implements Initializable {
         //creates right vertical fields (DOWN)
         setupRow(-1, 10, 10, true, true);  
         
-        //a probably temporary solution to add all players' shapes at 
+        //adding the players needs access to the players in the game
+        Game g = Settings.getInstance().gameInteface ;
+        
+        //add all players' shapes at 
         //the start of the game
         for (int i = 0; i < Settings.getInstance().numberOfPlayers; i++) {
-            //add a circle with radius 8
-            Circle c = new Circle(Settings.getInstance().playerRadius);
-           
-            gp.add(c, 0, 0);
             
+            //add a circle with a radius from Settings
+            Circle c = new Circle(Settings.getInstance().playerRadius);
+            
+            //get color from the player class and color the player's circle
+            c.setFill(g.getNthPlayer(i).getColor());
+            
+            //add a new player to the top left, which is then promptly moved 
+            //to it's correct location using OnRoll
+            gp.add(c, 0, 0);
+            PolyMonyDrawer.getInstance().onRoll.drawPlayer(g.getNthPlayer(i));
+        
             //all margins are defined from the top left
             GridPane.setValignment(c, VPos.TOP);
             GridPane.setHalignment(c, HPos.LEFT);

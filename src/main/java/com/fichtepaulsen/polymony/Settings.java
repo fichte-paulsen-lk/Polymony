@@ -46,7 +46,7 @@ public class Settings {
     public final double fieldHeight = 50f;
     public final double fieldWidth = 100f;
     
-    public final double playerRadius = 10f;
+    public final double playerRadius = 8f;
     
     // Public Settings
     public GridPane gameGridPane;

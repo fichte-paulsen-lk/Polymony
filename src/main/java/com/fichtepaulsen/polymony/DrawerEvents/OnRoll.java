@@ -19,8 +19,8 @@ import javafx.scene.image.ImageView;
 public class OnRoll extends Drawer{
 
     //interval of the x coordinates of the players
-    private final double minX = 0.2;
-    private final double maxX = 0.8;
+    private final double minX = 0.35;
+    private final double maxX = 0.65;
     private final int width = 40;
     private final double offX = 1;
     private final double offY = 1;
@@ -63,13 +63,11 @@ public class OnRoll extends Drawer{
         System.out.println("Player = " + p.getIndex());
         System.out.println("Position = " + position);
        
-        //creates DoublePair to calculate the fields x and y coordinates
-        DoublePair dP = new DoublePair(0,0);
-
-        //calculates the fields x and y coordiantes
-        dP = dP.indexToPoint(position, width, offX, offY, dimX, dimY);
-
-        System.out.println("Top left of new field: " + dP.getX() + " , " + dP.getY());
+        //creates DoublePair to calculate the x and y coordinates of the top left
+        //corner of the position'th field
+        DoublePair fieldCorner = DoublePair.indexToPoint(position, Settings.getInstance().rowLength, offX, offY, dimX, dimY);
+ 
+        System.out.println("Top left of new field: " + fieldCorner.getX() + " , " + fieldCorner.getY());
 
         //calculates the position of the player in the field
         DoublePair pPos = fieldPos(p.getIndex());
@@ -87,9 +85,9 @@ public class OnRoll extends Drawer{
         //calculate the row and column of the player's new position
         IntPair playerGridCoordinates = IntPair.indexToPos(position, Settings.getInstance().rowLength);
 
-        System.out.println("new grid coordinates: " + playerGridCoordinates.getX() + ", " + playerGridCoordinates.getY());
+        System.out.println("new grid coordinates: " + playerGridCoordinates.getFirst() + ", " + playerGridCoordinates.getSecond());
          //applies the new position
-        GridPane.setConstraints(playerShape, playerGridCoordinates.getX(), playerGridCoordinates.getY());
+        GridPane.setConstraints(playerShape, playerGridCoordinates.getFirst(), playerGridCoordinates.getSecond());
 
         double yInset;
         double xInset;
@@ -100,13 +98,13 @@ public class OnRoll extends Drawer{
         double radius = Settings.getInstance().playerRadius;
         
         //if the player is on a row 
-        if (playerGridCoordinates.getY() == 0 || playerGridCoordinates.getY() == Settings.getInstance().rowLength) {
+        if (playerGridCoordinates.getSecond() == 0 || playerGridCoordinates.getFirst() == Settings.getInstance().rowLength) {
             xInset = pPos.getX() * shortSide - radius;
             yInset = pPos.getY() * longSide  - radius;
         }
         else {
             xInset = pPos.getY() * longSide  - radius;
-            yInset = pPos.getX() * shortSide - radius;
+            yInset = pPos.getX() * shortSide - radius ;
         }
         
         System.out.println("xInset = " + xInset + "yInset = " + yInset);
