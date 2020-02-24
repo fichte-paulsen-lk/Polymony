@@ -166,7 +166,7 @@ public class Game implements GameInterface{
             }
         }
         
-        if(pastStart(lastPosition, newPos)){
+        if(pastStart(lastPosition, newPos) && activePlayer.getDoubletsCounter()!=3){
             currentPlayer.setBalance(currentPlayer.getBalance() + 4000);
         }
         
