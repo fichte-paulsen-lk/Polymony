@@ -22,7 +22,8 @@ public class DoublePair {
      * should be given
      * method returns the coordinates of the top left corner of the field at the n-th index
      */
-    public static DoublePair indexToPoint(int index, int width, double offsetX, double offsetY, double dimX, double dimY) {
+    public static DoublePair indexToPoint(int index, int width, double offsetX, 
+                                          double offsetY, double dimX, double dimY) {
         IntPair pair = IntPair.indexToPos(index, width);
         
         System.out.println("Indices: " + pair.getFirst() + ", " +  pair.getSecond());

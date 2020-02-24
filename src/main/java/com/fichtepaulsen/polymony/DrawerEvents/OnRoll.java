@@ -65,7 +65,8 @@ public class OnRoll extends Drawer{
        
         //creates DoublePair to calculate the x and y coordinates of the top left
         //corner of the position'th field
-        DoublePair fieldCorner = DoublePair.indexToPoint(position, Settings.getInstance().rowLength, offX, offY, dimX, dimY);
+        DoublePair fieldCorner = DoublePair.indexToPoint(position, 
+                Settings.getInstance().rowLength, offX, offY, dimX, dimY);
  
         System.out.println("Top left of new field: " + fieldCorner.getX() + " , " + fieldCorner.getY());
 
@@ -98,7 +99,7 @@ public class OnRoll extends Drawer{
         double radius = Settings.getInstance().playerRadius;
         
         //if the player is on a row 
-        if (playerGridCoordinates.getSecond() == 0 || playerGridCoordinates.getFirst() == Settings.getInstance().rowLength) {
+        if (playerGridCoordinates.getSecond() == 0 || playerGridCoordinates.getSecond() == Settings.getInstance().rowLength) {
             xInset = pPos.getX() * shortSide - radius;
             yInset = pPos.getY() * longSide  - radius;
         }
