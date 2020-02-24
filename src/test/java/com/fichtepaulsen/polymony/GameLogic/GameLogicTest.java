@@ -28,6 +28,7 @@ public class GameLogicTest {
         game.startGame(2);
     }
     
+    
     @Test
     public void testReadJSON() {
         Field[] field = null;
@@ -41,6 +42,7 @@ public class GameLogicTest {
         assertNotNull(field);
         assertEquals(field.length, 40);
     }
+
     
     @Test
     public void testIsDoublets() {

@@ -9,6 +9,7 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.NormalDice;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.ActionField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.GoToPrisonField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.OwnableField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.PrisonField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StartField;
@@ -219,7 +220,14 @@ public class Game implements GameInterface{
                     temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), getColor((int)field.get("color")));
                     break;
                 case "ActionField":
-                    temp[i] = new ActionField();
+                    try{
+                        field.getBoolean("freeParking");
+                        temp[i] = new ActionField(false,field.getBoolean("freeParking"));
+                    }catch(JSONException e){
+                        temp[i] = new ActionField(field.getBoolean("community"),false);
+                    }
+                    
+                    
                     break;
                 case "TaxField":
                     temp[i] = new TaxField((int)field.get("tax"),(String) field.get("name"),i);
@@ -229,6 +237,9 @@ public class Game implements GameInterface{
                     break;
                 case "Prison":
                     temp[i] = new PrisonField();
+                    break;
+                case "GoToPrisonField":
+                    temp[i] = new GoToPrisonField();
                     break;
                 case "Utility":
                     temp[i] = new UtilityField((String)field.get("name"),(int)field.get("price"));
