@@ -116,14 +116,14 @@ public class Game implements GameInterface{
 
                   activePlayer.incrementPrisonAttemptCounter();
                 if(activePlayer.getPrisonAttemptCounter()==3){                  //When the player doesn't roll doublets for 3 rounds 
-                  activePlayer.setIsInPrison(false);                            //he comes out of prison and moves
+                  activePlayer.setOutOfPrison();                            //he comes out of prison and moves
                   activePlayer.setPosition(newPos);
                   activePlayer.setPrisonAttemptCounter(0);
                 }  
 
               }
               else{                                                             //If the player rolls doublets during one of his 3 attempts
-                activePlayer.setIsInPrison(false);                              //he comes out of prison and moves by the amount he rolled  
+                activePlayer.setOutOfPrison();                              //he comes out of prison and moves by the amount he rolled  
                 activePlayer.setPosition(newPos);                               //(no additional move after these doublets)
               }    
           }
@@ -139,7 +139,7 @@ public class Game implements GameInterface{
               activePlayer.incrementDoubletsCounter();
                 keepActivePlayer = true;
                 if (activePlayer.getDoubletsCounter()==3){                      //When doubletCounter reaches 3, the player will be automatically moved to 
-                  activePlayer.setIsInPrison(true);                             //the prison field and activePlayerIndex increments
+                  activePlayer.setInPrison();                                   //the prison field and activePlayerIndex increments
                   activePlayer.setDoubletsCounter(0);
                   activePlayer.setPrisonAttemptCounter(0);
                   activePlayer.setPosition(10);
@@ -170,7 +170,7 @@ public class Game implements GameInterface{
     }
     public void prisonPayment(){                                                //pays the bail and frees the player
         Player activePlayer = players[activePlayerIndex];
-        activePlayer.setIsInPrison(false);
+        activePlayer.setOutOfPrison();
         activePlayer.setBalance(activePlayer.getBalance()-50);    
     } 
     public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
