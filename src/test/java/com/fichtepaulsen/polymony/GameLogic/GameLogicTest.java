@@ -33,7 +33,7 @@ public class GameLogicTest {
         Field[] field = null;
         
         try {
-            field = game.readJson(40);
+            field = game.readJson();
         } catch (Exception ex) {
             assertNotNull(ex);
         } 
@@ -56,7 +56,7 @@ public class GameLogicTest {
         Card[] cards = null;
                 
         try {
-            cards = game.readCardsJson(3);
+            cards = game.readCommunityCardsJson();
         } catch (Exception ex) {
             assertNotNull(ex);
         }

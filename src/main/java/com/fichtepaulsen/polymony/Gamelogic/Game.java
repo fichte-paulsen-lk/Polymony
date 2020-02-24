@@ -35,19 +35,15 @@ public class Game implements GameInterface{
     private Player[] players;
     private Field[] fields;
     private Dice[] dices;
-    private Card[] cards;
+    private Card[] chanceCards;
+    private Card[] communityCards;
     private boolean keepActivePlayer;
     
     private int activePlayerIndex;
     
     public Game(){
-    /*    cards = new Card[Settings.getInstance().GameFields]; 
-        try {
-            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
-      } catch (IOException e) {
-           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
-        }
-    */ }
+
+    }
 
     /*
     requires: integer number of players. 
@@ -56,7 +52,7 @@ public class Game implements GameInterface{
     public void startGame(int playerCount){
         // create 40 fields in a fieldArray.    
         try {
-            fields = readJson(40);
+            fields = readJson();
         } catch (Exception e) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());        
         }
@@ -75,6 +71,16 @@ public class Game implements GameInterface{
         for (int i = 0; i < dices.length; i++){
             this.dices[i] = new NormalDice();
         }
+        
+        //create community- and chanceCard arrays from JSON file
+        try{
+            this.communityCards = shuffle(readCommunityCardsJson());
+            this.chanceCards = shuffle(readChanceCardsJson());
+            System.out.print("yp");
+        }catch(IOException e){
+            
+        }
+        
     }
 
     /* requires: -
@@ -173,10 +179,10 @@ public class Game implements GameInterface{
         activePlayer.setOutOfPrison();
         activePlayer.setBalance(activePlayer.getBalance()-50);    
     } 
-    public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public Field[] readJson() throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
         //Array der später zurückgegeben wird-
-        Field[] temp = new Field[length];
+        
 
         //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
         InputStream in = this.getClass().getResourceAsStream("/setup.json");
@@ -193,7 +199,7 @@ public class Game implements GameInterface{
 
         //öffne den fields array aus dem JSONObject
         JSONArray jsonArray = obj.getJSONArray("fields");
-
+        Field[] temp = new Field[jsonArray.length()];
         //iteriere durch alle Einträge
         for (int i = 0; i < jsonArray.length(); i++){
 
@@ -201,7 +207,7 @@ public class Game implements GameInterface{
             JSONObject field = jsonArray.getJSONObject(i);
             
             //Hole den Typen bzw. den Klassenbezeichner des Feldes
-            String fieldClassName = (String) field.get("type");
+            String fieldClassName = field.getString("type");
             
             //Je nachdem welche Klasse es ist wird der Konstruktor mit den jeweils gewünschten Werten aufgerufen und das Objekt in temp an Stelle des Indizes i geschrieben
             switch (fieldClassName)
@@ -321,10 +327,10 @@ public class Game implements GameInterface{
 
         }
     }
-
-    public Card[] readCardsJson(int length) throws IOException{
-                //Array der später zurückgegeben wird-
-        Card[] temp = new Card[length];
+    
+    //reads the ChacneCard part from the JSON file
+    public Card[] readChanceCardsJson() throws IOException{
+        
 
         //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
         InputStream in = this.getClass().getResourceAsStream("/setup.json");
@@ -340,7 +346,11 @@ public class Game implements GameInterface{
         JSONObject obj = new JSONObject(jsonString);
 
         //öffne den fields array aus dem JSONObject
-        JSONArray jsonArray = obj.getJSONArray("cards");
+        JSONObject cardsObj = obj.getJSONObject("cards");
+        
+        JSONArray jsonArray= cardsObj.getJSONArray("chance");
+        
+        Card[] temp = new Card[jsonArray.length()];
 
         //iteriere durch alle Einträge
         for (int i = 0;i<jsonArray.length();i++){
@@ -361,6 +371,49 @@ public class Game implements GameInterface{
         return temp;
     }
     
+    //reads the CommunityCard part from the JSON file
+    public Card[] readCommunityCardsJson() throws IOException{
+
+        //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
+        InputStream in = this.getClass().getResourceAsStream("/setup.json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String jsonString = "";
+
+        String line = null;
+        while ( (line = reader.readLine()) != null) {
+            jsonString +=line;
+        }
+
+        //lade den String als JSONObject
+        JSONObject obj = new JSONObject(jsonString);
+
+        //öffne den fields array aus dem JSONObject
+         JSONObject cardsObj = obj.getJSONObject("cards");
+        
+        JSONArray jsonArray= cardsObj.getJSONArray("chance");
+        
+        Card[] temp = new Card[jsonArray.length()];
+
+        //iteriere durch alle Einträge
+        for (int i = 0;i<jsonArray.length();i++){
+
+            //lade das JSONObject am Index i
+            JSONObject card = jsonArray.getJSONObject(i);
+            //Hole den Typen bzw. den Klassenbezeichner des Feldes
+            String cardClassName = (String) card.get("type");
+            
+            switch (cardClassName){
+                case "MoneyCard": 
+                    temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"),(boolean) card.get("community"));
+                    break;
+                default: 
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
+            }
+        }
+        return temp;
+    }
+    //shuffels the array with the cards
+    //used for Community- and ChanceCards
     private Card[] shuffle(Card[] array) {
         Random rnd = ThreadLocalRandom.current();
         
@@ -399,5 +452,8 @@ public class Game implements GameInterface{
             //Player loses as much money as the price of the ownableField 
             activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
         }
+    }
+    public Player getActivePlayer(){
+        return players[activePlayerIndex];
     }
 }

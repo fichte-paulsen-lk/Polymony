@@ -1,13 +1,15 @@
 package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
 public class GoToPrisonField extends SpecialField {
     public GoToPrisonField() { }
     
     @Override
-    public void action(Player activePlayer){
-        activePlayer.setPosition(10);
-        activePlayer.setIncarcerated(true);
+    public void action(Game game){
+        
+        game.getActivePlayer().setPosition(10);
+        game.getActivePlayer().setIncarcerated(true);
     }
 }
