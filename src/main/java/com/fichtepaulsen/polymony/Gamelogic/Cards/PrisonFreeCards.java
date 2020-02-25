@@ -6,8 +6,8 @@ import com.fichtepaulsen.polymony.Gamelogic.Game;
 public class PrisonFreeCards extends Card{
     private Player [] players;
     
-    public PrisonFreeCards (String title){
-        super(title);
+    public PrisonFreeCards (String title,boolean community){
+        super(title,community);
     }
     
     @Override
