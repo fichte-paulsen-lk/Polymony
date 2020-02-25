@@ -101,7 +101,6 @@ public class Game implements GameInterface{
     @Override
     public int[] rollDices(){
         int lastPosition = getCurrentPlayer().getPosition();
-        Player currentPlayer = getCurrentPlayer();
         //Returns an array of roll results
         int [] results = new int[dices.length];
         for (int i = 0;i<dices.length;i++){
@@ -166,8 +165,8 @@ public class Game implements GameInterface{
             }
         }
         
-        if(pastStart(lastPosition, newPos) && activePlayer.getDoubletsCounter()!=3){
-            currentPlayer.setBalance(currentPlayer.getBalance() + 4000);
+        if(pastStart(lastPosition, newPos) && !activePlayer.getIsInPrison()){
+            activePlayer.setBalance(activePlayer.getBalance() + 4000);
         }
         
         return results;
