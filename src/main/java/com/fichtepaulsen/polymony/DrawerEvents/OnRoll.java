@@ -11,10 +11,14 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import com.fichtepaulsen.polymony.Settings;
+import javafx.animation.PathTransition;
+import javafx.animation.PathTransition.OrientationType;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Path;
+import javafx.scene.shape.*;
+import javafx.util.Duration;
+
 
 
 public class OnRoll extends Drawer{
@@ -31,6 +35,7 @@ public class OnRoll extends Drawer{
     public OnRoll(GameInterface ga, Stage st) {
         super(ga, st);
     }
+
 
     private class Travel {
 
@@ -72,14 +77,15 @@ public class OnRoll extends Drawer{
             }
 
             //add the player's final position to the path as well
-            path.getElements.add(
-                new MoveTo(playerShape.getX(),
-                           playerShape.getY()
+            path.getElements().add(
+                new MoveTo(playerShape.getLayoutX(),
+                           playerShape.getLayoutY()
                            ));
+            return path;
         }
 
         public void calculateCornersPassed(int oldIndex, int newIndex) {
-            int count = ((newIndex - oldIndex) / Settings.getInstance().rowLength)
+            int count = ((newIndex - oldIndex) / Settings.getInstance().rowLength);
 
             //passed over go
             if (newIndex < oldIndex) {
@@ -89,7 +95,7 @@ public class OnRoll extends Drawer{
             for (int i = 1; i < 4; ++i) {
 
                 //if the player is before or on the i-th corner
-                if (oldIndex =< i * rowLength && oldIndex > (i-1) * rowLength) {
+                if (oldIndex <= i * Settings.getInstance().rowLength && oldIndex > ((i-1) * Settings.getInstance().rowLength)) {
                     //set count-many corners from this one on
                     //as passed
                     for (int j = 0; j < count; j++) {
@@ -113,11 +119,30 @@ public class OnRoll extends Drawer{
         showDice();
 
         //move the current player to the new position
-        drawPlayer(gameLogic.getCurrentPlayer());
+        Player cPlayer = gameLogic.getCurrentPlayer();
+        drawPlayer(cPlayer);
+        drawPlayerWithAnimation(cPlayer,10000d);
+        //move the player
         //System.out.println("=================================================");
 
     }
-
+    public void drawPlayerWithAnimation(Player p,double duration){
+        if (p == null) {
+            System.out.println("Player = null");
+        }
+        else {
+            /*
+            PathTransition pathTransition = new PathTransition();
+            pathTransition.setDuration(Duration.millis(duration));
+            pathTransition.setNode(getPlyerNode(p.getIndex));
+            pathTransition.setPath(getPlayerTransitionPath(p);
+            pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+            pathTransition.setCycleCount(4f);
+            pathTransition.setAutoReverse(false);
+            */
+            new PathTransition(Duration.millis(duration),(Shape) getPlayerTransitionPath(p),getPlayerNode(p.getIndex())).play();
+        }
+    }
     public void drawPlayerAt(int index) {
         if (gameLogic.getAllPlayers()[index] == null) {
             System.out.println("getAllPlayersArray = null");
