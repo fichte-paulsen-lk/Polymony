@@ -19,7 +19,7 @@ public interface GameInterface {
     public int[] rollDices();
 
     /* requires: -
-       returns: - (makes the next player active)
+       does: makes the next player active
     */
     public void nextTurn();
   
@@ -68,12 +68,6 @@ public interface GameInterface {
     public Field getNthField(int index);
     
     /*
-    requires: 
-    does: switches the activePlayerIndex to the next player
-    */
-    public void endTurn();
-    
-    /*
     requires: Color index from json file
     returns:  Color object for the corresponding index
     */
@@ -84,5 +78,30 @@ public interface GameInterface {
     does:  current player buys the ownableField he stands on
     */
     public void buyField();
+    
+    /*
+    requires: 
+    returns: boolean if the current player is able to buy the street he stands on
+    */
+    public boolean isAbleToBuyField();
+    
+    /*
+    requires: 
+    does:  current player buys himself out of prison
+    */
+    public void prisonPayment();
+    
+    /*
+    requires: 
+    returns: boolean if the current player is able to buy himself out of prison
+    */
+    public boolean isAbleToBuyOutOfPrison();
+    
+    /*
+    requires: integer for the last position of a player
+              integer for the current position of a player
+    returns:  boolean if a player past start in the last turn
+    */
+    public boolean pastStart(int lastPosition, int newPosition);
 }
 
