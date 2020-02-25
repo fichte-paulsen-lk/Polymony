@@ -204,7 +204,7 @@ public class Game implements GameInterface{
     */
     public void prisonPayment(){                                                
         Player activePlayer = players[activePlayerIndex];
-        activePlayer.setIsInPrison(false);t
+        activePlayer.setIsInPrison(false);
         activePlayer.setBalance(activePlayer.getBalance()-1000);    
     }
     
