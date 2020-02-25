@@ -34,21 +34,21 @@ public class OnRoll extends Drawer{
     @Override
     public void handle() {
         //show the dice
-        System.out.println("=================================================");
+        //System.out.println("=================================================");
         showDice();
         
         //move the current player to the new position
         drawPlayer(gameLogic.getCurrentPlayer());
-        System.out.println("=================================================");
+        //System.out.println("=================================================");
         
     }
     
     public void drawPlayerAt(int index) {
         if (gameLogic.getAllPlayers()[index] == null) {
-            System.out.println("NULLLLLLLLLLLLLL");
+            System.out.println("getAllPlayersArray = null");
         }
         else {
-            System.out.println("Drawing player at " + index);
+            //System.out.println("Drawing player at " + index);
             drawPlayer(gameLogic.getAllPlayers()[index]);
         }
     }
@@ -60,20 +60,20 @@ public class OnRoll extends Drawer{
         
         int position = p.getPosition();
         
-        System.out.println("Player = " + p.getIndex());
-        System.out.println("Position = " + position);
+        //System.out.println("Player = " + p.getIndex());
+        //System.out.println("Position = " + position);
        
         //creates DoublePair to calculate the x and y coordinates of the top left
         //corner of the position'th field
         DoublePair fieldCorner = DoublePair.indexToPoint(position, 
                 Settings.getInstance().rowLength, offX, offY, dimX, dimY);
  
-        System.out.println("Top left of new field: " + fieldCorner.getX() + " , " + fieldCorner.getY());
+        //System.out.println("Top left of new field: " + fieldCorner.getX() + " , " + fieldCorner.getY());
 
         //calculates the position of the player in the field
         DoublePair pPos = fieldPos(p.getIndex());
 
-        System.out.println("Position inside the field: " + pPos.getX() + ", " + pPos.getY() + " of " + p.getIndex());
+        //System.out.println("Position inside the field: " + pPos.getX() + ", " + pPos.getY() + " of " + p.getIndex());
         //get the player's shape that should be moved from the global gridpane in settings
         //using getPlayerNode from the controller 
         Node playerShape = GamefieldController.getPlayerNode(Settings.getInstance().gameGridPane, 
@@ -86,7 +86,7 @@ public class OnRoll extends Drawer{
         //calculate the row and column of the player's new position
         IntPair playerGridCoordinates = IntPair.indexToPos(position, Settings.getInstance().rowLength);
 
-        System.out.println("new grid coordinates: " + playerGridCoordinates.getFirst() + ", " + playerGridCoordinates.getSecond());
+        //System.out.println("new grid coordinates: " + playerGridCoordinates.getFirst() + ", " + playerGridCoordinates.getSecond());
          //applies the new position
         GridPane.setConstraints(playerShape, playerGridCoordinates.getFirst(), playerGridCoordinates.getSecond());
 
@@ -108,12 +108,12 @@ public class OnRoll extends Drawer{
             yInset = pPos.getX() * shortSide - radius ;
         }
         
-        System.out.println("xInset = " + xInset + "yInset = " + yInset);
+        //System.out.println("xInset = " + xInset + "yInset = " + yInset);
       
         //set the margins for the playe's position inside the field
         GridPane.setMargin(playerShape, new Insets(yInset, 0, 0, xInset));
 
-        System.out.println("Tried to draw the player's new position");
+        //System.out.println("Tried to draw the player's new position");
         }
 
         //gets: index of player whose position in a field should be calculated
