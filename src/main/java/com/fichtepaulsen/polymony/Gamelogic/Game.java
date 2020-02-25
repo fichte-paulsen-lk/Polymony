@@ -172,6 +172,22 @@ public class Game implements GameInterface{
         Player activePlayer = players[activePlayerIndex];
         activePlayer.setIsInPrison(false);
         activePlayer.setBalance(activePlayer.getBalance()-50);    
+    }
+     //checks if the player is able to use "get out of prison" card
+    public boolean isAbleToUseGetOutOfJailCard(){                                  
+        Player activePlayer = players[activePlayerIndex];                       
+        if(activePlayer.getIsInPrison()==true && activePlayer.getAmountPrisonFreeCard()>=1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    //uses 1 "get out of prison" card
+    public void useGetOutOfJailCard(){                                                
+        Player activePlayer = players[activePlayerIndex];
+        activePlayer.setIsInPrison(false);
+        activePlayer.setAmountPrisonFreeCard(activePlayer.getAmountPrisonFreeCard()-1);   
     } 
     public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
