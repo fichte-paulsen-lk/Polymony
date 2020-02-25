@@ -204,8 +204,26 @@ public class Game implements GameInterface{
     */
     public void prisonPayment(){                                                
         Player activePlayer = players[activePlayerIndex];
-        activePlayer.setIsInPrison(false);
+        activePlayer.setIsInPrison(false);t
         activePlayer.setBalance(activePlayer.getBalance()-1000);    
+    }
+    
+    //checks if the player is able to use "get out of prison" card
+    public boolean isAbleToUseGetOutOfJailCard(){                                  
+        Player activePlayer = players[activePlayerIndex];                       
+        if(activePlayer.getIsInPrison()==true && activePlayer.getAmountPrisonFreeCard()>=1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    //uses 1 "get out of prison" card
+    public void useGetOutOfJailCard(){                                                
+        Player activePlayer = players[activePlayerIndex];
+        activePlayer.setIsInPrison(false);
+        activePlayer.setAmountPrisonFreeCard(activePlayer.getAmountPrisonFreeCard()-1);   
     } 
     
     public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -386,7 +404,7 @@ public class Game implements GameInterface{
             
             switch (cardClassName){
                 case "MoneyCard": 
-                    temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"));
+                    temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"),(boolean) card.get("community"));
                     break;
                 default: 
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
