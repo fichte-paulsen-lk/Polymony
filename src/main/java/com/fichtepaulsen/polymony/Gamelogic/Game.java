@@ -32,10 +32,13 @@ import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 
 public class Game implements GameInterface{
+
     private Player[] players;
     private Field[] fields;
     private Dice[] dices;
     private Card[] cards;
+    private Player activePlayer;
+    int [] results;
     private boolean keepActivePlayer;
     
     private int activePlayerIndex;
@@ -44,11 +47,11 @@ public class Game implements GameInterface{
     
     }
     
-    @Override
     /*
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
     */
+    @Override
     public void startGame(int playerCount){
         // create 40 fields in a fieldArray.    
         try {
@@ -93,7 +96,6 @@ public class Game implements GameInterface{
         }
 
     }
-
     /* 
     requires: -
     returns: results of dices being rolled
@@ -102,7 +104,7 @@ public class Game implements GameInterface{
     public int[] rollDices(){
         int lastPosition = getCurrentPlayer().getPosition();
         //Returns an array of roll results
-        int [] results = new int[dices.length];
+        results = new int[dices.length];
         for (int i = 0;i<dices.length;i++){
             results[i] = dices[i].roll();
         }
@@ -118,7 +120,7 @@ public class Game implements GameInterface{
         //Tests for doublets
         boolean doublets =  isDoublets(results); 
         //Calculates next position after rolling the dices
-        int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;           
+        int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;
         //Case where the player is in prison:
           if(activePlayer.getIsInPrison()==true){   
               if (doublets == false){
@@ -143,9 +145,9 @@ public class Game implements GameInterface{
           }
           //Normal case:
           else{                                                     
-            activePlayer.setPosition(newPos);                                   
+            activePlayer.setPosition(newPos);
             //Normal roll(player moves, activePlayerIndex increments,
-            if (doublets == false){                                             
+            if (doublets == false){       
                 keepActivePlayer = false;
                 //doubletsCounter resets)
               activePlayer.setDoubletsCounter(0);
@@ -162,13 +164,12 @@ public class Game implements GameInterface{
                   activePlayer.setPrisonAttemptCounter(0);
                   activePlayer.setPosition(10);
                 }
+                System.out.println("PASCH!!!!");
             }
         }
-        
         if(pastStart(lastPosition, newPos) && !activePlayer.getIsInPrison()){
             activePlayer.setBalance(activePlayer.getBalance() + 4000);
         }
-        
         return results;
     }
 

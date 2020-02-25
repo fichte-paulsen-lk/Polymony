@@ -1,5 +1,7 @@
 package com.fichtepaulsen.polymony.Gamelogic.Player;
 
+import javafx.scene.paint.Color;
+
 public abstract class Player {
     
     private int position;
@@ -11,13 +13,15 @@ public abstract class Player {
     private int playerIndex;
     private boolean isInPrison;
     private int prisonAttemptCounter;                                           //Counts doublet attempts in prison
-    private int doubletsCounter;                                                
+    private int doubletsCounter;
+    private Color color;
 
     public Player(int position, int balance, int index){
         this.position = position;
         this.balance = balance;
         this.playerIndex = index;
         this.isInPrison = false;
+        this.color = Color.rgb( (int) (Math.random()*255)+1,(int) (Math.random()*255)+1,(int) (Math.random()*255)+1);
     }
     
     public int getAmountPrisonFreeCard() {
@@ -30,6 +34,9 @@ public abstract class Player {
 
     public boolean isIncarcerated() {
         return incarcerated;
+    }
+    public Color getColor(){
+        return this.color;
     }
 
     public void setIncarcerated(boolean incarcerated) {

@@ -22,7 +22,7 @@ public interface GameInterface {
        does: makes the next player active
     */
     public void nextTurn();
-  
+
     /*
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
