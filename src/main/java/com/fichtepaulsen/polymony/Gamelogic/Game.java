@@ -47,7 +47,6 @@ public class Game implements GameInterface{
     
     }
     
-    @Override
     /*
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
