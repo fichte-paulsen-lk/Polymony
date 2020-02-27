@@ -96,7 +96,7 @@ public class Game implements GameInterface{
         }catch(IOException e){
             
         }
-      // System.out.println("");
+      
     }
 
     /* requires: -
@@ -125,9 +125,8 @@ public class Game implements GameInterface{
         for (int value : results){
             gesamtZahl+=value;
         }
-        //System.out.println("GesamtZahl = "+gesamtZahl);
-       
-        //TODO: Spiellogik ausführen
+               
+        
         Player activePlayer = players[activePlayerIndex];
 
         boolean doublets =  isDoublets(results);                                //Tests for doublets
