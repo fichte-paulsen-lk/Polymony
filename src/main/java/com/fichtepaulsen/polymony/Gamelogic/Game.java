@@ -46,6 +46,9 @@ public class Game implements GameInterface{
 
     }
 
+    
+    
+    
     /*
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
@@ -149,7 +152,6 @@ public class Game implements GameInterface{
                   activePlayer.setInPrison();                                   //the prison field and activePlayerIndex increments
                   activePlayer.setDoubletsCounter(0);
                   activePlayer.setPrisonAttemptCounter(0);
-                  activePlayer.setPosition(10);
                 }
             }
         }
