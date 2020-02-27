@@ -37,8 +37,8 @@ public class Game implements GameInterface{
     private Field[] fields;
     private Dice[] dices;
     private Card[] cards;
-    private Player activePlayer;
-    int [] results;
+    //private Player activePlayer;
+    private int [] results;
     private boolean keepActivePlayer;
     
     private int activePlayerIndex;
@@ -163,6 +163,7 @@ public class Game implements GameInterface{
                   activePlayer.setDoubletsCounter(0);
                   activePlayer.setPrisonAttemptCounter(0);
                   activePlayer.setPosition(10);
+                  keepActivePlayer = false;
                 }
                 System.out.println("PASCH!!!!");
             }
@@ -470,6 +471,60 @@ public class Game implements GameInterface{
             return true;
         }
         else{ 
+            return false;
+        }
+    }
+    
+    @Override
+    /*
+    requires: index of the field where a player wants to add a Hypothek to
+    does:     set hypothek on the field at the given fieldIndex 
+    */
+    public void addHypothek(int fieldIndex){
+        OwnableField oField = (OwnableField)fields[fieldIndex];
+        oField.addHypothek();
+    }
+    
+    @Override
+    /*
+    requires: index of the field where a player wants to add a Hypothek
+    returns:  boolean if the current player is able to add a hypothek at a field at fieldIndex
+    */
+    public boolean isAbleToAddHypothek(int fieldIndex){
+        Player activePlayer = players[activePlayerIndex];
+        OwnableField oField = (OwnableField)fields[fieldIndex];
+        if (activePlayer == oField.getOwner() && !oField.getIsHypothek()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    @Override
+    /*
+    requires: index of the field where a player wants to remove the Hypothek 
+    does:     remove hypothek from the field at the given fieldIndex 
+    */
+    public void removeHypothek(int fieldIndex){
+        OwnableField oField = (OwnableField)fields[fieldIndex];
+        oField.freeHypothek();
+    }
+    
+    @Override
+    /*
+    requires: index of the field where a player wants to remove the Hypothek
+    returns:  boolean if the current player is able to remove a hypothek from a field at fieldIndex
+    */
+    public boolean isAbleToRemoveHypothek(int fieldIndex){
+        Player activePlayer = players[activePlayerIndex];
+        OwnableField oField = (OwnableField)fields[fieldIndex];
+        if (activePlayer == oField.getOwner() && oField.getIsHypothek() && 
+                activePlayer.getBalance() >= (oField.getHypothekAmount() + oField.getHypothekAmount()*1/10)){
+            
+            return true;
+        }
+        else{
             return false;
         }
     }

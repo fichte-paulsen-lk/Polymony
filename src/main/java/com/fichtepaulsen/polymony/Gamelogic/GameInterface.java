@@ -34,6 +34,7 @@ public interface GameInterface {
     returns: player object from the active player.
              to get the player index: getIndex().
              to get the player position: getPosition().
+             to get the player balance: getBalance().
     */
     public Player getCurrentPlayer();
     
@@ -64,6 +65,8 @@ public interface GameInterface {
     /*
     requires: index from a field 
     returns:  field object from fields at the given index
+              to get the owner of a field: getOwner().
+              to see if the the field has hypothek: isHypothek().
     */ 
     public Field getNthField(int index);
     
@@ -103,5 +106,29 @@ public interface GameInterface {
     returns:  boolean if a player past start in the last turn
     */
     public boolean pastStart(int lastPosition, int newPosition);
+    
+    /*
+    requires: index of the field where a player wants to add a Hypothek to
+    does:     set hypothek on the field at the given fieldIndex 
+    */
+    public void addHypothek(int fieldIndex);
+    
+    /*
+    requires: index of the field where a player wants to add a Hypothek
+    returns:  boolean if the current player is able to add a hypothek at a field at fieldIndex
+    */
+    public boolean isAbleToAddHypothek(int fieldIndex);
+    
+    /*
+    requires: index of the field where a player wants to remove the Hypothek 
+    does:     remove hypothek from the field at the given fieldIndex 
+    */
+    public void removeHypothek(int fieldIndex);
+    
+    /*
+    requires: index of the field where a player wants to remove the Hypothek
+    returns:  boolean if the current player is able to remove a hypothek from a field at fieldIndex
+    */
+    public boolean isAbleToRemoveHypothek(int fieldIndex);
 }
 
