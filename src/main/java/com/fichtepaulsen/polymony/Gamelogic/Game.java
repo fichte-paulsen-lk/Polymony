@@ -9,6 +9,7 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.NormalDice;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.ActionField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.OwnableField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.PrisonField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StartField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
@@ -23,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
@@ -385,10 +388,74 @@ public class Game implements GameInterface{
     public int getActivePlayerIndex() {
         return activePlayerIndex;
     }
-    @Override
-    public void buyHouse (int fieldIndex) {
-        fields[fieldIndex].setOwner(players[activePlayerIndex]);
-        players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance()-fields[fieldIndex].getPrice());
+    
+    public  OwnableField [] getFieldsOwnedByPlayer (Player player){
+        OwnableField [] tobereturned= new OwnableField[36];
+        OwnableField [] save= (OwnableField []) fields;
+        int y=0;
+        for(int i=0;i<=fields.length; i++){
+            if(save[i].getOwner()==player){
+                tobereturned[y]=save[i];
+                y++;
+            }
+        }
+        return tobereturned;
+    }
+    public HashMap amountofColoredFields (){
+        HashMap<Color, Integer> tobereturned = new HashMap<Color, Integer>();
+        StreetField [] save=(StreetField [])fields;
+        Color save1=save[0].getColor();
+        for(int i=0;i<=save.length;i++){
+            if(save1==save[i].getColor()){
+                tobereturned.put(save1,tobereturned.get(save1)+1);
+            }
+            else{
+                save1=save[i].getColor();
+                tobereturned.put(save1,tobereturned.get(save1)+1);
+            }
+        }
+        return tobereturned;
     }
     
+    public HashMap amountfieldsownedbyPlayer (Player player){
+        HashMap<Color, Integer> tobereturned = new HashMap<Color, Integer>();
+        StreetField [] save=(StreetField [])getFieldsOwnedByPlayer(player);
+        
+        Color save1=save[0].getColor();
+        for(int i=0;i<=save.length;i++){
+            if(save1==save[i].getColor()){
+                tobereturned.put(save1,tobereturned.get(save1)+1);
+            }
+            else{
+                save1=save[i].getColor();
+                tobereturned.put(save1,tobereturned.get(save1)+1);
+            }
+        }
+        return tobereturned;
+    }
+    public boolean isAllowedToBuyHouse(Player player, int fieldIndex){
+         StreetField [] save=(StreetField [])fields;
+         HashMap<Color, Integer> tobereturned;
+         HashMap<Color, Integer> should;
+         tobereturned = amountfieldsownedbyPlayer(players[activePlayerIndex]);
+         should=amountofColoredFields();
+         if(Objects.equals(tobereturned.get(save[fieldIndex].getColor()), should.get(save[fieldIndex].getColor()))){
+             return true;   
+         }
+         else{ 
+             return false;
+         }
+    }
+    
+    @Override
+    public void buyHouse (int fieldIndex) {
+        if(fields[fieldIndex] instanceof StreetField) {
+            
+            if(isAllowedToBuyHouse(players[activePlayerIndex],fieldIndex)==true){
+                OwnableField save2=(OwnableField)fields[fieldIndex];
+                save2.setOwner(players[activePlayerIndex]);
+                players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance()-save2.getPrice());    
+            }   
+        }
+    }
 }
