@@ -36,7 +36,7 @@
         {"type":"ActionField","community":true},
         {"type":"StreetField","name" : "Bahnhofsstraße","price":6400, "color": 7},
         {"type":"TrafficField","name":"Hauptbahnhof","price":4000},
-        {"type":"ActionField","communit":false},
+        {"type":"ActionField","community":false},
         {"type":"StreetField","name" : "Parkstraße","price":7000, "color": 8},
         {"type":"TaxField","tax": 2000,"name": "Zusatzsteuer"},
         {"type":"StreetField","name" : "Schloßallee","price":8000, "color": 8}

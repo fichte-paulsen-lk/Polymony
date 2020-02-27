@@ -11,7 +11,9 @@ import static org.junit.Assert.*;
 public class GameLogicTest {
     private Game game;
     
-    public GameLogicTest() {  }
+    public GameLogicTest() { 
+       
+    }
     
     @Before
     public void setUp() {
@@ -31,16 +33,23 @@ public class GameLogicTest {
     
     @Test
     public void testReadJSON() {
+
+        System.out.println(game);
         Field[] field = null;
+        
         
         try {
             field = game.readJson();
+            
         } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            System.out.println(ex.getMessage());
             assertNotNull(ex);
         } 
         
         assertNotNull(field);
         assertEquals(field.length, 40);
+
     }
 
     
