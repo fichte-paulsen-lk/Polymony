@@ -16,5 +16,6 @@ public class MoneyCard  extends Card{
         Player[] players = game.getAllPlayers();
         int activePlayerIndex = game.getCurrentPlayer().getIndex();
         players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() + value);
+        System.out.println(players[activePlayerIndex].getBalance());
     }
 }

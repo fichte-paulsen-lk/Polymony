@@ -64,6 +64,6 @@ public class GameLogicTest {
         }
         
         assertNotNull(cards);
-        assertEquals(cards.length, 3);
+        assertEquals(cards.length, 4);
     }
 }

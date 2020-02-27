@@ -1,6 +1,7 @@
 package com.fichtepaulsen.polymony.Gamelogic;
 
 import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
+import com.fichtepaulsen.polymony.Gamelogic.Cards.JumpCard;
 import com.fichtepaulsen.polymony.Gamelogic.Cards.MoneyCard;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,6 +38,15 @@ public class Game implements GameInterface{
     private Field[] fields;
     private Dice[] dices;
     private Card[] chanceCards;
+
+    public Card[] getChanceCards() {
+        return chanceCards;
+    }
+
+    public Card[] getCommunityCards() {
+        return communityCards;
+    }
+
     private Card[] communityCards;
     private boolean keepActivePlayer;
     
@@ -45,6 +55,8 @@ public class Game implements GameInterface{
     public Game(){
 
     }
+    
+    
 
     
     
@@ -84,7 +96,7 @@ public class Game implements GameInterface{
         }catch(IOException e){
             
         }
-        
+      // System.out.println("");
     }
 
     /* requires: -
@@ -377,6 +389,9 @@ public class Game implements GameInterface{
                 case "MoneyCard": 
                     temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"),(boolean) card.get("community"));
                     break;
+                case "JumpCard": 
+                    temp[i] = new JumpCard(card.getInt("value"),card.getString("text"),card.getBoolean("community"));
+                    break;   
                 default: 
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
             }
@@ -419,6 +434,9 @@ public class Game implements GameInterface{
                 case "MoneyCard": 
                     temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"),(boolean) card.get("community"));
                     break;
+                case "JumpCard": 
+                    temp[i] = new JumpCard(card.getInt("value"),card.getString("text"),card.getBoolean("community"));
+                    break;   
                 default: 
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
             }

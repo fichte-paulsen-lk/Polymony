@@ -15,7 +15,9 @@ public class ActionField extends SpecialField{
     public void action(Game game) {
         if (!this.freeParking){
             if (this.community){
-                
+                game.getCommunityCards()[0].action(game);
+            }else{
+                game.getChanceCards()[0].action(game);
             }
         }
     }
