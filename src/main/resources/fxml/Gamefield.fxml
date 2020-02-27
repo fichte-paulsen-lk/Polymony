@@ -58,7 +58,7 @@
                               </GridPane>
                            </children>
                         </HBox>
-                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
+                        <VBox fx:id="infoBox" alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
                           <children>
                             <GridPane id="cardGridPane" fx:id="cardGridPane" alignment="CENTER" prefHeight="400.0" prefWidth="200.0">
                             </GridPane>

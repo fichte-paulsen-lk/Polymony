@@ -7,6 +7,7 @@ import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -25,6 +26,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+
 public class GamefieldController implements Initializable {
 
     @FXML
@@ -41,6 +43,9 @@ public class GamefieldController implements Initializable {
 
     @FXML
     private GridPane cardGridPane;
+    
+    @FXML
+    private VBox infoBox;
 
     //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 50.0;
@@ -58,6 +63,7 @@ public class GamefieldController implements Initializable {
         Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
         Settings.getInstance().rollDice = this.rollDice;
+        Settings.getInstance().infoBox = this.infoBox;
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
 
@@ -223,6 +229,7 @@ public class GamefieldController implements Initializable {
     public void rollDice(Event e) {
         if (Settings.isNextTurnButton) {
             PolyMonyDrawer.getInstance().onNextTurn.handle();
+            
         } else {
             PolyMonyDrawer.getInstance().onRoll.handle(); 
         }
