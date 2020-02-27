@@ -26,7 +26,6 @@ public class OnRoll extends Drawer{
     //interval of the x coordinates of the players
     private final double minX = 0.35;
     private final double maxX = 0.65;
-    private final int width = 40;
     private final double offX = 1;
     private final double offY = 1;
     private final double dimX = 50;
@@ -43,14 +42,12 @@ public class OnRoll extends Drawer{
         boolean[] cornersPassed = new boolean[4];
 
         //empty constructor - cornersPassed is already initialized
-        public Travel() {
-
-        }
+        public Travel() {}
 
         //gets: a player who just moved
         //does: returns a path of the movement the player should
         //      perform
-        private Path getPlayerTransitionPath(Player p) {
+        public Path getPlayerTransitionPath(Player p) {
 
             //contains the return value
             Path path = new Path();
@@ -76,16 +73,22 @@ public class OnRoll extends Drawer{
                 }
             }
 
+            checkpoint = fieldPosition(p.getPosition(), p.getIndex(), Settings.getInstance().playerRadius)
+                    ;
             //add the player's final position to the path as well
             path.getElements().add(
-                new MoveTo(playerShape.getLayoutX(),
-                           playerShape.getLayoutY()
-                           ));
+                new MoveTo(checkpoint.getX(), checkpoint.getY())
+                           );
+            
             return path;
         }
 
         public void calculateCornersPassed(int oldIndex, int newIndex) {
-            int count = ((newIndex - oldIndex) / Settings.getInstance().rowLength);
+            
+            
+            int rowLength = Settings.getInstance().rowLength;
+            
+            int count = (((newIndex - oldIndex) % (4*rowLength)) / rowLength);
 
             //passed over go
             if (newIndex < oldIndex) {
@@ -95,7 +98,7 @@ public class OnRoll extends Drawer{
             for (int i = 1; i < 4; ++i) {
 
                 //if the player is before or on the i-th corner
-                if (oldIndex <= i * Settings.getInstance().rowLength && oldIndex > ((i-1) * Settings.getInstance().rowLength)) {
+                if (oldIndex <= i * rowLength && oldIndex > ((i-1) * rowLength)) {
                     //set count-many corners from this one on
                     //as passed
                     for (int j = 0; j < count; j++) {
@@ -121,7 +124,7 @@ public class OnRoll extends Drawer{
         //move the current player to the new position
         Player cPlayer = gameLogic.getCurrentPlayer();
         drawPlayer(cPlayer);
-        drawPlayerWithAnimation(cPlayer,10000d);
+        //drawPlayerWithAnimation(cPlayer,10000d);
         //move the player
         //System.out.println("=================================================");
 
@@ -140,7 +143,7 @@ public class OnRoll extends Drawer{
             pathTransition.setCycleCount(4f);
             pathTransition.setAutoReverse(false);
             */
-            new PathTransition(Duration.millis(duration),(Shape) getPlayerTransitionPath(p),getPlayerNode(p.getIndex())).play();
+            new PathTransition(Duration.millis(duration),(Shape) lastTravels[p.getIndex()].getPlayerTransitionPath(p),getPlayerNode(p.getIndex())).play();
         }
     }
     public void drawPlayerAt(int index) {
@@ -166,7 +169,7 @@ public class OnRoll extends Drawer{
                 Settings.getInstance().rowLength, offX, offY, dimX, dimY);
 
         //the players position inside the field relative to the top left corner
-        DoublePair insideField = fieldPos(playerIndex);
+        DoublePair insideField = fieldPos(playerIndex, maxX, minX);
 
         //calculate the row and column of the player's new position
         IntPair gridCoorinates = IntPair.indexToPos(position, Settings.getInstance().rowLength);
@@ -184,7 +187,7 @@ public class OnRoll extends Drawer{
         }
         else {
             xInset = insideField.getY() * longSide  - offset;
-            yInset = insideField.getX() * shortSide - offset ;
+            yInset = insideField.getX() * shortSide - offset;
         }
 
         return new DoublePair(fieldCorner.getX() + xInset, fieldCorner.getY() + yInset);
@@ -196,10 +199,20 @@ public class OnRoll extends Drawer{
 
         int position = p.getPosition();
 
-        //calculates the position of the player in the field
-        DoublePair pPos = fieldPos(p.getIndex());
+        //calculate the row and column of the player's new position
+        IntPair playerGridCoordinates = IntPair.indexToPos(position, Settings.getInstance().rowLength);
+        
+        DoublePair pPos;
+                
+        if (getPlayerStrip(p.getPosition()) == 1 || getPlayerStrip(p.getPosition()) == 2) {
+            //calculates the position of the player in the field
+            pPos = fieldPos(p.getIndex(), maxX, minX);
+        }
+        else {
+            pPos = fieldPos(p.getIndex(), minX, maxX);
+        }
 
-        //System.out.println("Position inside the field: " + pPos.getX() + ", " + pPos.getY() + " of " + p.getIndex());
+        System.out.println("Position inside the field: " + pPos.getX() + ", " + pPos.getY() + " of " + p.getIndex());
         //get the player's shape that should be moved from the global gridpane in settings
         //using getPlayerNode from the controller
         Node playerShape = getPlayerNode(p.getIndex());
@@ -208,10 +221,9 @@ public class OnRoll extends Drawer{
             System.out.println("Couldn't get the player's shape from the controller");
         }
 
-        //calculate the row and column of the player's new position
-        IntPair playerGridCoordinates = IntPair.indexToPos(position, Settings.getInstance().rowLength);
+        
 
-        //System.out.println("new grid coordinates: " + playerGridCoordinates.getFirst() + ", " + playerGridCoordinates.getSecond());
+        System.out.println("new grid coordinates: " + playerGridCoordinates.getFirst() + ", " + playerGridCoordinates.getSecond());
          //applies the new position
         GridPane.setConstraints(playerShape, playerGridCoordinates.getFirst(), playerGridCoordinates.getSecond());
 
@@ -227,12 +239,28 @@ public class OnRoll extends Drawer{
         if (playerGridCoordinates.getSecond() == 0 || playerGridCoordinates.getSecond() == Settings.getInstance().rowLength) {
             xInset = pPos.getX() * shortSide - radius;
             yInset = pPos.getY() * longSide  - radius;
+            
+            /*
+            if (getPlayerStrip(p.getPosition()) == 2) {
+                xInset = shortSide - xInset;
+                yInset = longSide  - yInset;
+            }
+            */
         }
         else {
             xInset = pPos.getY() * longSide  - radius;
-            yInset = pPos.getX() * shortSide - radius ;
+            yInset = pPos.getX() * shortSide - radius;
+            
+            /*
+            if (getPlayerStrip(p.getPosition()) == 1) {
+                //System.out.println("rotating");
+                xInset = longSide  - xInset;
+                yInset = shortSide - yInset;
+            }
+            */
         }
 
+        System.out.println("xInset = " + xInset + ", yInset = " + yInset);
         //set the margins for the playe's position inside the field
         GridPane.setMargin(playerShape, new Insets(yInset, 0, 0, xInset));
     }
@@ -240,16 +268,27 @@ public class OnRoll extends Drawer{
     //gets: index of player whose position in a field should be calculated
     //does: calculates the position of the n-th player in a single field
     //      (0,0) is the top left corner the field and (1,1) the bottom right
-    private DoublePair fieldPos(int player) {
+    private DoublePair fieldPos(int player, double min, double max) {
 
          //number of players playing the game
          int numP = Settings.getInstance().numberOfPlayers;
 
-         //space between the x-coords of players
-         double spacing = (maxX - minX) / (double) (numP - 1);
-
+         double spacing; 
+         
          //x coordinate of the player is the minimum x coordinate plus a certain spacing
-         double y = minX + player * spacing;
+         double y;
+         
+         if (numP > 1) {
+            //space between the x-coords of players
+            spacing = (max - min) / (double) (numP - 1);
+            y = min + player * spacing;
+         }
+         else {
+            spacing = ((max - min) / 2) ; 
+            y = min + spacing;
+         }
+         
+         System.out.println("Spacing = " + spacing);
 
          //the players are on the middle vertical axis with the calculated x coordinate
          return new DoublePair(0.5f, y);

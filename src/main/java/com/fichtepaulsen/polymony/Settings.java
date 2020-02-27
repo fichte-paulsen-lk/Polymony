@@ -34,7 +34,7 @@ public class Settings {
     //number of players playing the game, can be made
     //non final if we want to change the number of 
     //players during runtime
-    public final int numberOfPlayers = 4;
+    public final int numberOfPlayers = 1;
 
     public final int GameFields = 40;
     
