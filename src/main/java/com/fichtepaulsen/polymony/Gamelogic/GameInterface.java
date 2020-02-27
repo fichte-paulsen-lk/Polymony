@@ -108,27 +108,27 @@ public interface GameInterface {
     public boolean pastStart(int lastPosition, int newPosition);
     
     /*
-    requires: index of the field where a player wants to add a Hypothek to
-    does:     set hypothek on the field at the given fieldIndex 
+    requires: index of the field where a player wants to add a mortgage to
+    does:     set mortgage on the field at the given fieldIndex 
     */
-    public void addHypothek(int fieldIndex);
+    public void addMortgage(int fieldIndex);
     
     /*
-    requires: index of the field where a player wants to add a Hypothek
-    returns:  boolean if the current player is able to add a hypothek at a field at fieldIndex
+    requires: index of the field where a player wants to add a mortgage
+    returns:  boolean if the current player is able to add a mortgage at a field at fieldIndex
     */
-    public boolean isAbleToAddHypothek(int fieldIndex);
+    public boolean isAbleToAddMortgage(int fieldIndex);
     
     /*
-    requires: index of the field where a player wants to remove the Hypothek 
-    does:     remove hypothek from the field at the given fieldIndex 
+    requires: index of the field where a player wants to remove the mortgage 
+    does:     remove mortgage from the field at the given fieldIndex 
     */
-    public void removeHypothek(int fieldIndex);
+    public void removeMortgage(int fieldIndex);
     
     /*
-    requires: index of the field where a player wants to remove the Hypothek
-    returns:  boolean if the current player is able to remove a hypothek from a field at fieldIndex
+    requires: index of the field where a player wants to remove the mortgage
+    returns:  boolean if the current player is able to remove a mortgage from a field at fieldIndex
     */
-    public boolean isAbleToRemoveHypothek(int fieldIndex);
+    public boolean isAbleToRemoveMortgage(int fieldIndex);
 }
 

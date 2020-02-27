@@ -7,31 +7,31 @@ public abstract class OwnableField extends Field{
   private Player owner;
   public String name;
   private int houseAmount;
-  private boolean isHypothek;
-  private int hypothekAmount;
+  private boolean isMortgage;
+  private int mortgageAmount;
 
-    public boolean getIsHypothek() {
-        return isHypothek;
+    public boolean getIsMortgage() {
+        return isMortgage;
     }
 
-    public void setIsHypothek(boolean isHypothek) {
-        this.isHypothek = isHypothek;
+    public void setIsMortgage(boolean isMortgage) {
+        this.isMortgage = isMortgage;
     }
     
-    public void addHypothek(){
-        owner.setBalance(owner.getBalance()+hypothekAmount);
-        isHypothek = true;
+    public void addMortgage(){
+        owner.setBalance(owner.getBalance()+mortgageAmount);
+        isMortgage = true;
     }
     
-    public void freeHypothek(){
-        if(isHypothek==true){
-            owner.setBalance(owner.getBalance()-(hypothekAmount+hypothekAmount*1/10));
-            isHypothek=false;
+    public void freeMortgage(){
+        if(isMortgage==true){
+            owner.setBalance(owner.getBalance()-(mortgageAmount+mortgageAmount*1/10));
+            isMortgage=false;
         }
     }
     
-    public int getHypothekAmount() {
-        return hypothekAmount;
+    public int getMortgageAmount() {
+        return mortgageAmount;
     }
     
     public String getName() {
