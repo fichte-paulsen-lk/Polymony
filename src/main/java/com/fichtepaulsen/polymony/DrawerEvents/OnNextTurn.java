@@ -24,19 +24,19 @@ public class OnNextTurn extends Drawer{
     }
     
     public void getPlayerInfo() {
-      /*  VBox info = Settings.getInstance().infoBox;
+        /*StackPane infoStackPane = Settings.getInstance().infoStackPane;
         Player currentPlayer = gameLogic.getCurrentPlayer();
         
         Label balance = new Label("Balance: " + currentPlayer.getBalance());
         Label prisonFreeCards = new Label("PrisonFreeCards: " + currentPlayer.getAmountPrisonFreeCard());
         Label utilitiesOwned = new Label("Owned Utilities: " + currentPlayer.getUtilitiesOwned());
-        StackPane infoStack = new StackPane(balance, prisonFreeCards, utilitiesOwned);
+        //StackPane infoStack = new StackPane(balance, prisonFreeCards, utilitiesOwned);
+        infoStackPane.getChildren().addAll(balance, prisonFreeCards, utilitiesOwned);
         
-        infoStack.setAlignment(balance, Pos.BOTTOM_CENTER);
-        infoStack.setAlignment(prisonFreeCards, Pos.TOP_RIGHT);
-        infoStack.setAlignment(utilitiesOwned, Pos.CENTER_RIGHT);
+        infoStackPane.setAlignment(balance, Pos.BOTTOM_CENTER);
+        infoStackPane.setAlignment(prisonFreeCards, Pos.TOP_RIGHT);
+        infoStackPane.setAlignment(utilitiesOwned, Pos.CENTER_RIGHT);*/
         
-        info.getChildren().add(infoStack);*/
     }
     
 }

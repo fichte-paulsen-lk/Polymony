@@ -25,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 
 
 public class GamefieldController implements Initializable {
@@ -45,7 +46,7 @@ public class GamefieldController implements Initializable {
     private GridPane cardGridPane;
     
     @FXML
-    private VBox infoBox;
+    private StackPane infoStackPane;
 
     //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 50.0;
@@ -58,12 +59,13 @@ public class GamefieldController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         //get vars from Singleton
         Settings.getInstance().diceResult1 = this.diceResult1;
         Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
         Settings.getInstance().rollDice = this.rollDice;
-        Settings.getInstance().infoBox = this.infoBox;
+        Settings.getInstance().infoStackPane = this.infoStackPane;
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
 
@@ -114,8 +116,15 @@ public class GamefieldController implements Initializable {
             rec.setStroke(Color.BLACK);
             rec.setFill(Color.LIGHTGREEN);
             
+            //general attributes of an streetField + font and size for name and price
             Rectangle colorRec = new Rectangle();
-            //StreetFields also receive there specific color, that is shown an upper rectangle
+            Label name = new Label();
+            Label price = new Label();
+            name.setFont(new Font("Futura", 6));
+            price.setFont(new Font("Futura", 6));
+            
+            
+            //StreetFields also receive there specific color, that is shown an upper rectangle + name and price are added to label
             if(isStreetField){
                 colorRec.setHeight(horizontal ? defaultFieldWidth/4 : defaultFieldHeight);
                 colorRec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth/4);
@@ -123,9 +132,16 @@ public class GamefieldController implements Initializable {
                 colorRec.setStrokeType(StrokeType.INSIDE);
                 colorRec.setStroke(Color.BLACK);
                 colorRec.setFill(c);
+                
+                //getting name and price from current field
+                StreetField f = (StreetField)gameFields[fac];
+                name.setText(f.getName());  
+                price.setText(f.getPrice() + "$");
             }
             
             Pane box;
+            StackPane cardStack = new StackPane();
+            
             //adds the base rectangle & topper one (for the streets) according to it's orientation 
             //decides if a HBox or Vbox is necessary
             if(!horizontal) {
@@ -133,10 +149,26 @@ public class GamefieldController implements Initializable {
                 if(factor == 20) {
                     box.getChildren().add(rec);
                     box.getChildren().add(colorRec);
+                    
+                    name.setRotate(90);
+                    price.setRotate(90);
+                    
+                    //merging labels and rectangles from current field
+                    cardStack.getChildren().addAll(box, name, price);
+                    cardStack.setAlignment(name, Pos.CENTER);
+                    cardStack.setAlignment(price, Pos.CENTER_LEFT);
                 }
                 else {
-                box.getChildren().add(colorRec);
-                box.getChildren().add(rec);
+                    box.getChildren().add(colorRec);
+                    box.getChildren().add(rec);
+                    
+                    name.setRotate(-90);
+                    price.setRotate(-90);
+                    
+                    //merging labels and rectangles from current field
+                    cardStack.getChildren().addAll(box, name, price);
+                    cardStack.setAlignment(name, Pos.CENTER);
+                    cardStack.setAlignment(price, Pos.CENTER_RIGHT);
                 }
             }
             else {
@@ -144,20 +176,39 @@ public class GamefieldController implements Initializable {
                 if(factor == 20) {
                     box.getChildren().add(rec);
                     box.getChildren().add(colorRec);
+                    
+                    name.setRotate(180);
+                    price.setRotate(180);
+                    
+                    
+                    //merging labels and rectangles from current field
+                    cardStack.getChildren().addAll(box, name, price);
+                    cardStack.setAlignment(name, Pos.CENTER);
+                    cardStack.setAlignment(price, Pos.TOP_CENTER);
 
                 }
                 else {
                     box.getChildren().add(colorRec);
                     box.getChildren().add(rec);
+
+                    //merging labels and rectangles from current field
+                    cardStack.getChildren().addAll(box, name, price);
+                    cardStack.setAlignment(name, Pos.CENTER);
+                    cardStack.setAlignment(price, Pos.BOTTOM_CENTER);
                 }
             }
             //OnMouseClick Event that shows details about Fields
-            box.setOnMouseClicked( ( e ) ->
+            cardStack.setOnMouseClicked( ( e ) ->
             {
               this.onCardClick(gameFields[fac]);
             } );
-
-            gp.add(box, ((x==-1) ? i : x), ((y==-1) ? i : y));
+            
+            
+            
+            
+           
+            
+            gp.add(cardStack, ((x==-1) ? i : x), ((y==-1) ? i : y));
         }
     }
     
