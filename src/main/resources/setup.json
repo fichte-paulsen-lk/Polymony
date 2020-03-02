@@ -2,12 +2,12 @@
     "fields":[
         {"type":"StartField"},
         {"type":"StreetField","name" : "Badstraße","price":1200, "color": 1},
-        {"type":"ActionField"},
+        {"type":"ActionField","community":true},
         {"type":"StreetField","name" : "Turmstraße","price":1200, "color": 1},
         {"type":"TaxField","tax": 4000,"name": "Einkommenssteuer"},
         {"type":"TrafficField", "name":"Südbahnhof", "price":4000},
         {"type":"StreetField","name" : "Chausseestraße","price":2000, "color": 2},
-        {"type":"ActionField"},
+        {"type":"ActionField","community":false},
         {"type":"StreetField","name" : "Elisenstraße","price":1200, "color": 2},
         {"type":"StreetField","name" : "Poststraße","price":2400, "color": 2},
         {"type":"Prison"},
@@ -17,12 +17,12 @@
         {"type":"StreetField","name" : "Neue Straße","price":3200, "color": 3},
         {"type":"TrafficField","name":"Westbahnhof", "price": 4000},
         {"type":"StreetField","name" : "Münchner Straße","price":3600, "color": 4},
-        {"type":"ActionField"},
+        {"type":"ActionField","community":true},
         {"type":"StreetField","name" : "Wiener Straße","price":3600, "color": 4},
         {"type":"StreetField","name" : "Berliner Straße","price":4000, "color": 4},
-        {"type":"ActionField"},
+        {"type":"ActionField","freeParking":true},
         {"type":"StreetField","name" : "Theaterstraße","price":4400, "color": 5},
-        {"type":"ActionField"},
+        {"type":"ActionField","community":false},
         {"type":"StreetField","name" : "Museumstraße","price":4400, "color": 5},
         {"type":"StreetField","name" : "Opernplatz","price":4800, "color": 5},
         {"type":"TrafficField", "name":"Nordbahnhof","price":4000},
@@ -30,21 +30,33 @@
         {"type":"StreetField","name" : "Schillerstraße","price":5200, "color": 6},
         {"type":"Utility","name":"Wasserwerk","price":3000},
         {"type":"StreetField","name" : "Goethestraße","price":5600, "color": 6},
-        {"type":"ActionField"},
+        {"type":"GoToPrisonField"},
         {"type":"StreetField","name" : "Rathausplatz","price":6000, "color": 7},
         {"type":"StreetField","name" : "Hauptstraße","price":6000, "color": 7},
-        {"type":"ActionField"},
+        {"type":"ActionField","community":true},
         {"type":"StreetField","name" : "Bahnhofsstraße","price":6400, "color": 7},
         {"type":"TrafficField","name":"Hauptbahnhof","price":4000},
-        {"type":"ActionField"},
+        {"type":"ActionField","community":false},
         {"type":"StreetField","name" : "Parkstraße","price":7000, "color": 8},
         {"type":"TaxField","tax": 2000,"name": "Zusatzsteuer"},
         {"type":"StreetField","name" : "Schloßallee","price":8000, "color": 8}
     ],
     
-   "cards":[
-        {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,community:true},
-        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,community:false},
-        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,community:true}
-    ]
+   "cards":
+   {
+   "community":[
+        {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":true},
+        {"type" : "MoneyCard","text" : "Ziehß 10 Euro ein","value" : 10,"community":true},
+        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":true},
+		{"type" : "JumpToCard","text" : "Springe zu Position 6","community":true,"position":6},
+		{"type" : "MoneyCardOtherPlayers","text" : "100","value" : 100,"community":true},
+		{"type" : "PrisonFreeCard","text" : "Du kommst aus dem Gefängnis frei","community":true},
+		],
+	"chance":[
+	    {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":false},
+        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,"community":false},
+        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":false},
+		{"type" : "JumpCard","text" : "Springe 4 Schritte","community":false,"value":4}
+		]
+	}
 }

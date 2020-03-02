@@ -1,19 +1,19 @@
 package com.fichtepaulsen.polymony;
 
 public class IntPair {
-    private int first, second;
+    private int x, y;
     
     public IntPair(int a,int b){
-        first = a;
-        second = b;
+        x = a;
+        y = b;
     }
     
-    public int getFirst() {
-        return first;
+    public int getX() {
+        return x;
     }
     
-    public int getSecond() {
-        return second;
+    public int getY() {
+        return y;
     }
     
     /*
@@ -24,18 +24,13 @@ public class IntPair {
      */ 
     public static IntPair indexToPos(int index, int width) {
         
-        //translate all indices by half of the amount of fields
-        index += (Settings.getInstance().rowLength * 2);
-        index %= 4 * width;
-        
-        //there are four strips on the field, 
-        //each of which is a different case for (row,col) for the grid
+        //there are four strips on the field
         int strip = index / width;
         
         return 
             (strip == 0) ? new IntPair(index, 0) : 
             (strip == 1) ? new IntPair(width, index-width) : 
-            (strip == 2) ? new IntPair(width-((index-width)%width), width) :
-                           new IntPair(0, width-((index-width)%width));  
+            (strip == 2) ? new IntPair(width-((index-width)%index), width) :
+                           new IntPair(0, width-((index-width)%index));  
     }
 }

@@ -27,25 +27,11 @@ public class Settings {
     public final int WindowWidth = 500;
     public final int WindowHeight = 500;
     
-    //one fourth of the total amount of field on the
-    //game board (so that no non multiples of four can be used)
-    public final int rowLength = 10;
-    
     public final int GameFields = 40;
     
     public final String ApplicationVersion = "1.2";
-
-    //defaults for the height and the width of a normal field
-    //note that width and heigh are for a field on the right or 
-    //left rows, not the top or buttom
-    public final double fieldHeight = 50f;
-    public final double fieldWidth = 100f;
-    
-    public final double playerRadius = 8f;
     
     // Public Settings
-    public int numberOfPlayers = 4;
-
     public GridPane gameGridPane;
     public Label diceResult1;
     public Label diceResult2;
