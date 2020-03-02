@@ -31,11 +31,75 @@ public class OnRoll extends Drawer{
     private final double dimX = 50;
     private final double dimY = 100;
 
+    //over which corners every player last moved
+    private Travel[] lastTravels;
+    
+    
     public OnRoll(GameInterface ga, Stage st) {
         super(ga, st);
+        
+        lastTravels = new Travel[Settings.getInstance().numberOfPlayers];
+        
+        for (int i = 0; i < lastTravels.length; i++) {
+           lastTravels[i] = new Travel();
+        }
     }
+    
+    
+    @Override
+    public void handle() {
+        //show the dice
+        //System.out.println("=================================================");
+        
+        Player cPlayer = gameLogic.getCurrentPlayer();
+        int oldIndex = cPlayer.getPosition();
+        showDice();
 
+        //move the current player to the new position
+        //drawPlayer(cPlayer);
+        
+        if (lastTravels[cPlayer.getIndex()] == null) {
+            System.out.println("Bakkpulver with " + cPlayer.getIndex() + " eggs");
+        }
+        lastTravels[cPlayer.getIndex()].calculateCornersPassed(oldIndex, cPlayer.getPosition());
+        drawPlayerWithAnimation(cPlayer, 10000f);
+        //move the player
+        //System.out.println("=================================================");
 
+    }
+    
+    public void drawPlayerWithAnimation(Player p, double duration){
+        if (p == null) {
+            System.out.println("Player = null");
+        }
+        else {
+            /*
+            PathTransition pathTransition = new PathTransition();
+            pathTransition.setDuration(Duration.millis(duration));
+            pathTransition.setNode(getPlyerNode(p.getIndex));
+            pathTransition.setPath(getPlayerTransitionPath(p);
+            pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+            pathTransition.setCycleCount(4f);
+            pathTransition.setAutoReverse(false);
+            */
+            if(getPlayerNode(p.getIndex()) == null){
+                System.out.println("PlayNode is null");
+            }
+            if (lastTravels[p.getIndex()] == null) {
+                System.out.println("Last Travels at " + p.getIndex() + " is null");
+            }
+            
+            PathTransition anim = new PathTransition(Duration.millis(duration), (Shape) lastTravels[p.getIndex()].getPlayerTransitionPath(p), getPlayerNode(p.getIndex()));
+            
+            if (anim == null) {
+                System.out.println("bash ur head");
+            }
+            else {
+                anim.play();
+            }
+        }
+    }
+    
     private class Travel {
 
         //one boolean value for each corner (0 is bottom right, then clockwise)
@@ -54,16 +118,18 @@ public class OnRoll extends Drawer{
 
             //get the player's shape from the controller
             Node playerShape = getPlayerNode(p.getIndex());
-
-            //simply move the player over to the new coordinates without
-            //animating anything
-            drawPlayer(p);
-
+            
+            
+            if(playerShape == null){
+                System.out.println("PlayNode is null");
+            }
+            
             DoublePair checkpoint;
-
+            
             for (int i = 0; i < 4; ++i) {
                 if (cornersPassed[i]) {
 
+                    System.out.println("Passed corner " + i);
                     //calculate the x and y coordinates of the player if it
                     //were standing on the current corner
                     checkpoint = fieldPosition(i * 10, p.getIndex(), Settings.getInstance().playerRadius);
@@ -72,20 +138,23 @@ public class OnRoll extends Drawer{
                     path.getElements().add(new MoveTo(checkpoint.getX(), checkpoint.getY()));
                 }
             }
-
-            checkpoint = fieldPosition(p.getPosition(), p.getIndex(), Settings.getInstance().playerRadius)
-                    ;
+            
+            System.out.println();
+            checkpoint = fieldPosition(p.getPosition(), p.getIndex(), Settings.getInstance().playerRadius);
             //add the player's final position to the path as well
             path.getElements().add(
                 new MoveTo(checkpoint.getX(), checkpoint.getY())
                            );
             
+            System.out.println("Path:");
+            for (int i = 0; i < path.getElements().size(); i++) {
+                System.out.println(path.getElements().get(i).toString());
+            }
+            
             return path;
         }
 
-        public void calculateCornersPassed(int oldIndex, int newIndex) {
-            
-            
+        public void calculateCornersPassed(int oldIndex, int newIndex) {    
             int rowLength = Settings.getInstance().rowLength;
             
             int count = (((newIndex - oldIndex) % (4*rowLength)) / rowLength);
@@ -111,41 +180,7 @@ public class OnRoll extends Drawer{
             }
         }
     }
-
-    //over which corners every player last moved
-    private Travel[] lastTravels = new Travel[Settings.getInstance().numberOfPlayers];
-
-    @Override
-    public void handle() {
-        //show the dice
-        //System.out.println("=================================================");
-        showDice();
-
-        //move the current player to the new position
-        Player cPlayer = gameLogic.getCurrentPlayer();
-        drawPlayer(cPlayer);
-        //drawPlayerWithAnimation(cPlayer,10000d);
-        //move the player
-        //System.out.println("=================================================");
-
-    }
-    public void drawPlayerWithAnimation(Player p,double duration){
-        if (p == null) {
-            System.out.println("Player = null");
-        }
-        else {
-            /*
-            PathTransition pathTransition = new PathTransition();
-            pathTransition.setDuration(Duration.millis(duration));
-            pathTransition.setNode(getPlyerNode(p.getIndex));
-            pathTransition.setPath(getPlayerTransitionPath(p);
-            pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
-            pathTransition.setCycleCount(4f);
-            pathTransition.setAutoReverse(false);
-            */
-            new PathTransition(Duration.millis(duration),(Shape) lastTravels[p.getIndex()].getPlayerTransitionPath(p),getPlayerNode(p.getIndex())).play();
-        }
-    }
+ 
     public void drawPlayerAt(int index) {
         if (gameLogic.getAllPlayers()[index] == null) {
             System.out.println("getAllPlayersArray = null");
@@ -157,12 +192,14 @@ public class OnRoll extends Drawer{
     }
 
     private Node getPlayerNode(int index) {
-        return GamefieldController.getPlayerNode(Settings.getInstance().gameGridPane, index);
+        return GamefieldController.getPlayerNode(Settings.getInstance().gameStackPane, index);
     }
 
     //gets: a field position, the player's index and an offset towards the top left of the field
     //does: returns a DoublePair with the coordiantes
     private DoublePair fieldPosition(int position, int playerIndex, double offset) {
+        System.out.println("Called fieldPosition");
+        
         //creates DoublePair to calculate the x and y coordinates of the top left
         //corner of the position'th field
         DoublePair fieldCorner = DoublePair.indexToPoint(position,
@@ -212,7 +249,7 @@ public class OnRoll extends Drawer{
             pPos = fieldPos(p.getIndex(), minX, maxX);
         }
 
-        System.out.println("Position inside the field: " + pPos.getX() + ", " + pPos.getY() + " of " + p.getIndex());
+        //System.out.println("Position inside the field: " + pPos.getX() + ", " + pPos.getY() + " of " + p.getIndex());
         //get the player's shape that should be moved from the global gridpane in settings
         //using getPlayerNode from the controller
         Node playerShape = getPlayerNode(p.getIndex());
@@ -223,7 +260,7 @@ public class OnRoll extends Drawer{
 
         
 
-        System.out.println("new grid coordinates: " + playerGridCoordinates.getFirst() + ", " + playerGridCoordinates.getSecond());
+        //System.out.println("new grid coordinates: " + playerGridCoordinates.getFirst() + ", " + playerGridCoordinates.getSecond());
          //applies the new position
         GridPane.setConstraints(playerShape, playerGridCoordinates.getFirst(), playerGridCoordinates.getSecond());
 
@@ -260,7 +297,7 @@ public class OnRoll extends Drawer{
             */
         }
 
-        System.out.println("xInset = " + xInset + ", yInset = " + yInset);
+        //System.out.println("xInset = " + xInset + ", yInset = " + yInset);
         //set the margins for the playe's position inside the field
         GridPane.setMargin(playerShape, new Insets(yInset, 0, 0, xInset));
     }
@@ -288,13 +325,13 @@ public class OnRoll extends Drawer{
             y = min + spacing;
          }
          
-         System.out.println("Spacing = " + spacing);
+         //System.out.println("Spacing = " + spacing);
 
          //the players are on the middle vertical axis with the calculated x coordinate
          return new DoublePair(0.5f, y);
     }
 
-    public void showDice(){
+    public void showDice() {
         Label diceLabel1 = Settings.getInstance().diceResult1;
         Label diceLabel2 = Settings.getInstance().diceResult2;
 

@@ -28,6 +28,7 @@ public class OnNewGame extends Drawer {
             parentRoot = FXMLLoader.load(getClass().getResource("/fxml/Gamefield.fxml"));
         } catch (IOException ex) {
             Logger.getLogger(OnNewGame.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Logger is drunk");
         }
         
         Scene scene = new Scene(parentRoot);

@@ -34,17 +34,7 @@ import javafx.scene.text.Text;
 
 public class GamefieldController implements Initializable {
     
-    //static here because logic concerns implementation of this class
-    //requires: index of the player that we want the shape of
-    //returns : node for display of the index-th player
-    public static Node getPlayerNode(GridPane gp, int index) {
-        //TODO fix NPE here
-        if (gp == null) {
-            System.out.println("GridPane is NULL");
-        }
-        //returns the index + (number of fields) - th child of the GridPane
-        return gp.getChildren().get(index + 4*Settings.getInstance().rowLength);
-    }
+    
 
     @FXML
     private GridPane gp;
@@ -60,7 +50,22 @@ public class GamefieldController implements Initializable {
 
     @FXML
     private GridPane cardGridPane;
+    
+    @FXML
+    private StackPane playerPane;
 
+    //static here because logic concerns implementation of this class
+    //requires: index of the player that we want the shape of
+    //returns : node for display of the index-th player
+    public static Node getPlayerNode(StackPane sp, int index) {
+        //TODO fix NPE here
+        if (sp == null) {
+            System.out.println("GridPane is NULL");
+        }
+        //returns the index + (number of fields) - th child of the GridPane
+        return sp.getChildren().get(index + 1);
+    }
+    
     //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 50.0;
     private double defaultFieldWidth = 100.0;
@@ -77,6 +82,7 @@ public class GamefieldController implements Initializable {
         Settings.getInstance().diceResult1 = this.diceResult1;
         Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
+        Settings.getInstance().gameStackPane = this.playerPane;
         Settings.getInstance().rollDice = this.rollDice;
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
@@ -121,12 +127,15 @@ public class GamefieldController implements Initializable {
             
             //add a new player to the top left, which is then promptly moved 
             //to it's correct location using OnRoll
-            gp.add(c, 0, 0);
+            StackPane.setMargin(c, new Insets(-150, 0, 0, 0));
+            StackPane.setAlignment(c, Pos.CENTER);
+            playerPane.getChildren().add(c);
+            
             PolyMonyDrawer.getInstance().onRoll.drawPlayer(g.getNthPlayer(i));
         
             //all margins are defined from the top left
-            GridPane.setValignment(c, VPos.TOP);
-            GridPane.setHalignment(c, HPos.LEFT);
+            //StackPane.setValignment(c, VPos.TOP);
+            //GridPane.setHalignment(c, HPos.LEFT);
           
         }
        
