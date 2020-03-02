@@ -1,7 +1,9 @@
 package com.fichtepaulsen.polymony.DrawerController;
 
+import com.fichtepaulsen.polymony.DrawerEvents.OnRoll;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.PolyMonyDrawer;
 import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
@@ -9,6 +11,10 @@ import java.util.ResourceBundle;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.HPos;
+import javafx.geometry.Insets;
+import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.StrokeType;
 import javafx.scene.image.*;
+import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.Group;
@@ -26,6 +33,18 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 public class GamefieldController implements Initializable {
+    
+    //static here because logic concerns implementation of this class
+    //requires: index of the player that we want the shape of
+    //returns : node for display of the index-th player
+    public static Node getPlayerNode(GridPane gp, int index) {
+        //TODO fix NPE here
+        if (gp == null) {
+            System.out.println("GridPane is NULL");
+        }
+        //returns the index + (number of fields) - th child of the GridPane
+        return gp.getChildren().get(index + 4*Settings.getInstance().rowLength);
+    }
 
     @FXML
     private GridPane gp;
@@ -45,7 +64,8 @@ public class GamefieldController implements Initializable {
     //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 50.0;
     private double defaultFieldWidth = 100.0;
-    //height and width of cornerfield are equal to the value of defaultFieldWidth
+
+    //height and width of cornerfield are equal to the value of defaultFieldWidth 
     //if you change the defaultFieldWidth you should also resize the cornerFieldLength
     private double cornerFieldLength = 100.0;
 
@@ -84,7 +104,32 @@ public class GamefieldController implements Initializable {
         setupRow(10, -1, 30, false, false);
 
         //creates right vertical fields (DOWN)
-        setupRow(-1, 10, 10, true, true);
+        setupRow(-1, 10, 10, true, true);  
+        
+        //adding the players needs access to the players in the game
+        Game g = Settings.getInstance().gameInteface ;
+        
+        //add all players' shapes at 
+        //the start of the game
+        for (int i = 0; i < Settings.getInstance().numberOfPlayers; i++) {
+            
+            //add a circle with a radius from Settings
+            Circle c = new Circle(Settings.getInstance().playerRadius);
+            
+            //get color from the player class and color the player's circle
+            c.setFill(g.getNthPlayer(i).getColor());
+            
+            //add a new player to the top left, which is then promptly moved 
+            //to it's correct location using OnRoll
+            gp.add(c, 0, 0);
+            PolyMonyDrawer.getInstance().onRoll.drawPlayer(g.getNthPlayer(i));
+        
+            //all margins are defined from the top left
+            GridPane.setValignment(c, VPos.TOP);
+            GridPane.setHalignment(c, HPos.LEFT);
+          
+        }
+       
     }
 
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
@@ -102,6 +147,7 @@ public class GamefieldController implements Initializable {
             rec.setHeight(horizontal ? (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth) : (defaultFieldHeight));
             rec.setWidth(horizontal ? (defaultFieldHeight) : (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth));
             rec.setStrokeWidth(1.0);
+
             rec.setStrokeType(StrokeType.INSIDE);
             rec.setStroke(Color.BLACK);
             rec.setFill(Color.LIGHTGREEN);

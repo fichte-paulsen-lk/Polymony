@@ -34,6 +34,7 @@ import java.util.logging.Logger;
 import javafx.scene.paint.Color;
 
 public class Game implements GameInterface{
+
     private Player[] players;
     private Field[] fields;
     private Dice[] dices;
@@ -53,18 +54,14 @@ public class Game implements GameInterface{
     private int activePlayerIndex;
     
     public Game(){
-
+    
     }
-    
-    
-
-    
-    
     
     /*
     requires: integer number of players. 
     does: initializes players,fields and dice to start the game.
     */
+    @Override
     public void startGame(int playerCount){
         // create 40 fields in a fieldArray.    
         try {
@@ -77,7 +74,7 @@ public class Game implements GameInterface{
         this.players = new Player[playerCount];
         // fill playerArray with human players.
         for(int i = 0; i < playerCount; i++){
-            this.players[i] = new HumanPlayer(0, 1500, i);
+            this.players[i] = new HumanPlayer(0, 30000, i);
         }
         activePlayerIndex = 0;
         
@@ -98,9 +95,11 @@ public class Game implements GameInterface{
         }
       
     }
-
-    /* requires: -
-    returns: - (makes the next player active)
+    
+    @Override
+    /* 
+    requires: -
+    does: makes the next player active
     */
     public void nextTurn(){
         if (!keepActivePlayer){
@@ -108,14 +107,15 @@ public class Game implements GameInterface{
         }
 
     }
-
-    /* requires: -
+    /* 
+    requires: -
     returns: results of dices being rolled
     */
     @Override
     public int[] rollDices(){
+        int lastPosition = getCurrentPlayer().getPosition();
         //Returns an array of roll results
-        int [] results = new int[dices.length];
+        results = new int[dices.length];
         for (int i = 0;i<dices.length;i++){
             results[i] = dices[i].roll();
         }
@@ -128,9 +128,10 @@ public class Game implements GameInterface{
                
         
         Player activePlayer = players[activePlayerIndex];
-
-        boolean doublets =  isDoublets(results);                                //Tests for doublets
-        int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;           //Calculates next position after rolling the dices
+        //Tests for doublets
+        boolean doublets =  isDoublets(results); 
+        //Calculates next position after rolling the dices
+        int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;
         //Case where the player is in prison:
           if(activePlayer.getIsInPrison()==true){   
               if (doublets == false){
@@ -150,13 +151,15 @@ public class Game implements GameInterface{
           }
           //Normal case:
           else{                                                     
-            activePlayer.setPosition(newPos);                                   
-            if (doublets == false){                                             //Normal roll(player moves, activePlayerIndex increments,
+            activePlayer.setPosition(newPos);
+            //Normal roll(player moves, activePlayerIndex increments,
+            if (doublets == false){       
                 keepActivePlayer = false;
                 //doubletsCounter resets)
               activePlayer.setDoubletsCounter(0);
             }
-            else{                                                               //Doublet roll(doubletCounter increments, activePlayerIndex stays untouched)
+            //Doublet roll(doubletCounter increments, activePlayerIndex stays untouched)
+            else{                                                               
               activePlayer.incrementDoubletsCounter();
                 keepActivePlayer = true;
                 if (activePlayer.getDoubletsCounter()==3){                      //When doubletCounter reaches 3, the player will be automatically moved to 
@@ -164,9 +167,12 @@ public class Game implements GameInterface{
                   activePlayer.setDoubletsCounter(0);
                   activePlayer.setPrisonAttemptCounter(0);
                 }
+                System.out.println("PASCH!!!!");
             }
         }
-      
+        if(pastStart(lastPosition, newPos) && !activePlayer.getIsInPrison()){
+            activePlayer.setBalance(activePlayer.getBalance() + 4000);
+        }
         return results;
     }
 
@@ -179,19 +185,51 @@ public class Game implements GameInterface{
         }
         return true;
     }
-    public boolean isAbleToBuyOutOfPrison(){                                    //checks if the player is able to pay the bail
+    
+    @Override
+    /*
+    requires: 
+    returns: boolean if the current player is able to buy himself out of prison
+    */
+    public boolean isAbleToBuyOutOfPrison(){                                    
         Player activePlayer = players[activePlayerIndex];                       
-        if(activePlayer.getIsInPrison()==true && activePlayer.getBalance()>=50){
+        if(activePlayer.getIsInPrison()==true && activePlayer.getBalance()>=1000){
             return true;
         }
         else{
             return false;
         }
     }
-    public void prisonPayment(){                                                //pays the bail and frees the player
+    
+    @Override
+    /*
+    requires: 
+    does:  current player buys himself out of prison
+    */
+    public void prisonPayment(){                                                
         Player activePlayer = players[activePlayerIndex];
         activePlayer.setOutOfPrison();
         activePlayer.setBalance(activePlayer.getBalance()-50);    
+        activePlayer.setIsInPrison(false);
+        activePlayer.setBalance(activePlayer.getBalance()-1000);    
+    }
+    
+    //checks if the player is able to use "get out of prison" card
+    public boolean isAbleToUseGetOutOfJailCard(){                                  
+        Player activePlayer = players[activePlayerIndex];                       
+        if(activePlayer.getIsInPrison()==true && activePlayer.getAmountPrisonFreeCard()>=1){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    //uses 1 "get out of prison" card
+    public void useGetOutOfJailCard(){                                                
+        Player activePlayer = players[activePlayerIndex];
+        activePlayer.setIsInPrison(false);
+        activePlayer.setAmountPrisonFreeCard(activePlayer.getAmountPrisonFreeCard()-1);   
     } 
     public Field[] readJson() throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
 
@@ -262,7 +300,6 @@ public class Game implements GameInterface{
                     break;
             }
         }
-
         return temp;
     }
     
@@ -461,26 +498,46 @@ public class Game implements GameInterface{
     @Override
     /*
     requires: 
-    does: switches the activePlayerIndex to the next player
-    */
-    public void endTurn(){
-        activePlayerIndex = (activePlayerIndex++)%players.length;
-    }
-    
-    @Override
-    /*
-    requires: 
     does:  current player buys the ownableField he stands on
     */
     public void buyField(){
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
-        //if the player has enough money to buy the field
+        //player becomes owner of the ownableField
+        currentField.setOwner(activePlayer);
+        //Player loses as much money as the price of the ownableField 
+        activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
+        
+    }
+    
+    @Override
+    /*
+    requires: 
+    returns: boolean if the current player is able to buy the street he stands on
+    */
+    public boolean isAbleToBuyField(){                                    
+        Player activePlayer = getCurrentPlayer();
+        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];                       
         if(activePlayer.getBalance() >= currentField.getPrice()){
-            //player becomes owner of the ownableField
-            currentField.setOwner(activePlayer);
-            //Player loses as much money as the price of the ownableField 
-            activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    @Override
+    /*
+    requires: integer for the last position of a player
+              integer for the current position of a player
+    returns:  boolean if a player past start in the last turn
+    */
+    public boolean pastStart(int lastPosition, int newPosition){
+        if((newPosition - lastPosition) < 0){
+            return true;
+        }
+        else{ 
+            return false;
         }
     }
     public Player getActivePlayer(){

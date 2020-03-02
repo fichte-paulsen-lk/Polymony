@@ -17,13 +17,17 @@ public class DoublePair {
     }
     
     /*
-     * Takes the field index, the width of the game field(amount of fields / 4), the X and Y offset from the top left corner
+     * Takes the field index, the width of the game field (amount of fields / 4), the X and Y offset from the top left corner
      * of the screen to the top left corner of the first field. The width (dimX) and height (dimY) of the individual fields
      * should be given
-     * method returns the coordinates of fthe top left corner of the field at the n-th index
+     * method returns the coordinates of the top left corner of the field at the n-th index
      */
-    public static DoublePair indexToPoint(int index, int width, double offsetX, double offsetY, double dimX, double dimY) {
+    public static DoublePair indexToPoint(int index, int width, double offsetX, 
+                                          double offsetY, double dimX, double dimY) {
         IntPair pair = IntPair.indexToPos(index, width);
-        return new DoublePair(offsetX + pair.getX()*dimX, offsetY + pair.getY()*dimY);
+        
+        System.out.println("Indices: " + pair.getFirst() + ", " +  pair.getSecond());
+        
+        return new DoublePair(offsetX + pair.getFirst()*dimX, offsetY + pair.getSecond()*dimY);
     }
 } 
