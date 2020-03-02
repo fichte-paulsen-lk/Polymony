@@ -11,9 +11,9 @@
    <children>
       <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="8.0">
          <children>
-            <Label text="Polymony - neues Spiel?" />
+            <Label text="Polymony - new Game?" />
             <Slider fx:id="playerCount" blockIncrement="1.0" majorTickUnit="1.0" max="4.0" min="1.0" minorTickCount="1" showTickLabels="true" snapToTicks="true" value="4.0" />
-            <Button fx:id="startGame" mnemonicParsing="false" onAction="#startNewGame" text="Starten" />
+            <Button fx:id="startGame" mnemonicParsing="false" onAction="#startNewGame" text="Start" />
          </children>
       </VBox>
    </children>
