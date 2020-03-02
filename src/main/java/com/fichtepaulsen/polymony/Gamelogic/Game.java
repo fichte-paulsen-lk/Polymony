@@ -273,7 +273,7 @@ public class Game implements GameInterface{
                     temp[i] = new TaxField((int)field.get("tax"),(String) field.get("name"),i);
                     break;
                 case "TrafficField":
-                    temp[i] = new TrafficField();
+                    temp[i] = new TrafficField((String)field.get("name"),(int)field.get("price"),(int)field.get("rent"));
                     break;
                 case "Prison":
                     temp[i] = new PrisonField();
@@ -437,7 +437,7 @@ public class Game implements GameInterface{
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
         //player becomes owner of the ownableField
-        currentField.setOwner(activePlayer);
+        currentField.buyField(activePlayer, fields);
         //Player loses as much money as the price of the ownableField 
         activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
         
@@ -450,9 +450,15 @@ public class Game implements GameInterface{
     */
     public boolean isAbleToBuyField(){                                    
         Player activePlayer = getCurrentPlayer();
-        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];                       
-        if(activePlayer.getBalance() >= currentField.getPrice()){
-            return true;
+        Field currentField = fields[activePlayer.getPosition()];
+        if (currentField instanceof OwnableField){
+            OwnableField oField = (OwnableField)fields[activePlayer.getPosition()];
+            if(activePlayer.getBalance() >= oField.getPrice()){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
         else{
             return false;

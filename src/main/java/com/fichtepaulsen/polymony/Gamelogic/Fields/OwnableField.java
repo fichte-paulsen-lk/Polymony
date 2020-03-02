@@ -6,10 +6,13 @@ public abstract class OwnableField extends Field{
   public int price;
   private Player owner;
   public String name;
-  private int houseamount;
   private boolean ishypothek;
   private int hypothekamount;
-
+  public int rent;
+  public int currentRent;
+  
+    //public abstract void buyField(Player currentPlayer);
+  
     public boolean isIshypothek() {
         return ishypothek;
     }
@@ -38,14 +41,6 @@ public abstract class OwnableField extends Field{
         this.name = name;
     }
 
-    public int getHouseamount() {
-        return houseamount;
-    }
-
-    public void setHouseamount(int houseamount) {
-        this.houseamount = houseamount;
-    }
-  
     public int getPrice() {
         return price;
     }
@@ -61,5 +56,6 @@ public abstract class OwnableField extends Field{
     public void setOwner(Player owner) {
         this.owner = owner;
     }
-   
+    
+    
 }
