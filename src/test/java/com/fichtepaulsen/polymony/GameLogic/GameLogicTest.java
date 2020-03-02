@@ -3,6 +3,8 @@ package com.fichtepaulsen.polymony.Gamelogic;
 import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,7 +36,6 @@ public class GameLogicTest {
     @Test
     public void testReadJSON() {
 
-        System.out.println(game);
         Field[] field = null;
         
         
@@ -42,8 +43,7 @@ public class GameLogicTest {
             field = game.readJson();
             
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            System.out.println(ex.getMessage());
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, ex.getMessage());
             assertNotNull(ex);
         } 
         

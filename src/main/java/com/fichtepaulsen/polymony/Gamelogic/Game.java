@@ -92,9 +92,9 @@ public class Game implements GameInterface{
         try{
             this.communityCards = shuffle(readCommunityCardsJson());
             this.chanceCards = shuffle(readChanceCardsJson());
-            System.out.print("yp");
-        }catch(IOException e){
             
+        }catch(IOException e){
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
         }
       
     }
