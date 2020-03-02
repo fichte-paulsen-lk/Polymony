@@ -17,8 +17,10 @@ public class MoneyCardOtherPlayers extends Card{
         Player [] players = game.getAllPlayers();
         int activePlayerIndex = game.getCurrentPlayer().getIndex();
         for (Player player : players) {
-            player.setBalance(player.getBalance() - (value));
-            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance()+value);
+            if (player != players[activePlayerIndex]) {
+                player.setBalance(player.getBalance() - (value));
+                players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() + value);
+            }
         }
      }
 }

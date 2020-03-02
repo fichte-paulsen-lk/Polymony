@@ -2,7 +2,9 @@ package com.fichtepaulsen.polymony.Gamelogic;
 
 import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
 import com.fichtepaulsen.polymony.Gamelogic.Cards.JumpCard;
+import com.fichtepaulsen.polymony.Gamelogic.Cards.JumpToCard;
 import com.fichtepaulsen.polymony.Gamelogic.Cards.MoneyCard;
+import com.fichtepaulsen.polymony.Gamelogic.Cards.MoneyCardOtherPlayers;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -417,14 +419,23 @@ public class Game implements GameInterface{
             //Hole den Typen bzw. den Klassenbezeichner des Feldes
             String cardClassName = (String) card.get("type");
             
-            switch (cardClassName){
-                case "MoneyCard": 
-                    temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"),(boolean) card.get("community"));
+            switch (cardClassName) {
+                case "MoneyCard":
+                    temp[i] = new MoneyCard((String) card.getString("text"), (int) card.get("value"), (boolean) card.get("community"));
                     break;
-                case "JumpCard": 
-                    temp[i] = new JumpCard(card.getInt("value"),card.getString("text"),card.getBoolean("community"));
-                    break;   
-                default: 
+                case "JumpCard":
+                    temp[i] = new JumpCard(card.getInt("value"), card.getString("text"), card.getBoolean("community"));
+                    break;
+                case "JumpToCard":
+                    temp[i] = new JumpToCard(card.getInt("position"), card.getString("text"), card.getBoolean("community"));
+                    break;
+                case "MoneyCardOtherPlayers":
+                    temp[i] = new MoneyCardOtherPlayers((String) card.getString("text"), (int) card.get("value"), (boolean) card.get("community"));
+                    break;
+                case "PrisonFreeCard":
+                    temp[i] = new PrisonFreeCard((String) card.getString("text"), (boolean) card.get("community"));
+                    break;
+                default:
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
             }
         }
