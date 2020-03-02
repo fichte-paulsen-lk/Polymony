@@ -51,7 +51,6 @@ public class Game implements GameInterface{
 
     private Card[] communityCards;
     private boolean keepActivePlayer;
-    
     private int activePlayerIndex;
     
     public Game(){
@@ -167,8 +166,8 @@ public class Game implements GameInterface{
                   activePlayer.setInPrison();                                   //the prison field and activePlayerIndex increments
                   activePlayer.setDoubletsCounter(0);
                   activePlayer.setPrisonAttemptCounter(0);
+                  keepActivePlayer = false;
                 }
-                System.out.println("PASCH!!!!");
             }
         }
         if(pastStart(lastPosition, newPos) && !activePlayer.getIsInPrison()){
@@ -537,6 +536,61 @@ public class Game implements GameInterface{
             return false;
         }
     }
+    
+    @Override
+    /*
+    requires: index of the field where a player wants to add a mortgage to
+    does:     set mortgage on the field at the given fieldIndex 
+    */
+    public void addMortgage(int fieldIndex){
+        OwnableField oField = (OwnableField)fields[fieldIndex];
+        oField.addMortgage();
+    }
+    
+    @Override
+    /*
+    requires: index of the field where a player wants to add a mortgage
+    returns:  boolean if the current player is able to add a mortgage at a field at fieldIndex
+    */
+    public boolean isAbleToAddMortgage(int fieldIndex){
+        Player activePlayer = players[activePlayerIndex];
+        OwnableField oField = (OwnableField)fields[fieldIndex];
+        if (activePlayer == oField.getOwner() && !oField.getIsMortgage()){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    @Override
+    /*
+    requires: index of the field where a player wants to remove the mortgage 
+    does:     remove mortgage from the field at the given fieldIndex 
+    */
+    public void removeMortgage(int fieldIndex){
+        OwnableField oField = (OwnableField)fields[fieldIndex];
+        oField.freeMortgage();
+    }
+    
+    @Override
+    /*
+    requires: index of the field where a player wants to remove the mortgage
+    returns:  boolean if the current player is able to remove a mortgage from a field at fieldIndex
+    */
+    public boolean isAbleToRemoveMortgage(int fieldIndex){
+        Player activePlayer = players[activePlayerIndex];
+        OwnableField oField = (OwnableField)fields[fieldIndex];
+        if (activePlayer == oField.getOwner() && oField.getIsMortgage() && 
+                activePlayer.getBalance() >= (oField.getMortgageAmount() + oField.getMortgageAmount()*1/10)){
+            
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public Player getActivePlayer(){
         return players[activePlayerIndex];
     }
