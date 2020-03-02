@@ -165,7 +165,6 @@ public class Game implements GameInterface{
                   activePlayer.setPosition(10);
                   keepActivePlayer = false;
                 }
-                System.out.println("PASCH!!!!");
             }
         }
         if(pastStart(lastPosition, newPos) && !activePlayer.getIsInPrison()){
