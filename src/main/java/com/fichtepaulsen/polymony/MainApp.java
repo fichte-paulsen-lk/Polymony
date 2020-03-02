@@ -29,6 +29,10 @@ public class MainApp extends Application {
         
         stage.setScene(scene);
         stage.show();
+        
+        PolyMonyPopup.stage = stage;
+        PolyMonyPopup.show((b) -> System.out.println("test"));
+        
     }
 
     /**
