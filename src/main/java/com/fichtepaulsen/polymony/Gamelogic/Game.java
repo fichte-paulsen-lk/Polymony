@@ -1,6 +1,7 @@
 package com.fichtepaulsen.polymony.Gamelogic;
 
 import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
+import com.fichtepaulsen.polymony.Gamelogic.Cards.JumpCard;
 import com.fichtepaulsen.polymony.Gamelogic.Cards.MoneyCard;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -9,6 +10,7 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.NormalDice;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.ActionField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.GoToPrisonField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.OwnableField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.PrisonField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.StartField;
@@ -36,9 +38,18 @@ public class Game implements GameInterface{
     private Player[] players;
     private Field[] fields;
     private Dice[] dices;
-    private Card[] cards;
-    private Player activePlayer;
-    int [] results;
+    private Card[] chanceCards;
+    private int [] results;
+
+    public Card[] getChanceCards() {
+        return chanceCards;
+    }
+
+    public Card[] getCommunityCards() {
+        return communityCards;
+    }
+
+    private Card[] communityCards;
     private boolean keepActivePlayer;
     
     private int activePlayerIndex;
@@ -55,7 +66,7 @@ public class Game implements GameInterface{
     public void startGame(int playerCount){
         // create 40 fields in a fieldArray.    
         try {
-            fields = readJson(40);
+            fields = readJson();
         } catch (Exception e) {
             Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());        
         }
@@ -75,14 +86,15 @@ public class Game implements GameInterface{
             this.dices[i] = new NormalDice();
         }
         
-        //create cards and shuffle them
-        /*    cards = new Card[Settings.getInstance().GameFields]; 
-        try {
-            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
-        } catch (IOException e) {
-           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
+        //create community- and chanceCard arrays from JSON file
+        try{
+            this.communityCards = shuffle(readCommunityCardsJson());
+            this.chanceCards = shuffle(readChanceCardsJson());
+            
+        }catch(IOException e){
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
         }
-        */
+      
     }
     
     @Override
@@ -114,8 +126,8 @@ public class Game implements GameInterface{
         for (int value : results){
             gesamtZahl+=value;
         }
-        //System.out.println("GesamtZahl = "+gesamtZahl);
-       
+               
+        
         Player activePlayer = players[activePlayerIndex];
         //Tests for doublets
         boolean doublets =  isDoublets(results); 
@@ -126,21 +138,16 @@ public class Game implements GameInterface{
               if (doublets == false){
 
                   activePlayer.incrementPrisonAttemptCounter();
-                  //When the player doesn't roll doublets for 3 rounds
-                  if(activePlayer.getPrisonAttemptCounter()==3){                 
-                  //he comes out of prison and moves
-                  activePlayer.setIsInPrison(false);                            
+                if(activePlayer.getPrisonAttemptCounter()==3){                  //When the player doesn't roll doublets for 3 rounds 
+                  activePlayer.setOutOfPrison();                            //he comes out of prison and moves
                   activePlayer.setPosition(newPos);
                   activePlayer.setPrisonAttemptCounter(0);
                 }  
 
               }
-              //If the player rolls doublets during one of his 3 attempts
-              else{                                                             
-                //he comes out of prison and moves by the amount he rolled
-                activePlayer.setIsInPrison(false);                                
-                //(no additional move after these doublets)
-                activePlayer.setPosition(newPos);                               
+              else{                                                             //If the player rolls doublets during one of his 3 attempts
+                activePlayer.setOutOfPrison();                              //he comes out of prison and moves by the amount he rolled  
+                activePlayer.setPosition(newPos);                               //(no additional move after these doublets)
               }    
           }
           //Normal case:
@@ -156,13 +163,10 @@ public class Game implements GameInterface{
             else{                                                               
               activePlayer.incrementDoubletsCounter();
                 keepActivePlayer = true;
-                //When doubletCounter reaches 3, the player will be automatically moved to 
-                if (activePlayer.getDoubletsCounter()==3){                       
-                  //the prison field and activePlayerIndex increments
-                  activePlayer.setIsInPrison(true);                             
+                if (activePlayer.getDoubletsCounter()==3){                      //When doubletCounter reaches 3, the player will be automatically moved to 
+                  activePlayer.setInPrison();                                   //the prison field and activePlayerIndex increments
                   activePlayer.setDoubletsCounter(0);
                   activePlayer.setPrisonAttemptCounter(0);
-                  activePlayer.setPosition(10);
                 }
                 System.out.println("PASCH!!!!");
             }
@@ -205,7 +209,7 @@ public class Game implements GameInterface{
     */
     public void prisonPayment(){                                                
         Player activePlayer = players[activePlayerIndex];
-        activePlayer.setIsInPrison(false);
+        activePlayer.setOutOfPrison();
         activePlayer.setBalance(activePlayer.getBalance()-1000);    
     }
     
@@ -223,15 +227,12 @@ public class Game implements GameInterface{
     //uses 1 "get out of prison" card
     public void useGetOutOfJailCard(){                                                
         Player activePlayer = players[activePlayerIndex];
-        activePlayer.setIsInPrison(false);
+        activePlayer.setOutOfPrison();
         activePlayer.setAmountPrisonFreeCard(activePlayer.getAmountPrisonFreeCard()-1);   
     } 
     
-    public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
-
-        //Array der später zurückgegeben wird-
-        Field[] temp = new Field[length];
-
+    
+    public Field[] readJson() throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
         //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
         InputStream in = this.getClass().getResourceAsStream("/setup.json");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
@@ -247,7 +248,7 @@ public class Game implements GameInterface{
 
         //öffne den fields array aus dem JSONObject
         JSONArray jsonArray = obj.getJSONArray("fields");
-
+        Field[] temp = new Field[jsonArray.length()];
         //iteriere durch alle Einträge
         for (int i = 0; i < jsonArray.length(); i++){
 
@@ -255,7 +256,7 @@ public class Game implements GameInterface{
             JSONObject field = jsonArray.getJSONObject(i);
             
             //Hole den Typen bzw. den Klassenbezeichner des Feldes
-            String fieldClassName = (String) field.get("type");
+            String fieldClassName = field.getString("type");
             
             //Je nachdem welche Klasse es ist wird der Konstruktor mit den jeweils gewünschten Werten aufgerufen und das Objekt in temp an Stelle des Indizes i geschrieben
             switch (fieldClassName)
@@ -267,7 +268,14 @@ public class Game implements GameInterface{
                     temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), getColor((int)field.get("color")));
                     break;
                 case "ActionField":
-                    temp[i] = new ActionField();
+                    try{
+                        field.getBoolean("freeParking");
+                        temp[i] = new ActionField(false,field.getBoolean("freeParking"));
+                    }catch(JSONException e){
+                        temp[i] = new ActionField(field.getBoolean("community"),false);
+                    }
+                    
+                    
                     break;
                 case "TaxField":
                     temp[i] = new TaxField((int)field.get("tax"),(String) field.get("name"),i);
@@ -277,6 +285,9 @@ public class Game implements GameInterface{
                     break;
                 case "Prison":
                     temp[i] = new PrisonField();
+                    break;
+                case "GoToPrisonField":
+                    temp[i] = new GoToPrisonField();
                     break;
                 case "Utility":
                     temp[i] = new UtilityField((String)field.get("name"),(int)field.get("price"));
@@ -374,10 +385,10 @@ public class Game implements GameInterface{
 
         }
     }
-
-    public Card[] readCardsJson(int length) throws IOException{
-                //Array der später zurückgegeben wird-
-        Card[] temp = new Card[length];
+    
+    //reads the ChacneCard part from the JSON file
+    public Card[] readChanceCardsJson() throws IOException{
+        
 
         //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
         InputStream in = this.getClass().getResourceAsStream("/setup.json");
@@ -393,7 +404,11 @@ public class Game implements GameInterface{
         JSONObject obj = new JSONObject(jsonString);
 
         //öffne den fields array aus dem JSONObject
-        JSONArray jsonArray = obj.getJSONArray("cards");
+        JSONObject cardsObj = obj.getJSONObject("cards");
+        
+        JSONArray jsonArray= cardsObj.getJSONArray("chance");
+        
+        Card[] temp = new Card[jsonArray.length()];
 
         //iteriere durch alle Einträge
         for (int i = 0;i<jsonArray.length();i++){
@@ -407,6 +422,9 @@ public class Game implements GameInterface{
                 case "MoneyCard": 
                     temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"),(boolean) card.get("community"));
                     break;
+                case "JumpCard": 
+                    temp[i] = new JumpCard(card.getInt("value"),card.getString("text"),card.getBoolean("community"));
+                    break;   
                 default: 
                     Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
             }
@@ -414,6 +432,52 @@ public class Game implements GameInterface{
         return temp;
     }
     
+    //reads the CommunityCard part from the JSON file
+    public Card[] readCommunityCardsJson() throws IOException{
+
+        //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
+        InputStream in = this.getClass().getResourceAsStream("/setup.json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+        String jsonString = "";
+
+        String line = null;
+        while ( (line = reader.readLine()) != null) {
+            jsonString +=line;
+        }
+
+        //lade den String als JSONObject
+        JSONObject obj = new JSONObject(jsonString);
+
+        //öffne den fields array aus dem JSONObject
+         JSONObject cardsObj = obj.getJSONObject("cards");
+        
+        JSONArray jsonArray= cardsObj.getJSONArray("chance");
+        
+        Card[] temp = new Card[jsonArray.length()];
+
+        //iteriere durch alle Einträge
+        for (int i = 0;i<jsonArray.length();i++){
+
+            //lade das JSONObject am Index i
+            JSONObject card = jsonArray.getJSONObject(i);
+            //Hole den Typen bzw. den Klassenbezeichner des Feldes
+            String cardClassName = (String) card.get("type");
+            
+            switch (cardClassName){
+                case "MoneyCard": 
+                    temp[i] = new MoneyCard((String) card.getString("text"),(int) card.get("value"),(boolean) card.get("community"));
+                    break;
+                case "JumpCard": 
+                    temp[i] = new JumpCard(card.getInt("value"),card.getString("text"),card.getBoolean("community"));
+                    break;   
+                default: 
+                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "Card JSON import not working!");
+            }
+        }
+        return temp;
+    }
+    //shuffels the array with the cards
+    //used for Community- and ChanceCards
     private Card[] shuffle(Card[] array) {
         Random rnd = ThreadLocalRandom.current();
         
@@ -472,5 +536,8 @@ public class Game implements GameInterface{
         else{ 
             return false;
         }
+    }
+    public Player getActivePlayer(){
+        return players[activePlayerIndex];
     }
 }
