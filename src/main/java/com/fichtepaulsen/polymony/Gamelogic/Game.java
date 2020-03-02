@@ -440,11 +440,35 @@ public class Game implements GameInterface {
             return false;
         }
     }
+    public boolean isEvenlyBuild(int fieldIndex){
+        StreetField [] save=new StreetField [3]; //works only if theres not more then 3 Fields per Color
+        StreetField [] allFieldsSave= (StreetField [])fields;
+        int y=1; //Counter is used as a pointer for the save-Array, which is used to save all fields from one and the same color
+        save[0]=allFieldsSave[fieldIndex]; //the given fieldIndex is in save-Array always on first place
+        Color color=allFieldsSave[fieldIndex].getColor();
+        for(int i=0;i<fields.length; i++){ //puts all Fields from a Color in an Array
+            if(allFieldsSave[i].getColor()==color){
+                save[y]=allFieldsSave[i];
+                y++;
+            }
+        }
+        if(save[3]!=null){ //if the Color has 3 Fields, checks if the difference between the houseAmounts isnt more then 1
+            if(save[1].getHouseAmount()-save[0].getHouseAmount()<=1 && save[2].getHouseAmount()-save[0].getHouseAmount()<=1){
+                return true;
+            }
+        }
+        else{ //if the Color has 2 Fields
+            if(save[1].getHouseAmount()-save[0].getHouseAmount()<=1){
+                return true;
+            }
+        }
+        return false;
+    }
 
     @Override
     public void buyHouse(int fieldIndex) {
         StreetField save2 = (StreetField) fields[fieldIndex];
-        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() <6) { //checks if the field is a StreetField and if there´s space on the field
+        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 6 && isEvenlyBuild(fieldIndex)==true ) { //checks if the field is a StreetField and if there´s space on the field
             save2.setHouseamount(save2.getHouseamount() + 1);
             players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getHousePrice());
             housesAvaible--;
