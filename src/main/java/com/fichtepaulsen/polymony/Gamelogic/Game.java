@@ -39,6 +39,7 @@ public class Game implements GameInterface{
     private Field[] fields;
     private Dice[] dices;
     private Card[] chanceCards;
+    private int [] results;
 
     public Card[] getChanceCards() {
         return chanceCards;
@@ -209,8 +210,6 @@ public class Game implements GameInterface{
     public void prisonPayment(){                                                
         Player activePlayer = players[activePlayerIndex];
         activePlayer.setOutOfPrison();
-        activePlayer.setBalance(activePlayer.getBalance()-50);    
-        activePlayer.setIsInPrison(false);
         activePlayer.setBalance(activePlayer.getBalance()-1000);    
     }
     
@@ -228,14 +227,12 @@ public class Game implements GameInterface{
     //uses 1 "get out of prison" card
     public void useGetOutOfJailCard(){                                                
         Player activePlayer = players[activePlayerIndex];
-        activePlayer.setIsInPrison(false);
+        activePlayer.setOutOfPrison();
         activePlayer.setAmountPrisonFreeCard(activePlayer.getAmountPrisonFreeCard()-1);   
     } 
+    
+    
     public Field[] readJson() throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
-
-        //Array der später zurückgegeben wird-
-        
-
         //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
         InputStream in = this.getClass().getResourceAsStream("/setup.json");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));

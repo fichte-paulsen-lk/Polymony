@@ -14,7 +14,8 @@ public abstract class Player {
     private boolean isInPrison;
     //Counts doublet attempts in prison
     private int prisonAttemptCounter;                                           
-    private int doubletsCounter;                                                
+    private int doubletsCounter;     
+    private Color color;
 
     public Player(int position, int balance, int index){
         this.position = position;
@@ -114,5 +115,9 @@ public abstract class Player {
     
     public void setDoubletsCounter(int dc){
         this.doubletsCounter=dc; 
+    }
+    
+    public Color getColor(){
+        return this.color;
     }
 }
