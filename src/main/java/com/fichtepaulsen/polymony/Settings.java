@@ -31,11 +31,6 @@ public class Settings {
     //game board (so that no non multiples of four can be used)
     public final int rowLength = 10;
     
-    //number of players playing the game, can be made
-    //non final if we want to change the number of 
-    //players during runtime
-    public final int numberOfPlayers = 4;
-
     public final int GameFields = 40;
     
     public final String ApplicationVersion = "1.2";
@@ -49,6 +44,8 @@ public class Settings {
     public final double playerRadius = 8f;
     
     // Public Settings
+    public int numberOfPlayers = 4;
+
     public GridPane gameGridPane;
     public Label diceResult1;
     public Label diceResult2;
