@@ -9,9 +9,9 @@ public abstract class OwnableField extends Field{
   private boolean ishypothek;
   private int hypothekamount;
   public int rent;
-  public int currentRent;
+
   
-    //public abstract void buyField(Player currentPlayer);
+    public abstract void buyField(Player currentPlayer);
   
     public boolean isIshypothek() {
         return ishypothek;

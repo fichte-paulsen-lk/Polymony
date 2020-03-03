@@ -13,8 +13,8 @@ public class UtilityField extends OwnableField {
        return 0;  
     }
     
-    //public void buyField(Player currentPlayer){
+    public void buyField(Player currentPlayer){
         //this.setOwner(currentPlayer);
         //currentPlayer.setTrainstationOwned(currentPlayer.getUtilitiesOwned() + 1);
-    //}
+    }
 }

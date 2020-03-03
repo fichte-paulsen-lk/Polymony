@@ -7,23 +7,19 @@ public class TrafficField extends OwnableField {
          this.name = name;
          this.price = price;
          this.rent = rent;
-         this.currentRent = rent;
     }
     
-    public void buyField(Player currentPlayer, Field[] fields){
+    public void buyField(Player currentPlayer){
         this.setOwner(currentPlayer);
         currentPlayer.setTrainstationOwned(currentPlayer.getTrainstationOwned() + 1);
-        for(int i = 0; i < fields.length; i++){
-            if(fields[i] instanceof TrafficField){
-                Field temp = (TrafficField) fields[i];
-                if(temp.getOwner() ==  currentPlayer){
-                    currentRent *= 2;
-                }
-            }
-        }
     }
     
-    public int getCurrentRent(){
-        return currentRent;
+    public int getPayPrice(Player currentPlayer){
+        int payPrice = rent;
+        for (int i = 1; i < currentPlayer.getTrainstationOwned(); i++){
+            payPrice *= 2;
+        }
+        return payPrice;
     }
+    
 }

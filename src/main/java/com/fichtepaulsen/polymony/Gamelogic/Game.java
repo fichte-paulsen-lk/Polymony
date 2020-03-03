@@ -264,7 +264,7 @@ public class Game implements GameInterface{
                     temp[i] = new StartField();
                     break;
                 case "StreetField":
-                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), getColor((int)field.get("color")));
+                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), getColor((int)field.get("color")),(int)field.get("rent"),(int)field.get("house1"),(int)field.get("house2"), (int)field.get("house3"), (int)field.get("house4"), (int)field.get("hotel"));
                     break;
                 case "ActionField":
                     temp[i] = new ActionField();
@@ -437,7 +437,7 @@ public class Game implements GameInterface{
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
         //player becomes owner of the ownableField
-        currentField.buyField(activePlayer, fields);
+        currentField.buyField(activePlayer);
         //Player loses as much money as the price of the ownableField 
         activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
         
