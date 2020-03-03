@@ -440,7 +440,7 @@ public class Game implements GameInterface {
             return false;
         }
     }
-    public boolean isEvenlyBuild(int fieldIndex){
+    public boolean isAllowedtoBuildHouseOnTheGivenField(int fieldIndex){ //checks if the Color is evenly build
         StreetField [] save=new StreetField [3]; //works only if theres not more then 3 Fields per Color
         StreetField [] allFieldsSave= (StreetField [])fields;
         int y=1; //Counter is used as a pointer for the save-Array, which is used to save all fields from one and the same color
@@ -468,10 +468,22 @@ public class Game implements GameInterface {
     @Override
     public void buyHouse(int fieldIndex) {
         StreetField save2 = (StreetField) fields[fieldIndex];
-        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 6 && isEvenlyBuild(fieldIndex)==true ) { //checks if the field is a StreetField and if there´s space on the field
+        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 6 && isAllowedtoBuildHouseOnTheGivenField(fieldIndex)==true ) { //checks if the field is a StreetField and if there´s space on the field
             save2.setHouseamount(save2.getHouseamount() + 1);
             players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getHousePrice());
             housesAvaible--;
         }
+    }
+    @Override
+    public OwnableField [] getFieldsOwnedBy (Player player){
+        OwnableField [] tobereturned= new OwnableField [36];
+        OwnableField [] save=(OwnableField []) fields;
+        int y=0; //Counter for the returned Array
+        for(int i =0; i<fields.length; i++ ){
+            if(save[i].getOwner()==player){
+                tobereturned[y]=save[i];
+            }
+        }
+        return tobereturned;
     }
 }
