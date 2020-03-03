@@ -8,6 +8,7 @@ import com.fichtepaulsen.polymony.PolyMonyDrawer;
 import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.PathTransition;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -30,7 +31,11 @@ import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class GamefieldController implements Initializable {
     
@@ -127,18 +132,19 @@ public class GamefieldController implements Initializable {
             
             //add a new player to the top left, which is then promptly moved 
             //to it's correct location using OnRoll
-            StackPane.setMargin(c, new Insets(-150, 0, 0, 0));
-            StackPane.setAlignment(c, Pos.CENTER);
+            StackPane.setMargin(c, new Insets(0, 0, 0, 0));
+            
+            //all margins are defined from the top left
+            StackPane.setAlignment(c, Pos.TOP_LEFT);
+            
             playerPane.getChildren().add(c);
             
-            PolyMonyDrawer.getInstance().onRoll.drawPlayer(g.getNthPlayer(i));
-        
-            //all margins are defined from the top left
-            //StackPane.setValignment(c, VPos.TOP);
-            //GridPane.setHalignment(c, HPos.LEFT);
-          
+            PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 0);    
         }
-       
+        
+        PathTransition anim = new PathTransition();
+        
+        anim.play();
     }
 
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {

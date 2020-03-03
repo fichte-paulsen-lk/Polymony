@@ -57,7 +57,7 @@
                            <children>
                               <StackPane id="playerPane" fx:id="playerPane" prefHeight="150.0" prefWidth="200.0">
                                  <children>
-                                    <GridPane id="gp" fx:id="gp" alignment="CENTER" prefHeight="500.0" prefWidth="631.0">
+                                    <GridPane id="gp" fx:id="gp" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="631.0">
                               </GridPane>
                                  </children>
                               </StackPane>

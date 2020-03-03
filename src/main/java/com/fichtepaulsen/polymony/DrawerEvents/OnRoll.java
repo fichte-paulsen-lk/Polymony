@@ -73,15 +73,6 @@ public class OnRoll extends Drawer{
             System.out.println("Player = null");
         }
         else {
-            /*
-            PathTransition pathTransition = new PathTransition();
-            pathTransition.setDuration(Duration.millis(duration));
-            pathTransition.setNode(getPlyerNode(p.getIndex));
-            pathTransition.setPath(getPlayerTransitionPath(p);
-            pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
-            pathTransition.setCycleCount(4f);
-            pathTransition.setAutoReverse(false);
-            */
             if(getPlayerNode(p.getIndex()) == null){
                 System.out.println("PlayNode is null");
             }
@@ -89,7 +80,10 @@ public class OnRoll extends Drawer{
                 System.out.println("Last Travels at " + p.getIndex() + " is null");
             }
             
-            PathTransition anim = new PathTransition(Duration.millis(duration), (Shape) lastTravels[p.getIndex()].getPlayerTransitionPath(p), getPlayerNode(p.getIndex()));
+            PathTransition anim = new PathTransition(
+                    Duration.millis(duration), 
+                    (Shape) lastTravels[p.getIndex()].getPlayerTransitionPath(p), 
+                    getPlayerNode(p.getIndex()));
             
             if (anim == null) {
                 System.out.println("bash ur head");
