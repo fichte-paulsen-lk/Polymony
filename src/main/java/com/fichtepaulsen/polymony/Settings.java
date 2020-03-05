@@ -43,6 +43,9 @@ public class Settings {
     
     public final double playerRadius = 8f;
     
+    public final String WindowTitle = "Polymony";
+
+    
     // Public Settings
     public int numberOfPlayers = 4;
 
