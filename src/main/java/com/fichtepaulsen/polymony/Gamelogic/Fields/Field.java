@@ -23,7 +23,4 @@ public abstract class Field {
         this.index = index;
     }
 
-    Player getOwner() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }
