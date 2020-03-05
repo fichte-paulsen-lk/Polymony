@@ -10,9 +10,12 @@
         {"type":"ActionField"},
         {"type":"StreetField","name" : "Elisenstraße","price":1200, "color": 2, "rent":120, "house1":600,"house2":1800,"house3":5400,"house4":8000,"hotel":11000},
         {"type":"StreetField","name" : "Poststraße","price":2400, "color": 2, "rent":160, "house1":800,"house2":2000,"house3":6000,"house4":9000,"hotel":12000},
+
+      
         {"type":"Prison"},
         {"type":"StreetField","name" : "Seetraße","price":2800, "color": 3, "rent":200, "house1":1000,"house2":3000,"house3":9000,"house4":12500,"hotel":15000},
         {"type":"Utility", "name": "Elektrizitätswerkwerk", "price": 3000},
+
         {"type":"StreetField","name" : "Hafenstraße","price":2800, "color": 3, "rent":200, "house1":1000,"house2":3000,"house3":9000,"house4":12500,"hotel":15000},
         {"type":"StreetField","name" : "Neue Straße","price":3200, "color": 3, "rent":240, "house1":1200,"house2":3600,"house3":10000,"house4":14000,"hotel":18000},
         {"type":"TrafficField","name":"Westbahnhof", "price": 4000, "rent":500},
@@ -42,9 +45,19 @@
         {"type":"StreetField","name" : "Schloßallee","price":8000, "color": 8, "rent":1000, "house1":4000,"house2":12000,"house3":28000,"house4":34000,"hotel":40000}
     ],
     
-   "cards":[
+
+   "cards":
+   {
+   "community":[
         {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":true},
-        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,"community":false},
+        {"type" : "MoneyCard","text" : "Ziehß 10 Euro ein","value" : 10,"community":true},
         {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":true}
-    ]
+		],
+	"chance":[
+	    {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":false},
+        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,"community":false},
+        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":false},
+		{"type" : "JumpCard","text" : "Springe 4 Schritte","community":false,"value":4}
+		]
+	}
 }

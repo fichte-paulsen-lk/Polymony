@@ -15,6 +15,7 @@ public class MainApp extends Application {
     public void start(Stage stage) throws Exception {
         Settings.createInstance();
         PolyMonyDrawer.createInstance(stage);
+        PolyMonyPopup.stage = stage;
 
         Parent parentRoot = null;
         
@@ -27,8 +28,9 @@ public class MainApp extends Application {
         Scene scene = new Scene(parentRoot, Settings.getInstance().WindowWidth, Settings.getInstance().WindowHeight);
         scene.getStylesheets().add("/styles/Styles.css");
         
+        stage.setTitle(Settings.getInstance().WindowTitle);
         stage.setScene(scene);
-        stage.show();
+        stage.show();        
     }
 
     /**
