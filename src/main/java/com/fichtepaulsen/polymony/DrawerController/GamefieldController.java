@@ -67,11 +67,10 @@ public class GamefieldController implements Initializable {
     //requires: index of the player that we want the shape of
     //returns : node for display of the index-th player
     public static Node getPlayerNode(StackPane sp, int index) {
-        //TODO fix NPE here
         if (sp == null) {
             System.out.println("GridPane is NULL");
         }
-        //returns the index + (number of fields) - th child of the GridPane
+        //there is only the GridPane before the players in the StackPane, so offset by one
         return sp.getChildren().get(index + 1);
     }
     
@@ -142,28 +141,10 @@ public class GamefieldController implements Initializable {
             StackPane.setAlignment(c, Pos.TOP_LEFT);
             
             playerPane.getChildren().add(c);
-            
-            
-           //playerPane.getChildren().get(1).setScaleX(2);
 
-            PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 0, 0);    
+            //quickly step onto go from the last field before it 
+            PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 500, 39);    
         }
-        
-        Path path = new Path(new MoveTo (0,0), new LineTo(517f, 1043f));
-        pathTransition = new PathTransition();
-        pathTransition.setDuration(Duration.millis(2000));
-        pathTransition.setNode(playerPane.getChildren().get(1));
-        pathTransition.setPath(path);
-        pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
-        //pathTransition.play();
-
-
-        //Scene scene = PolyMonyDrawer.getInstance().onNewGame.mScene;
-        
-        
-        //PolyMonyDrawer.getInstance().showStage(scene);
-        
-
     }
 
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
