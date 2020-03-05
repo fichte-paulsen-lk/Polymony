@@ -383,22 +383,9 @@ public class Game implements GameInterface {
         return activePlayerIndex;
     }
 
-    public OwnableField[] getFieldsOwnedByPlayer(Player player) {
-        OwnableField[] tobereturned = new OwnableField[36];
-        OwnableField[] save = (OwnableField[]) fields;
-        int y = 0;
-        for (int i = 0; i <= fields.length; i++) {
-            if (save[i].getOwner() == player) {
-                tobereturned[y] = save[i];
-                y++;
-            }
-        }
-        return tobereturned;
-    }
-
     public HashMap amountofColoredFields() {
         HashMap<Color, Integer> tobereturned = new HashMap<Color, Integer>();
-        StreetField[] save = (StreetField[]) fields;
+        StreetField[] save = getAllStreetFields();
         Color save1 = save[0].getColor();
         for (int i = 0; i <= save.length; i++) {
             if (save1 == save[i].getColor()) {
@@ -410,11 +397,10 @@ public class Game implements GameInterface {
         }
         return tobereturned;
     }
-
+    //returns: HashMap: key: Color, value: int (counts only the Streetfields the player owns)
     public HashMap amountfieldsownedbyPlayer(Player player) {
         HashMap<Color, Integer> tobereturned = new HashMap<Color, Integer>();
-        StreetField[] save = (StreetField[]) getFieldsOwnedByPlayer(player);
-
+        StreetField[] save = (StreetField[]) getFieldsOwnedBy(player);
         Color save1 = save[0].getColor();
         for (int i = 0; i <= save.length; i++) {
             if (save1 == save[i].getColor()) {
@@ -426,10 +412,11 @@ public class Game implements GameInterface {
         }
         return tobereturned;
     }
-
-    @Override
-    public boolean isAllowedToBuyHouse(Player player, int fieldIndex) {
-        StreetField[] save = (StreetField[]) fields;
+    
+    //returns: true if given player owns all street from one color
+    //         false if not
+    public boolean ownsAllFieldsFromOneColor(Player player, int fieldIndex) {
+        StreetField[] save = getAllStreetFields();
         HashMap<Color, Integer> tobereturned;
         HashMap<Color, Integer> should;
         tobereturned = amountfieldsownedbyPlayer(players[activePlayerIndex]);
@@ -440,24 +427,26 @@ public class Game implements GameInterface {
             return false;
         }
     }
-    public boolean isAllowedtoBuildHouseOnTheGivenField(int fieldIndex){ //checks if the Color is evenly build
-        StreetField [] save=new StreetField [3]; //works only if theres not more then 3 Fields per Color
-        StreetField [] allFieldsSave= (StreetField [])fields;
-        int y=1; //Counter is used as a pointer for the save-Array, which is used to save all fields from one and the same color
-        save[0]=allFieldsSave[fieldIndex]; //the given fieldIndex is in save-Array always on first place
+    @Override
+    //returns true if the activePlayer is allowed to buy a hpuse on the given field
+    public boolean isAllowedtoBuildHouseOnTheGivenField(int fieldIndex){ 
+        StreetField [] save=new StreetField [3]; 
+        StreetField [] allFieldsSave= getAllStreetFields();
+        int y=1; 
+        save[0]=allFieldsSave[fieldIndex]; 
         Color color=allFieldsSave[fieldIndex].getColor();
-        for(int i=0;i<fields.length; i++){ //puts all Fields from a Color in an Array
+        for(int i=0;i<allFieldsSave.length; i++){ 
             if(allFieldsSave[i].getColor()==color){
                 save[y]=allFieldsSave[i];
                 y++;
             }
         }
-        if(save[3]!=null){ //if the Color has 3 Fields, checks if the difference between the houseAmounts isnt more then 1
+        if(save[3]!=null){ 
             if(save[1].getHouseAmount()-save[0].getHouseAmount()<=1 && save[2].getHouseAmount()-save[0].getHouseAmount()<=1){
                 return true;
             }
         }
-        else{ //if the Color has 2 Fields
+        else{ 
             if(save[1].getHouseAmount()-save[0].getHouseAmount()<=1){
                 return true;
             }
@@ -484,7 +473,7 @@ public class Game implements GameInterface {
     @Override
     public OwnableField [] getFieldsOwnedBy (Player player){
         OwnableField [] tobereturned= new OwnableField [36];
-        OwnableField [] save=(OwnableField []) fields;
+        OwnableField [] save= getAllOwnableFields();
         int y=0; //Counter for the returned Array
         for(int i =0; i<fields.length; i++ ){
             if(save[i].getOwner()==player){
@@ -492,5 +481,27 @@ public class Game implements GameInterface {
             }
         }
         return tobereturned;
+    }
+    public StreetField[] getAllStreetFields(){
+        StreetField [] save= new StreetField [36];
+        int c=0;
+        for(int i=0; i<fields.length; i++){
+            if(fields[i] instanceof StreetField){
+                save[c]=(StreetField)fields[i];
+                c++;
+            }
+        }
+        return save;
+    }
+    public OwnableField[] getAllOwnableFields(){
+        OwnableField [] save= new OwnableField [36];
+        int c=0;
+        for(int i=0; i<fields.length; i++){
+            if(fields[i] instanceof OwnableField){
+                save[c]=(OwnableField)fields[i];
+                c++;
+            }
+        }
+        return save;
     }
 }

@@ -74,7 +74,7 @@ public interface GameInterface {
      returns: boolean, if the player is allowed to build a house
      effect: nothing
      */
-     public boolean isAllowedToBuyHouse(Player player, int fieldIndex);
+     public boolean isAllowedtoBuildHouseOnTheGivenField(int fieldIndex);
     
      /*
      requires: Player attribute
