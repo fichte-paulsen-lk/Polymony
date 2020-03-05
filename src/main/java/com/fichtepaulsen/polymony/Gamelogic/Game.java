@@ -40,6 +40,7 @@ public class Game implements GameInterface{
     private Player activePlayer;
     int [] results;
     private boolean keepActivePlayer;
+    private int sum;
     
     private int activePlayerIndex;
     
@@ -110,9 +111,8 @@ public class Game implements GameInterface{
         }
         
         //Calculates the sum of roll results
-        int gesamtZahl = 0;
         for (int value : results){
-            gesamtZahl+=value;
+            sum += value;
         }
         //System.out.println("GesamtZahl = "+gesamtZahl);
        
@@ -120,7 +120,7 @@ public class Game implements GameInterface{
         //Tests for doublets
         boolean doublets =  isDoublets(results); 
         //Calculates next position after rolling the dices
-        int newPos = (activePlayer.getPosition()  + gesamtZahl) % 40;
+        int newPos = (activePlayer.getPosition()  + sum) % 40;
         //Case where the player is in prison:
           if(activePlayer.getIsInPrison()==true){   
               if (doublets == false){
@@ -467,6 +467,56 @@ public class Game implements GameInterface{
     
     @Override
     /*
+    requires: 
+    does:  current player pays the rent on the ownableField he stands on
+    */
+    public void payRent(){
+        Player activePlayer = getCurrentPlayer();
+        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
+        activePlayer.setBalance(activePlayer.getBalance() - currentField.getPayPrice(activePlayer, sum));
+    }
+    
+    @Override
+    /*
+    requires: 
+    returns: boolean if the current player has to pay rent on the field he stands on
+    */
+    public boolean hasToPayRent(){
+        Player activePlayer = getCurrentPlayer();
+        Field currentField = fields[activePlayer.getPosition()];
+        if (currentField instanceof OwnableField){
+            OwnableField oField = (OwnableField)fields[activePlayer.getPosition()];
+            if(oField.getOwner() != activePlayer && oField.getOwner() != null){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }     
+    }
+    
+    @Override
+    /*
+    requires: 
+    returns: boolean if the current player is able to pay the rent on the field he stands on
+    */
+    public boolean isAbleToPayRent(){                                    
+        Player activePlayer = getCurrentPlayer();
+        OwnableField currentField = (OwnableField)fields[activePlayer.getPosition()];
+        if(activePlayer.getBalance() >= currentField.getPayPrice(activePlayer, sum)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    
+    @Override
+    /*
     requires: integer for the last position of a player
               integer for the current position of a player
     returns:  boolean if a player past start in the last turn
@@ -478,5 +528,5 @@ public class Game implements GameInterface{
         else{ 
             return false;
         }
-    }
+    }   
 }

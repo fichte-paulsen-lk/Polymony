@@ -9,12 +9,14 @@ public class TrafficField extends OwnableField {
          this.rent = rent;
     }
     
+    @Override
     public void buyField(Player currentPlayer){
         this.setOwner(currentPlayer);
         currentPlayer.setTrainstationOwned(currentPlayer.getTrainstationOwned() + 1);
     }
     
-    public int getPayPrice(Player currentPlayer){
+    @Override
+    public int getPayPrice(Player currentPlayer, int sum){
         int payPrice = rent;
         for (int i = 1; i < currentPlayer.getTrainstationOwned(); i++){
             payPrice *= 2;

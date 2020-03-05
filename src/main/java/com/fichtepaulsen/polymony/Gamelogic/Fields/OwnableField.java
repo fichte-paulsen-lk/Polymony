@@ -10,8 +10,10 @@ public abstract class OwnableField extends Field{
   private int hypothekamount;
   public int rent;
 
-  
+    //method to buy an ownableField 
     public abstract void buyField(Player currentPlayer);
+    //method to get the rent a player has to pay on a field
+    public abstract int getPayPrice(Player currentPlayer, int sum);
   
     public boolean isIshypothek() {
         return ishypothek;

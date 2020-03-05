@@ -13,8 +13,19 @@ public class UtilityField extends OwnableField {
        return 0;  
     }
     
+    @Override
     public void buyField(Player currentPlayer){
-        //this.setOwner(currentPlayer);
-        //currentPlayer.setTrainstationOwned(currentPlayer.getUtilitiesOwned() + 1);
+        this.setOwner(currentPlayer);
+        currentPlayer.setTrainstationOwned(currentPlayer.getUtilitiesOwned() + 1);
+    }
+    
+    @Override
+    public int getPayPrice(Player currentPlayer, int sum){
+        if(getOwner().getUtilitiesOwned() == 1){
+            return sum * 80;
+        }
+        else{
+            return sum * 200;
+        }
     }
 }

@@ -32,11 +32,17 @@ public class StreetField extends OwnableField{
         this.houseamount = houseamount;
     }
     
+    @Override
     public void buyField(Player currentPlayer){
-        //this.setOwner(currentPlayer);
+        this.setOwner(currentPlayer);
     }
     
     public int[] getRents(){
         return rents;
+    }
+    
+    @Override
+    public int getPayPrice(Player currentPlayer, int sum){
+        return rents[this.getHouseamount()];
     }
 }
