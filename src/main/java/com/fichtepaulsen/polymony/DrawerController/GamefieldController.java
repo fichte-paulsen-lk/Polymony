@@ -9,6 +9,7 @@ import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.animation.PathTransition;
+import javafx.animation.PathTransition.OrientationType;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,9 +29,11 @@ import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
@@ -39,8 +42,6 @@ import javafx.util.Duration;
 
 public class GamefieldController implements Initializable {
     
-    
-
     @FXML
     private GridPane gp;
 
@@ -58,6 +59,9 @@ public class GamefieldController implements Initializable {
     
     @FXML
     private StackPane playerPane;
+    
+    
+     PathTransition pathTransition;
 
     //static here because logic concerns implementation of this class
     //requires: index of the player that we want the shape of
@@ -139,12 +143,27 @@ public class GamefieldController implements Initializable {
             
             playerPane.getChildren().add(c);
             
-            PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 0);    
+            
+           //playerPane.getChildren().get(1).setScaleX(2);
+
+            PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 0, 0);    
         }
         
-        PathTransition anim = new PathTransition();
+        Path path = new Path(new MoveTo (0,0), new LineTo(517f, 1043f));
+        pathTransition = new PathTransition();
+        pathTransition.setDuration(Duration.millis(2000));
+        pathTransition.setNode(playerPane.getChildren().get(1));
+        pathTransition.setPath(path);
+        pathTransition.setOrientation(OrientationType.ORTHOGONAL_TO_TANGENT);
+        //pathTransition.play();
+
+
+        //Scene scene = PolyMonyDrawer.getInstance().onNewGame.mScene;
         
-        anim.play();
+        
+        //PolyMonyDrawer.getInstance().showStage(scene);
+        
+
     }
 
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
