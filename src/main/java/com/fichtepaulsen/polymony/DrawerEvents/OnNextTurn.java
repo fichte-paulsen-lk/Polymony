@@ -30,18 +30,24 @@ public class OnNextTurn extends Drawer{
     public void getPlayerInfo() {
         
 
-        
+      
         Player currentPlayer = gameLogic.getCurrentPlayer();
-         player.setText("Player " +currentPlayer.getIndex());
-         balance.setText("Balance: " + currentPlayer.getBalance());
-         prisonFreeCards.setText("PrisonFreeCards: " + currentPlayer.getAmountPrisonFreeCard()); 
-         utilitiesOwned.setText("Owned Utilities: " + currentPlayer.getUtilitiesOwned());
-        Settings.getInstance().rightVBox.setAlignment(Pos.TOP_CENTER);
+        //Update player stats
+        player.setText("Player " +currentPlayer.getIndex());
+        player.setTextFill(currentPlayer.getColor());
+        balance.setText("Balance: " + currentPlayer.getBalance());
+        prisonFreeCards.setText("PrisonFreeCards: " + currentPlayer.getAmountPrisonFreeCard());  
+        utilitiesOwned.setText("Owned Utilities: " + currentPlayer.getUtilitiesOwned());
+        Settings.getInstance().infoBox.setAlignment(Pos.CENTER);
         
- 
- 
+        //Clear PlayerStats from VBox 
+        Settings.getInstance().infoBox.getChildren().remove(balance);
+        Settings.getInstance().infoBox.getChildren().remove(player);
+        Settings.getInstance().infoBox.getChildren().remove(prisonFreeCards);
+        Settings.getInstance().infoBox.getChildren().remove(utilitiesOwned);
         
-        Settings.getInstance().rightVBox.getChildren().addAll(player, balance, prisonFreeCards, utilitiesOwned);
+        //Add PlayerStats to PlayerStatsVBox
+        Settings.getInstance().infoBox.getChildren().addAll(player, balance, prisonFreeCards, utilitiesOwned);
     } 
     
 }

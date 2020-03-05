@@ -54,7 +54,7 @@ public class Settings {
     public Label playerLabel;
     public Button rollDice;
     public Game gameInteface;
-    public VBox rightVBox;
+    public VBox infoBox;
 
     public static boolean isNextTurnButton = false;
 
