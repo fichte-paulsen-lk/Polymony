@@ -64,8 +64,8 @@ public class GamefieldController implements Initializable {
     @FXML
     private GridPane cardGridPane;
     
-    @FXML
-    private StackPane infoStackPane;
+    @FXML 
+    private VBox rightVBox;
 
     //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 50.0;
@@ -81,11 +81,12 @@ public class GamefieldController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         //get vars from Singleton
+        Settings.getInstance().rightVBox = this.rightVBox;
         Settings.getInstance().diceResult1 = this.diceResult1;
         Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
         Settings.getInstance().rollDice = this.rollDice;
-        Settings.getInstance().infoStackPane = this.infoStackPane;
+  
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
 

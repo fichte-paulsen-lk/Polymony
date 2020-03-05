@@ -11,7 +11,11 @@ import javafx.geometry.Pos;
 
 
 public class OnNextTurn extends Drawer{
-
+    private Label player = new Label();
+    private Label balance = new Label();
+    private Label prisonFreeCards = new Label();
+    private Label utilitiesOwned = new Label();
+    
     public OnNextTurn(GameInterface ga, Stage st) {
         super(ga, st);
     }
@@ -24,19 +28,20 @@ public class OnNextTurn extends Drawer{
     }
     
     public void getPlayerInfo() {
-        /*StackPane infoStackPane = Settings.getInstance().infoStackPane;
+        
+
+        
         Player currentPlayer = gameLogic.getCurrentPlayer();
+         player.setText("Player " +currentPlayer.getIndex());
+         balance.setText("Balance: " + currentPlayer.getBalance());
+         prisonFreeCards.setText("PrisonFreeCards: " + currentPlayer.getAmountPrisonFreeCard()); 
+         utilitiesOwned.setText("Owned Utilities: " + currentPlayer.getUtilitiesOwned());
+        Settings.getInstance().rightVBox.setAlignment(Pos.TOP_CENTER);
         
-        Label balance = new Label("Balance: " + currentPlayer.getBalance());
-        Label prisonFreeCards = new Label("PrisonFreeCards: " + currentPlayer.getAmountPrisonFreeCard());
-        Label utilitiesOwned = new Label("Owned Utilities: " + currentPlayer.getUtilitiesOwned());
-        //StackPane infoStack = new StackPane(balance, prisonFreeCards, utilitiesOwned);
-        infoStackPane.getChildren().addAll(balance, prisonFreeCards, utilitiesOwned);
+ 
+ 
         
-        infoStackPane.setAlignment(balance, Pos.BOTTOM_CENTER);
-        infoStackPane.setAlignment(prisonFreeCards, Pos.TOP_RIGHT);
-        infoStackPane.setAlignment(utilitiesOwned, Pos.CENTER_RIGHT);*/
-        
-    }
+        Settings.getInstance().rightVBox.getChildren().addAll(player, balance, prisonFreeCards, utilitiesOwned);
+    } 
     
 }
