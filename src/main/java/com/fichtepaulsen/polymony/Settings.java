@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class Settings {
       
@@ -54,9 +55,9 @@ public class Settings {
     public Label diceResult1;
     public Label diceResult2;
     public Label playerLabel;
-    public StackPane infoStackPane;
     public Button rollDice;
     public Game gameInteface;
+    public VBox infoBox;
 
     public static boolean isNextTurnButton = false;
 

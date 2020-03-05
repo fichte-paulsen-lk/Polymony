@@ -49,15 +49,48 @@
    "cards":
    {
    "community":[
-        {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":true},
-        {"type" : "MoneyCard","text" : "Ziehß 10 Euro ein","value" : 10,"community":true},
-        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":true}
+        {"type" : "MoneyCard","text" : "Bank-Irrtum zu deinen Gunsten. Ziehe 4000€ ein.","value" : 4000,"community":true},
+        {"type" : "MoneyCard","text" : "Die Jahresrente wird fällig. Ziehe 2000€ ein.","value" : 2000,"community":true},
+        {"type" : "MoneyCard","text" : "Du erbst 2000€.","value" : 2000,"community":true},
+        {"type" : "MoneyCard","text" : "Du erhältst auf Vorzugs-Aktien 7% Dividende. Ziehe 500€ ein","value" : 500,"community":true},
+        {"type" : "MoneyCard","text" : "Einkommensteuer-Rückzahlung. Ziehe 400€ ein.","value" : 400,"community":true},
+        {"type" : "MoneyCard","text" : "Du hast den II. Preis in einer Schönheitskonkurrenz gewonnen. Ziehe 200€ ein","value" : 200,"community":true},
+        {"type" : "MoneyCard","text" : "Aus Lagerverkäufen erhältst du 100€.","value" : 100,"community":true},
+        {"type" : "MoneyCard","text" : "Arzt-Kosten. Zahle 100€.","value" : -100,"community":true},
+        {"type" : "MoneyCard","text" : "Zahle eine Strafe von 200€.","value" : -200,"community":true},
+        {"type" : "MoneyCard","text" : "Zahle deine Versicherungssumme von 1000€.","value" : -1000,"community":true},
+        {"type" : "MoneyCard","text" : "Zahle an das Krankenhaus 2000€.","value" : -2000,"community":true},
+		
+		{"type" : "MoneyCardOtherPlayers","text" : "Es ist dein Geburtstag. Zihe von jedem Spieler 200€ ein.","value" : 200,"community":true},
+		
+		{"type" : "JumpCard","text" : "Springe 4 Schritte","community":true,"value":4},
+		
+		{"type" : "JumpToCard","text" : "Rücke vor bis auf Los.","community":true,"money":true,"position":0},
+		{"type" : "JumpToCard","text" : "Gehe zurück zur Badstraße.","community":true,"money":false,"position":1},
+		
+		{"type" : "PrisonFreeCard","text" : "Du kommst aus dem Gefängnis frei.","community":true},
+		
+		{"type" : "GoToPrisonCard","text" : "Gehe in das Gefängnis. Begib dich direkt dorthin.","community":true},
 		],
 	"chance":[
-	    {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":false},
-        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,"community":false},
-        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":false},
-		{"type" : "JumpCard","text" : "Springe 4 Schritte","community":false,"value":4}
+        {"type" : "MoneyCard","text" : "Miete und Anleihungszinsen werden fällig. Die Bank zahlt dir 3000€","value" : 3000,"community":false},
+        {"type" : "MoneyCard","text" : "Du hast im Kreuzworträtsel-Wettbewerb gewonnen. Ziehe 2000€ ein.","value" : 2000,"community":false},
+        {"type" : "MoneyCard","text" : "Die Bank zahlt dir eine Dividende von 1000€.","value" : 1000,"community":false},
+        {"type" : "MoneyCard","text" : "Strafe für zu schnelles Fahren. Zahle 300€.","value" : -300,"community":false},
+        {"type" : "MoneyCard","text" : "Betrunken im Dienst. Strafe 400€.","value" : -400,"community":false},
+        {"type" : "MoneyCard","text" : "Zahle Schuldgeld 3000€","value" : -3000,"community":false},
+	
+		{"type" : "JumpCard","text" : "Gehe 3 Felder zurück.","community":false,"value":-3},
+	
+		{"type" : "JumpToCard","text" : "Rücke vor bis auf Los.","community":false,"money":true,"position":0},
+		{"type" : "JumpToCard","text" : "Rücke vor bis zur Seestraße.","community":false,"money":true,"position":11},
+		{"type" : "JumpToCard","text" : "Mache einen Ausflug zum Westbahnhof.","community":false,"money":true,"position":15},
+		{"type" : "JumpToCard","text" : "Rücke vor bis zum Opernplatz.","community":false,"money":true,"position":24},
+		{"type" : "JumpToCard","text" : "Rücke vor bis zur Schlossallee.","community":false,"money":false,"position":40},
+	    
+		{"type" : "PrisonFreeCard","text" : "Du kommst aus dem Gefängnis frei.","community":false},
+		
+		{"type" : "GoToPrisonCard","text" : "Gehe in das Gefängnis. Begib dich direkt dorthin.","community":false},
 		]
 	}
 }

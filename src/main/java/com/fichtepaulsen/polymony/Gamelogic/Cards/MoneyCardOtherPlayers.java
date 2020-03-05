@@ -14,11 +14,12 @@ public class MoneyCardOtherPlayers extends Card{
     
     @Override
     public void action(Game game){
-        Player [] players = game.getAllPlayers();
-        int activePlayerIndex = game.getCurrentPlayer().getIndex();
-        for (Player player : players) {
-            player.setBalance(player.getBalance() - (value));
-            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance()+value);
+        Player activePlayer = game.getActivePlayer();
+        for (Player player : game.getAllPlayers()) {
+            if (player != activePlayer) {
+                player.setBalance(player.getBalance() - (value));
+                activePlayer.setBalance(activePlayer.getBalance() + value);
+            }
         }
      }
 }

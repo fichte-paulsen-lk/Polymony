@@ -11,7 +11,11 @@ import javafx.geometry.Pos;
 
 
 public class OnNextTurn extends Drawer{
-
+    private Label player = new Label();
+    private Label balance = new Label();
+    private Label prisonFreeCards = new Label();
+    private Label utilitiesOwned = new Label();
+    
     public OnNextTurn(GameInterface ga, Stage st) {
         super(ga, st);
     }
@@ -24,19 +28,26 @@ public class OnNextTurn extends Drawer{
     }
     
     public void getPlayerInfo() {
-        /*StackPane infoStackPane = Settings.getInstance().infoStackPane;
+        
+
+      
         Player currentPlayer = gameLogic.getCurrentPlayer();
+        //Update player stats
+        player.setText("Player " +currentPlayer.getIndex());
+        player.setTextFill(currentPlayer.getColor());
+        balance.setText("Balance: " + currentPlayer.getBalance());
+        prisonFreeCards.setText("PrisonFreeCards: " + currentPlayer.getAmountPrisonFreeCard());  
+        utilitiesOwned.setText("Owned Utilities: " + currentPlayer.getUtilitiesOwned());
+        Settings.getInstance().infoBox.setAlignment(Pos.CENTER);
         
-        Label balance = new Label("Balance: " + currentPlayer.getBalance());
-        Label prisonFreeCards = new Label("PrisonFreeCards: " + currentPlayer.getAmountPrisonFreeCard());
-        Label utilitiesOwned = new Label("Owned Utilities: " + currentPlayer.getUtilitiesOwned());
-        //StackPane infoStack = new StackPane(balance, prisonFreeCards, utilitiesOwned);
-        infoStackPane.getChildren().addAll(balance, prisonFreeCards, utilitiesOwned);
+        //Clear PlayerStats from VBox 
+        Settings.getInstance().infoBox.getChildren().remove(balance);
+        Settings.getInstance().infoBox.getChildren().remove(player);
+        Settings.getInstance().infoBox.getChildren().remove(prisonFreeCards);
+        Settings.getInstance().infoBox.getChildren().remove(utilitiesOwned);
         
-        infoStackPane.setAlignment(balance, Pos.BOTTOM_CENTER);
-        infoStackPane.setAlignment(prisonFreeCards, Pos.TOP_RIGHT);
-        infoStackPane.setAlignment(utilitiesOwned, Pos.CENTER_RIGHT);*/
-        
-    }
+        //Add PlayerStats to PlayerStatsVBox
+        Settings.getInstance().infoBox.getChildren().addAll(player, balance, prisonFreeCards, utilitiesOwned);
+    } 
     
 }
