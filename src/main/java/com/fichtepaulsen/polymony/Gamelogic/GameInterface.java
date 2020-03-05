@@ -3,6 +3,7 @@ package com.fichtepaulsen.polymony.Gamelogic;
 import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.OwnableField;
 
 public interface GameInterface {
     
@@ -74,5 +75,12 @@ public interface GameInterface {
      effect: nothing
      */
      public boolean isAllowedToBuyHouse(Player player, int fieldIndex);
+    
+     /*
+     requires: Player attribute
+     returns: OwnableField- Array with all OwnableFields the player owns
+     effect: nothing 
+     */
+     public OwnableField [] getFieldsOwnedBy (Player player);
 }
 
