@@ -466,14 +466,21 @@ public class Game implements GameInterface {
     }
 
     @Override
-    public void buyHouse(int fieldIndex) {
+    public void buyHouse(int fieldIndex) { //buys a house or hotel automaticly follows the rules 
         StreetField save2 = (StreetField) fields[fieldIndex];
-        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 6 && isAllowedtoBuildHouseOnTheGivenField(fieldIndex)==true ) { //checks if the field is a StreetField and if there´s space on the field
+        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 4 && isAllowedtoBuildHouseOnTheGivenField(fieldIndex)==true ) { //checks if the field is a StreetField and if there´s space on the field
             save2.setHouseamount(save2.getHouseamount() + 1);
             players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getHousePrice());
             housesAvaible--;
         }
+        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() ==4 && isAllowedtoBuildHouseOnTheGivenField(fieldIndex)==true){ //if houseAmount is 4, a hotel sis build
+            save2.setHouseAmount(save2.getHouseAmount()+1);
+            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getHousePrice());
+            housesAvaible=housesAvaible+4;
+            hotelsAvaible=hotelsAvaible-1;
+        }
     }
+    
     @Override
     public OwnableField [] getFieldsOwnedBy (Player player){
         OwnableField [] tobereturned= new OwnableField [36];
