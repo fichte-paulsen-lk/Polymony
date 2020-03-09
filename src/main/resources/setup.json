@@ -1,59 +1,549 @@
 {
-    "fields":[
-        {"type":"StartField"},
-        {"type":"StreetField","name" : "Badstraße","price":1200, "color": 1, "rent":40, "house1":200,"house2":600,"house3":1800,"house4":3200,"hotel":5000},
-        {"type":"ActionField"},
-        {"type":"StreetField","name" : "Turmstraße","price":1200, "color": 1, "rent":80, "house1":400,"house2":1200,"house3":3600,"house4":6400,"hotel":9000},
-        {"type":"TaxField","tax": 4000,"name": "Einkommenssteuer"},
-        {"type":"TrafficField", "name":"Südbahnhof", "price":4000, "rent":500},
-        {"type":"StreetField","name" : "Chausseestraße","price":2000, "color": 2, "rent":120, "house1":600,"house2":1800,"house3":5400,"house4":8000,"hotel":11000},
-        {"type":"ActionField"},
-        {"type":"StreetField","name" : "Elisenstraße","price":1200, "color": 2, "rent":120, "house1":600,"house2":1800,"house3":5400,"house4":8000,"hotel":11000},
-        {"type":"StreetField","name" : "Poststraße","price":2400, "color": 2, "rent":160, "house1":800,"house2":2000,"house3":6000,"house4":9000,"hotel":12000},
-        {"type":"Prison"},
-        {"type":"StreetField","name" : "Seetraße","price":2800, "color": 3, "rent":200, "house1":1000,"house2":3000,"house3":9000,"house4":12500,"hotel":15000},
-        {"type":"Utility", "name": "Elektrizitätswerkwerk", "price": 3000},
-        {"type":"StreetField","name" : "Hafenstraße","price":2800, "color": 3, "rent":200, "house1":1000,"house2":3000,"house3":9000,"house4":12500,"hotel":15000},
-        {"type":"StreetField","name" : "Neue Straße","price":3200, "color": 3, "rent":240, "house1":1200,"house2":3600,"house3":10000,"house4":14000,"hotel":18000},
-        {"type":"TrafficField","name":"Westbahnhof", "price": 4000, "rent":500},
-        {"type":"StreetField","name" : "Münchner Straße","price":3600, "color": 4, "rent":280, "house1":1400,"house2":4000,"house3":11000,"house4":15000,"hotel":19000},
-        {"type":"ActionField"},
-        {"type":"StreetField","name" : "Wiener Straße","price":3600, "color": 4, "rent":280, "house1":1400,"house2":4000,"house3":11000,"house4":15000,"hotel":19000},
-        {"type":"StreetField","name" : "Berliner Straße","price":4000, "color": 4, "rent":320, "house1":1600,"house2":4400,"house3":12000,"house4":16000,"hotel":20000},
-        {"type":"ActionField"},
-        {"type":"StreetField","name" : "Theaterstraße","price":4400, "color": 5, "rent":360, "house1":1800,"house2":5000,"house3":14000,"house4":17500,"hotel":21000},
-        {"type":"ActionField"},
-        {"type":"StreetField","name" : "Museumstraße","price":4400, "color": 5, "rent":360, "house1":1800,"house2":5000,"house3":14000,"house4":17500,"hotel":21000},
-        {"type":"StreetField","name" : "Opernplatz","price":4800, "color": 5, "rent":400, "house1":2000,"house2":6000,"house3":15000,"house4":18500,"hotel":22000},
-        {"type":"TrafficField", "name":"Nordbahnhof","price":4000, "rent":500},
-        {"type":"StreetField","name" : "Lessingstraße","price":5200, "color": 6, "rent":440, "house1":2200,"house2":6600,"house3":16000,"house4":19500,"hotel":23000},
-        {"type":"StreetField","name" : "Schillerstraße","price":5200, "color": 6, "rent":440, "house1":2200,"house2":6600,"house3":16000,"house4":19500,"hotel":23000},
-        {"type":"Utility","name":"Wasserwerk","price":3000},
-        {"type":"StreetField","name" : "Goethestraße","price":5600, "color": 6, "rent":440, "house1":2400,"house2":7200,"house3":17000,"house4":20500,"hotel":24000},
-        {"type":"ActionField"},
-        {"type":"StreetField","name" : "Rathausplatz","price":6000, "color": 7, "rent":520, "house1":2600,"house2":7800,"house3":18000,"house4":22000,"hotel":25500},
-        {"type":"StreetField","name" : "Hauptstraße","price":6000, "color": 7, "rent":520, "house1":2600,"house2":7800,"house3":18000,"house4":22000,"hotel":25500},
-        {"type":"ActionField"},
-        {"type":"StreetField","name" : "Bahnhofsstraße","price":6400, "color": 7, "rent":560, "house1":3000,"house2":9000,"house3":20000,"house4":24000,"hotel":28000},
-        {"type":"TrafficField","name":"Hauptbahnhof","price":4000, "rent":500},
-        {"type":"ActionField"},
-        {"type":"StreetField","name" : "Parkstraße","price":7000, "color": 8, "rent":700, "house1":3500,"house2":10000,"house3":22000,"house4":26000,"hotel":30000},
-        {"type":"TaxField","tax": 2000,"name": "Zusatzsteuer"},
-        {"type":"StreetField","name" : "Schloßallee","price":8000, "color": 8, "rent":1000, "house1":4000,"house2":12000,"house3":28000,"house4":34000,"hotel":40000}
-    ],
-    
-   "cards":
-   {
-   "community":[
-        {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":true},
-        {"type" : "MoneyCard","text" : "Ziehß 10 Euro ein","value" : 10,"community":true},
-        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":true}
-		],
-	"chance":[
-	    {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":false},
-        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,"community":false},
-        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":false},
-		{"type" : "JumpCard","text" : "Springe 4 Schritte","community":false,"value":4}
-		]
-	}
+   "fields":[
+      {
+         "type":"StartField"
+      },
+      {
+         "type":"StreetField",
+         "name":"Badstraße",
+         "price":1200,
+         "color":1,
+         "rent":40,
+         "house1":200,
+         "house2":600,
+         "house3":1800,
+         "house4":3200,
+         "hotel":5000
+      },
+      {
+         "type":"ActionField",
+         "community": true
+      },
+      {
+         "type":"StreetField",
+         "name":"Turmstraße",
+         "price":1200,
+         "color":1,
+         "rent":80,
+         "house1":400,
+         "house2":1200,
+         "house3":3600,
+         "house4":6400,
+         "hotel":9000
+      },
+      {
+         "type":"TaxField",
+         "tax":4000,
+         "name":"Einkommenssteuer"
+      },
+      {
+         "type":"TrafficField",
+         "name":"Südbahnhof",
+         "price":4000,
+         "rent":500
+      },
+      {
+         "type":"StreetField",
+         "name":"Chausseestraße",
+         "price":2000,
+         "color":2,
+         "rent":120,
+         "house1":600,
+         "house2":1800,
+         "house3":5400,
+         "house4":8000,
+         "hotel":11000
+      },
+      {
+         "type":"ActionField",
+        "community": true
+
+      },
+      {
+         "type":"StreetField",
+         "name":"Elisenstraße",
+         "price":1200,
+         "color":2,
+         "rent":120,
+         "house1":600,
+         "house2":1800,
+         "house3":5400,
+         "house4":8000,
+         "hotel":11000
+      },
+      {
+         "type":"StreetField",
+         "name":"Poststraße",
+         "price":2400,
+         "color":2,
+         "rent":160,
+         "house1":800,
+         "house2":2000,
+         "house3":6000,
+         "house4":9000,
+         "hotel":12000
+      },
+      {
+         "type":"Prison"
+      },
+      {
+         "type":"StreetField",
+         "name":"Seetraße",
+         "price":2800,
+         "color":3,
+         "rent":200,
+         "house1":1000,
+         "house2":3000,
+         "house3":9000,
+         "house4":12500,
+         "hotel":15000
+      },
+      {
+         "type":"Utility",
+         "name":"Elektrizitätswerkwerk",
+         "price":3000
+      },
+      {
+         "type":"StreetField",
+         "name":"Hafenstraße",
+         "price":2800,
+         "color":3,
+         "rent":200,
+         "house1":1000,
+         "house2":3000,
+         "house3":9000,
+         "house4":12500,
+         "hotel":15000
+      },
+      {
+         "type":"StreetField",
+         "name":"Neue Straße",
+         "price":3200,
+         "color":3,
+         "rent":240,
+         "house1":1200,
+         "house2":3600,
+         "house3":10000,
+         "house4":14000,
+         "hotel":18000
+      },
+      {
+         "type":"TrafficField",
+         "name":"Westbahnhof",
+         "price":4000,
+         "rent":500
+      },
+      {
+         "type":"StreetField",
+         "name":"Münchner Straße",
+         "price":3600,
+         "color":4,
+         "rent":280,
+         "house1":1400,
+         "house2":4000,
+         "house3":11000,
+         "house4":15000,
+         "hotel":19000
+      },
+      {
+         "type":"ActionField",
+         "community": true
+
+      },
+      {
+         "type":"StreetField",
+         "name":"Wiener Straße",
+         "price":3600,
+         "color":4,
+         "rent":280,
+         "house1":1400,
+         "house2":4000,
+         "house3":11000,
+         "house4":15000,
+         "hotel":19000
+      },
+      {
+         "type":"StreetField",
+         "name":"Berliner Straße",
+         "price":4000,
+         "color":4,
+         "rent":320,
+         "house1":1600,
+         "house2":4400,
+         "house3":12000,
+         "house4":16000,
+         "hotel":20000
+      },
+      {
+         "type":"ActionField",
+         "community": true
+
+      },
+      {
+         "type":"StreetField",
+         "name":"Theaterstraße",
+         "price":4400,
+         "color":5,
+         "rent":360,
+         "house1":1800,
+         "house2":5000,
+         "house3":14000,
+         "house4":17500,
+         "hotel":21000
+      },
+      {
+         "type":"ActionField",
+         "community": true
+      },
+      {
+         "type":"StreetField",
+         "name":"Museumstraße",
+         "price":4400,
+         "color":5,
+         "rent":360,
+         "house1":1800,
+         "house2":5000,
+         "house3":14000,
+         "house4":17500,
+         "hotel":21000
+      },
+      {
+         "type":"StreetField",
+         "name":"Opernplatz",
+         "price":4800,
+         "color":5,
+         "rent":400,
+         "house1":2000,
+         "house2":6000,
+         "house3":15000,
+         "house4":18500,
+         "hotel":22000
+      },
+      {
+         "type":"TrafficField",
+         "name":"Nordbahnhof",
+         "price":4000,
+         "rent":500
+      },
+      {
+         "type":"StreetField",
+         "name":"Lessingstraße",
+         "price":5200,
+         "color":6,
+         "rent":440,
+         "house1":2200,
+         "house2":6600,
+         "house3":16000,
+         "house4":19500,
+         "hotel":23000
+      },
+      {
+         "type":"StreetField",
+         "name":"Schillerstraße",
+         "price":5200,
+         "color":6,
+         "rent":440,
+         "house1":2200,
+         "house2":6600,
+         "house3":16000,
+         "house4":19500,
+         "hotel":23000
+      },
+      {
+         "type":"Utility",
+         "name":"Wasserwerk",
+         "price":3000
+      },
+      {
+         "type":"StreetField",
+         "name":"Goethestraße",
+         "price":5600,
+         "color":6,
+         "rent":440,
+         "house1":2400,
+         "house2":7200,
+         "house3":17000,
+         "house4":20500,
+         "hotel":24000
+      },
+      {
+         "type":"ActionField",
+         "community": true
+      },
+      {
+         "type":"StreetField",
+         "name":"Rathausplatz",
+         "price":6000,
+         "color":7,
+         "rent":520,
+         "house1":2600,
+         "house2":7800,
+         "house3":18000,
+         "house4":22000,
+         "hotel":25500
+      },
+      {
+         "type":"StreetField",
+         "name":"Hauptstraße",
+         "price":6000,
+         "color":7,
+         "rent":520,
+         "house1":2600,
+         "house2":7800,
+         "house3":18000,
+         "house4":22000,
+         "hotel":25500
+      },
+      {
+         "type":"ActionField",
+         "community": true
+      },
+      {
+         "type":"StreetField",
+         "name":"Bahnhofsstraße",
+         "price":6400,
+         "color":7,
+         "rent":560,
+         "house1":3000,
+         "house2":9000,
+         "house3":20000,
+         "house4":24000,
+         "hotel":28000
+      },
+      {
+         "type":"TrafficField",
+         "name":"Hauptbahnhof",
+         "price":4000,
+         "rent":500
+      },
+      {
+         "type":"ActionField",
+         "community": true
+
+      },
+      {
+         "type":"StreetField",
+         "name":"Parkstraße",
+         "price":7000,
+         "color":8,
+         "rent":700,
+         "house1":3500,
+         "house2":10000,
+         "house3":22000,
+         "house4":26000,
+         "hotel":30000
+      },
+      {
+         "type":"TaxField",
+         "tax":2000,
+         "name":"Zusatzsteuer"
+      },
+      {
+         "type":"StreetField",
+         "name":"Schloßallee",
+         "price":8000,
+         "color":8,
+         "rent":1000,
+         "house1":4000,
+         "house2":12000,
+         "house3":28000,
+         "house4":34000,
+         "hotel":40000
+      }
+   ],
+   "cards":{
+      "community":[
+         {
+            "type":"MoneyCard",
+            "text":"Bank-Irrtum zu deinen Gunsten. Ziehe 4000€ ein.",
+            "value":4000,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Die Jahresrente wird fällig. Ziehe 2000€ ein.",
+            "value":2000,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Du erbst 2000€.",
+            "value":2000,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Du erhältst auf Vorzugs-Aktien 7% Dividende. Ziehe 500€ ein",
+            "value":500,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Einkommensteuer-Rückzahlung. Ziehe 400€ ein.",
+            "value":400,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Du hast den II. Preis in einer Schönheitskonkurrenz gewonnen. Ziehe 200€ ein",
+            "value":200,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Aus Lagerverkäufen erhältst du 100€.",
+            "value":100,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Arzt-Kosten. Zahle 100€.",
+            "value":-100,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Zahle eine Strafe von 200€.",
+            "value":-200,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Zahle deine Versicherungssumme von 1000€.",
+            "value":-1000,
+            "community":true
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Zahle an das Krankenhaus 2000€.",
+            "value":-2000,
+            "community":true
+         },
+         {
+            "type":"MoneyCardOtherPlayers",
+            "text":"Es ist dein Geburtstag. Zihe von jedem Spieler 200€ ein.",
+            "value":200,
+            "community":true
+         },
+         {
+            "type":"JumpCard",
+            "text":"Springe 4 Schritte",
+            "community":true,
+            "value":4
+         },
+         {
+            "type":"JumpToCard",
+            "text":"Rücke vor bis auf Los.",
+            "community":true,
+            "money":true,
+            "position":0
+         },
+         {
+            "type":"JumpToCard",
+            "text":"Gehe zurück zur Badstraße.",
+            "community":true,
+            "money":false,
+            "position":1
+         },
+         {
+            "type":"PrisonFreeCard",
+            "text":"Du kommst aus dem Gefängnis frei.",
+            "community":true
+         },
+         {
+            "type":"GoToPrisonCard",
+            "text":"Gehe in das Gefängnis. Begib dich direkt dorthin.",
+            "community":true
+         }
+      ],
+      "chance":[
+         {
+            "type":"MoneyCard",
+            "text":"Miete und Anleihungszinsen werden fällig. Die Bank zahlt dir 3000€",
+            "value":3000,
+            "community":false
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Du hast im Kreuzworträtsel-Wettbewerb gewonnen. Ziehe 2000€ ein.",
+            "value":2000,
+            "community":false
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Die Bank zahlt dir eine Dividende von 1000€.",
+            "value":1000,
+            "community":false
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Strafe für zu schnelles Fahren. Zahle 300€.",
+            "value":-300,
+            "community":false
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Betrunken im Dienst. Strafe 400€.",
+            "value":-400,
+            "community":false
+         },
+         {
+            "type":"MoneyCard",
+            "text":"Zahle Schuldgeld 3000€",
+            "value":-3000,
+            "community":false
+         },
+         {
+            "type":"JumpCard",
+            "text":"Gehe 3 Felder zurück.",
+            "community":false,
+            "value":-3
+         },
+         {
+            "type":"JumpToCard",
+            "text":"Rücke vor bis auf Los.",
+            "community":false,
+            "money":true,
+            "position":0
+         },
+         {
+            "type":"JumpToCard",
+            "text":"Rücke vor bis zur Seestraße.",
+            "community":false,
+            "money":true,
+            "position":11
+         },
+         {
+            "type":"JumpToCard",
+            "text":"Mache einen Ausflug zum Westbahnhof.",
+            "community":false,
+            "money":true,
+            "position":15
+         },
+         {
+            "type":"JumpToCard",
+            "text":"Rücke vor bis zum Opernplatz.",
+            "community":false,
+            "money":true,
+            "position":24
+         },
+         {
+            "type":"JumpToCard",
+            "text":"Rücke vor bis zur Schlossallee.",
+            "community":false,
+            "money":false,
+            "position":40
+         },
+         {
+            "type":"PrisonFreeCard",
+            "text":"Du kommst aus dem Gefängnis frei.",
+            "community":false
+         },
+         {
+            "type":"GoToPrisonCard",
+            "text":"Gehe in das Gefängnis. Begib dich direkt dorthin.",
+            "community":false
+         }
+      ]
+   }
 }

@@ -8,6 +8,8 @@ import com.fichtepaulsen.polymony.PolyMonyDrawer;
 import com.fichtepaulsen.polymony.Settings;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.animation.PathTransition;
+import javafx.animation.PathTransition.OrientationType;
 import javafx.event.Event;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
@@ -28,27 +30,21 @@ import javafx.scene.shape.Circle;
 import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 
 
 public class GamefieldController implements Initializable {
     
-    //static here because logic concerns implementation of this class
-    //requires: index of the player that we want the shape of
-    //returns : node for display of the index-th player
-    public static Node getPlayerNode(GridPane gp, int index) {
-        //TODO fix NPE here
-        if (gp == null) {
-            System.out.println("GridPane is NULL");
-        }
-        //returns the index + (number of fields) - th child of the GridPane
-        return gp.getChildren().get(index + 4*Settings.getInstance().rowLength);
-    }
-
     @FXML
     private GridPane gp;
 
@@ -65,8 +61,26 @@ public class GamefieldController implements Initializable {
     private GridPane cardGridPane;
     
     @FXML
-    private StackPane infoStackPane;
+    private StackPane playerPane;
+    
+    
+     PathTransition pathTransition;
+    
+    
+    @FXML
+    private VBox infoBox;
 
+    //static here because logic concerns implementation of this class
+    //requires: index of the player that we want the shape of
+    //returns : node for display of the index-th player
+    public static Node getPlayerNode(StackPane sp, int index) {
+        if (sp == null) {
+            System.out.println("GridPane is NULL");
+        }
+        //there is only the GridPane before the players in the StackPane, so offset by one
+        return sp.getChildren().get(index + 1);
+    }
+    
     //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 50.0;
     private double defaultFieldWidth = 100.0;
@@ -84,8 +98,10 @@ public class GamefieldController implements Initializable {
         Settings.getInstance().diceResult1 = this.diceResult1;
         Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
+        Settings.getInstance().gameStackPane = this.playerPane;
         Settings.getInstance().rollDice = this.rollDice;
-        Settings.getInstance().infoStackPane = this.infoStackPane;
+        Settings.getInstance().infoBox = this.infoBox;
+  
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
 
@@ -129,15 +145,16 @@ public class GamefieldController implements Initializable {
             
             //add a new player to the top left, which is then promptly moved 
             //to it's correct location using OnRoll
-            gp.add(c, 0, 0);
-            PolyMonyDrawer.getInstance().onRoll.drawPlayer(g.getNthPlayer(i));
-        
+            StackPane.setMargin(c, new Insets(0, 0, 0, 0));
+            
             //all margins are defined from the top left
-            GridPane.setValignment(c, VPos.TOP);
-            GridPane.setHalignment(c, HPos.LEFT);
-          
+            StackPane.setAlignment(c, Pos.TOP_LEFT);
+            
+            playerPane.getChildren().add(c);
+
+            //quickly step onto go from the last field before it 
+            PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 500, 39);    
         }
-       
     }
 
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {

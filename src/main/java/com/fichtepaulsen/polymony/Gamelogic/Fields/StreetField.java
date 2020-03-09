@@ -1,12 +1,14 @@
 package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
+
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import javafx.scene.paint.Color;
 
 public class StreetField extends OwnableField{
      private Color color;
      private int houseamount;
-     private int[] rents;
+     private int[] rents = new int[6];
      private boolean allStreetsOwned;
      
      public StreetField(String name, int price, Color color, int rent, int house1, int house2, int house3, int house4, int hotel) {
@@ -24,6 +26,12 @@ public class StreetField extends OwnableField{
      public Color getColor(){
         return this.color;
      }
+
+
+    @Override
+    public void action(Game game) {
+        Player activePlayer = game.getActivePlayer();
+    }
      
     public int getHouseamount() {
         return houseamount;
@@ -62,6 +70,7 @@ public class StreetField extends OwnableField{
     
     public int[] getRents(){
         return rents;
+
     }
     
     @Override

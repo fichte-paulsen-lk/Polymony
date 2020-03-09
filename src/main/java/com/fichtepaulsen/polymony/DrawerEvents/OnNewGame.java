@@ -16,6 +16,9 @@ public class OnNewGame extends Drawer {
         super(ga, st);
     }
     
+    public Parent parent;
+    public Scene mScene;
+    
     @Override
     public void handle () {
         
@@ -32,6 +35,8 @@ public class OnNewGame extends Drawer {
         
         Scene scene = new Scene(parentRoot);
         scene.getStylesheets().add("/styles/Styles.css");
+        
+        mScene = scene;
         
         this.stage.setScene(scene);
         this.stage.show();

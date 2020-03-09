@@ -5,6 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 
 public class Settings {
       
@@ -31,7 +32,7 @@ public class Settings {
     //one fourth of the total amount of field on the
     //game board (so that no non multiples of four can be used)
     public final int rowLength = 10;
-    
+
     public final int GameFields = 40;
     
     public final String ApplicationVersion = "1.2";
@@ -44,16 +45,20 @@ public class Settings {
     
     public final double playerRadius = 8f;
     
+    public final String WindowTitle = "Polymony";
+
+    
     // Public Settings
     public int numberOfPlayers = 4;
 
     public GridPane gameGridPane;
+    public StackPane gameStackPane;
     public Label diceResult1;
     public Label diceResult2;
     public Label playerLabel;
-    public StackPane infoStackPane;
     public Button rollDice;
     public Game gameInteface;
+    public VBox infoBox;
 
     public static boolean isNextTurnButton = false;
 

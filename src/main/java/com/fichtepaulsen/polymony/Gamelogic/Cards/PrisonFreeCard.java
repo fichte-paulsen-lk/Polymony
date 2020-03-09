@@ -3,17 +3,15 @@ package com.fichtepaulsen.polymony.Gamelogic.Cards;
 import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
-public class MoneyCard  extends Card{
-    private int value;
+public class PrisonFreeCard extends Card{
     
-    public MoneyCard(String text,int value,boolean community){
+    public PrisonFreeCard (String text,boolean community){
         super(text,community);
-        this.value = value;
     }
 
     @Override
     public void action(Game game) {
         Player activePlayer = game.getActivePlayer();
-        activePlayer.setBalance(activePlayer.getBalance() + value);
+        activePlayer.setAmountPrisonFreeCard(activePlayer.getAmountPrisonFreeCard()+1);
     }
 }

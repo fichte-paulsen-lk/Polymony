@@ -6,7 +6,9 @@ public abstract class OwnableField extends Field{
   public int price;
   private Player owner;
   public String name;
-  public int rent;
+  protected int rent;
+
+  
   private int houseAmount;
   private boolean isMortgage;
   private int mortgageAmount;

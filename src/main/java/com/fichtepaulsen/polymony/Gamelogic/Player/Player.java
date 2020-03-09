@@ -67,6 +67,10 @@ public abstract class Player {
     public void setBalance(int balance) {
         this.balance = balance;
     }
+    
+    public void changeBalance(int money) {
+        this.balance += money;
+    }
 
     public int getPosition() {
         return position;
