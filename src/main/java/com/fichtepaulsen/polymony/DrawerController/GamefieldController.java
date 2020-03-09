@@ -67,6 +67,8 @@ public class GamefieldController implements Initializable {
     
     @FXML
     private VBox infoBox;
+    
+    private Game gameLogic;
 
     //the height of a rectangle may be equal to the witdth of the field and viceversa, due to rotation
     private double defaultFieldHeight = 50.0;
@@ -87,6 +89,7 @@ public class GamefieldController implements Initializable {
         Settings.getInstance().gameGridPane = this.gp;
         Settings.getInstance().rollDice = this.rollDice;
         Settings.getInstance().infoBox = this.infoBox;
+        gameLogic = Settings.getInstance().gameInteface;
   
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
@@ -139,7 +142,7 @@ public class GamefieldController implements Initializable {
             GridPane.setHalignment(c, HPos.LEFT);
           
         }
-       
+       PolyMonyDrawer.getInstance().onNextTurn.getPlayerInfo();
     }
 
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
@@ -260,7 +263,7 @@ public class GamefieldController implements Initializable {
         }
     }
     
-    private void onCardClick(Field field) {
+    public void onCardClick(Field field) {
         if (field instanceof StreetField) {
             StreetField f = (StreetField)field;
             showStreetCard(f);
@@ -330,7 +333,11 @@ public class GamefieldController implements Initializable {
             PolyMonyDrawer.getInstance().onNextTurn.handle();
             
         } else {
+            
             PolyMonyDrawer.getInstance().onRoll.handle(); 
+            onCardClick(gameLogic.getNthField(gameLogic.getCurrentPlayer().getPosition()));
+            PolyMonyDrawer.getInstance().onRoll.showBuyButton();
+            
         }
     }
 
