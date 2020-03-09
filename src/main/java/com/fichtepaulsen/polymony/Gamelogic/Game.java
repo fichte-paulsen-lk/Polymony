@@ -55,6 +55,8 @@ public class Game implements GameInterface {
 
     private Card[] communityCards;
     private boolean keepActivePlayer;
+    private int sum;
+    
     private int activePlayerIndex;
 
     public Game() {
@@ -175,6 +177,7 @@ public class Game implements GameInterface {
         if (pastStart(lastPosition, newPos) && !activePlayer.getIsInPrison()) {
             activePlayer.setBalance(activePlayer.getBalance() + 4000);
         }
+        fields[newPos].action(this);
         return results;
     }
 
@@ -230,6 +233,7 @@ public class Game implements GameInterface {
     }
 
     public Field[] readJson() throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
+
         //Öffne die fields.json Datei und schreibe den Inhalt in jsonString
         InputStream in = this.getClass().getResourceAsStream("/setup.json");
         BufferedReader reader = new BufferedReader(new InputStreamReader(in, "UTF-8"));
@@ -255,41 +259,44 @@ public class Game implements GameInterface {
             //Hole den Typen bzw. den Klassenbezeichner des Feldes
             String fieldClassName = field.getString("type");
 
-            //Je nachdem welche Klasse es ist wird der Konstruktor mit den jeweils gewünschten Werten aufgerufen und das Objekt in temp an Stelle des Indizes i geschrieben
-            switch (fieldClassName) {
-                case "StartField":
-                    temp[i] = new StartField();
-                    break;
-                case "StreetField":
-                    temp[i] = new StreetField((String) field.get("name"), (int) field.get("price"), getColor((int) field.get("color")));
-                    break;
-                case "ActionField":
-                    try {
-                        field.getBoolean("freeParking");
-                        temp[i] = new ActionField(false, field.getBoolean("freeParking"));
-                    } catch (JSONException e) {
-                        temp[i] = new ActionField(field.getBoolean("community"), false);
-                    }
+            try {
+                //Je nachdem welche Klasse es ist wird der Konstruktor mit den jeweils gewünschten Werten aufgerufen und das Objekt in temp an Stelle des Indizes i geschrieben
+                switch (fieldClassName) {
+                    case "StartField":
+                        temp[i] = new StartField();
+                        break;
+                    case "StreetField":
+                        temp[i] = new StreetField((String) field.get("name"), (int) field.get("price"), getColor((int) field.get("color")), (int) field.get("rent"), (int) field.get("house1"), (int) field.get("house2"), (int) field.get("house3"), (int) field.get("house4"), (int) field.get("hotel"));
+                        break;
+                    case "ActionField":
+                        try {
+                            temp[i] = new ActionField(false, field.getBoolean("freeParking"));
+                        } catch (Exception e) {
+                            temp[i] = new ActionField(field.getBoolean("community"), false);
+                        }
 
-                    break;
-                case "TaxField":
-                    temp[i] = new TaxField((int) field.get("tax"), (String) field.get("name"), i);
-                    break;
-                case "TrafficField":
-                    temp[i] = new TrafficField();
-                    break;
-                case "Prison":
-                    temp[i] = new PrisonField();
-                    break;
-                case "GoToPrisonField":
-                    temp[i] = new GoToPrisonField();
-                    break;
-                case "Utility":
-                    temp[i] = new UtilityField((String) field.get("name"), (int) field.get("price"));
-                    break;
-                default:
-                    Logger.getLogger(getClass().getName()).log(Level.SEVERE, "JSON Import does not work!");
-                    break;
+                        break;
+                    case "TaxField":
+                        temp[i] = new TaxField((int) field.get("tax"), (String) field.get("name"), i);
+                        break;
+                    case "TrafficField":
+                        temp[i] = new TrafficField((String) field.get("name"), (int) field.get("price"), (int) field.get("rent"));
+                        break;
+                    case "Prison":
+                        temp[i] = new PrisonField();
+                        break;
+                    case "GoToPrisonField":
+                        temp[i] = new GoToPrisonField();
+                        break;
+                    case "Utility":
+                        temp[i] = new UtilityField((String) field.get("name"), (int) field.get("price"));
+                        break;
+                    default:
+                        Logger.getLogger(getClass().getName()).log(Level.SEVERE, "JSON Import does not work!");
+                        break;
+                }
+            } catch (Exception e) {
+                Logger.getLogger(getClass().getName()).log(Level.SEVERE, e.getMessage());
             }
         }
         return temp;
@@ -311,7 +318,8 @@ public class Game implements GameInterface {
         returns:  player object from players at the given index
      */
     @Override
-    public Player getNthPlayer(int index) {
+    public Player getNthPlayer(int index
+    ) {
         return players[index];
     }
 
@@ -347,7 +355,8 @@ public class Game implements GameInterface {
     returns:  field object from fields at the given index
      */
     @Override
-    public Field getNthField(int n) {
+    public Field getNthField(int n
+    ) {
         return fields[n];
     }
 
@@ -437,7 +446,6 @@ public class Game implements GameInterface {
         }
         this.chanceCards = chanceCards;
 
-
         JSONArray communityCardsJson = cardsObj.getJSONArray("community");
 
         Card[] communityCards = new Card[communityCardsJson.length()];
@@ -500,7 +508,7 @@ public class Game implements GameInterface {
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
         //player becomes owner of the ownableField
-        currentField.setOwner(activePlayer);
+        currentField.buyField(activePlayer, fields);
         //Player loses as much money as the price of the ownableField 
         activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
 
@@ -513,14 +521,69 @@ public class Game implements GameInterface {
      */
     public boolean isAbleToBuyField() {
         Player activePlayer = getCurrentPlayer();
-        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
-        if (activePlayer.getBalance() >= currentField.getPrice()) {
-            return true;
+        Field currentField = fields[activePlayer.getPosition()];
+        if (currentField instanceof OwnableField){
+            OwnableField oField = (OwnableField)fields[activePlayer.getPosition()];
+            if(activePlayer.getBalance() >= oField.getPrice() && oField.getOwner() == null){
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }
     }
 
+    @Override
+    /*
+    requires: 
+    does:  current player pays the rent on the ownableField he stands on
+    */
+    public void payRent(){
+        Player activePlayer = getCurrentPlayer();
+        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
+        activePlayer.setBalance(activePlayer.getBalance() - currentField.getPayPrice(sum));
+    }
+    
+    @Override
+    /*
+    requires: 
+    returns: boolean if the current player has to pay rent on the field he stands on
+    */
+    public boolean hasToPayRent(){
+        Player activePlayer = getCurrentPlayer();
+        Field currentField = fields[activePlayer.getPosition()];
+        if (currentField instanceof OwnableField){
+            OwnableField oField = (OwnableField)fields[activePlayer.getPosition()];
+            if(oField.getOwner() != activePlayer && oField.getOwner() != null && !oField.getIsMortgage()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            return false;
+        }     
+    }
+    
+    @Override
+    /*
+    requires: 
+    returns: boolean if the current player is able to pay the rent on the field he stands on
+    */
+    public boolean isAbleToPayRent(){                                    
+        Player activePlayer = getCurrentPlayer();
+        OwnableField currentField = (OwnableField)fields[activePlayer.getPosition()];
+        if(activePlayer.getBalance() >= currentField.getPayPrice(sum)){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    
     @Override
     /*
     requires: integer for the last position of a player

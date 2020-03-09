@@ -6,10 +6,18 @@ public abstract class OwnableField extends Field{
   public int price;
   private Player owner;
   public String name;
+  protected int rent;
+
+  
   private int houseAmount;
   private boolean isMortgage;
   private int mortgageAmount;
 
+    //method to buy an ownableField 
+    public abstract void buyField(Player currentPlayer, Field[] fields);
+    //method to get the rent a player has to pay on a field
+    public abstract int getPayPrice(int sum);
+  
     public boolean getIsMortgage() {
         return isMortgage;
     }
@@ -64,5 +72,6 @@ public abstract class OwnableField extends Field{
 
     public void setOwner(Player owner) {
         this.owner = owner;
-    } 
+    }
+    
 }

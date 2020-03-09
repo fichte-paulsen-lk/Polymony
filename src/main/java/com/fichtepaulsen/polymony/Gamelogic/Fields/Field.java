@@ -1,6 +1,9 @@
 package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
+import com.fichtepaulsen.polymony.Gamelogic.Game;
+
 public abstract class Field {
+    public abstract void action(Game game);
     
     protected int index;
     protected String name;
@@ -20,4 +23,5 @@ public abstract class Field {
     public void setIndex(int index) {
         this.index = index;
     }
+
 }
