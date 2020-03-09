@@ -3,6 +3,8 @@ package com.fichtepaulsen.polymony.Gamelogic;
 import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
+import java.awt.Color;
+import java.util.HashMap;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,4 +66,13 @@ public class GameLogicTest {
         assertNotNull(cards);
         assertEquals(cards.length, 3);
     }
+    
+    @Test
+    public void testAmountColoredFields() {
+    
+        HashMap<Color, Integer> map = game.amountOfColoredFields();
+        
+        assertEquals(map.get(Color.BLUE), new Integer(2));
+        assertEquals(map.get(Color.RED), new Integer(3));
+    } 
 }

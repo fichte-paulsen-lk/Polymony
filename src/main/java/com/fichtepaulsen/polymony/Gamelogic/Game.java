@@ -382,25 +382,31 @@ public class Game implements GameInterface {
     public int getActivePlayerIndex() {
         return activePlayerIndex;
     }
-
-    public HashMap amountofColoredFields() {
-        HashMap<Color, Integer> tobereturned = new HashMap<Color, Integer>();
+    
+    //requires: field[] is not null
+    //returns: HashMap; key is the Color and the Integer- value ahows how many fields are there of that Color
+    public HashMap amountOfColoredFields() {  
+        HashMap<Color, Integer> tobereturned = new HashMap<>();
         StreetField[] save = getAllStreetFields();
         Color save1 = save[0].getColor();
         for (int i = 0; i <= save.length; i++) {
-            if (save1 == save[i].getColor()) {
-                tobereturned.put(save1, tobereturned.get(save1) + 1);
-            } else {
-                save1 = save[i].getColor();
-                tobereturned.put(save1, tobereturned.get(save1) + 1);
+            if(save[i].getColor() != null) {
+                if (save1 == save[i].getColor()) {
+                    tobereturned.put(save1, tobereturned.get(save1) + 1);
+                } 
+                else {
+                    save1 = save[i].getColor();
+                    tobereturned.put(save1, tobereturned.get(save1) + 1);
+                }
             }
         }
         return tobereturned;
     }
+    
     //returns: HashMap: key: Color, value: int (counts only the Streetfields the player owns)
     public HashMap amountfieldsownedbyPlayer(Player player) {
         HashMap<Color, Integer> tobereturned = new HashMap<Color, Integer>();
-        StreetField[] save = (StreetField[]) getFieldsOwnedBy(player);
+        StreetField[] save = (StreetField[]) getStreetFieldsOwnedBy(player);
         Color save1 = save[0].getColor();
         for (int i = 0; i <= save.length; i++) {
             if (save1 == save[i].getColor()) {
@@ -420,7 +426,7 @@ public class Game implements GameInterface {
         HashMap<Color, Integer> tobereturned;
         HashMap<Color, Integer> should;
         tobereturned = amountfieldsownedbyPlayer(players[activePlayerIndex]);
-        should = amountofColoredFields();
+        should = amountOfColoredFields();
         if (Objects.equals(tobereturned.get(save[fieldIndex].getColor()), should.get(save[fieldIndex].getColor()))) {
             return true;
         } else {
@@ -482,15 +488,28 @@ public class Game implements GameInterface {
         }
         return tobereturned;
     }
+    
+    public StreetField [] getStreetFieldsOwnedBy (Player player){
+        StreetField [] tobereturned= new StreetField [36];
+        OwnableField [] save= getAllOwnableFields();
+        int y=0; //Counter for the returned Array
+        for(int i =0; i<fields.length; i++ ){
+            if(save[i].getOwner()==player && save[i] instanceof StreetField){
+                tobereturned[y]=(StreetField)save[i];
+            }
+        }
+        return tobereturned;
+    }
     public StreetField[] getAllStreetFields(){
         StreetField [] save= new StreetField [36];
         int c=0;
-        for(int i=0; i<fields.length; i++){
+        for(int i=0; i < save.length; i++){
             if(fields[i] instanceof StreetField){
-                save[c]=(StreetField)fields[i];
+                save[c]=(StreetField) fields[i];
                 c++;
             }
         }
+        
         return save;
     }
     public OwnableField[] getAllOwnableFields(){
