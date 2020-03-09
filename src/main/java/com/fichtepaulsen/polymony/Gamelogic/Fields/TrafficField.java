@@ -16,9 +16,9 @@ public class TrafficField extends OwnableField {
     }
     
     @Override
-    public int getPayPrice(Player currentPlayer, int sum){
+    public int getPayPrice(int sum){
         int payPrice = rent;
-        for (int i = 1; i < currentPlayer.getTrainstationOwned(); i++){
+        for (int i = 1; i < getOwner().getTrainstationOwned(); i++){
             payPrice *= 2;
         }
         return payPrice;

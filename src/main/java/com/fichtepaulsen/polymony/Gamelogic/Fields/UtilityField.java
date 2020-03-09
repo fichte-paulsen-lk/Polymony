@@ -20,7 +20,7 @@ public class UtilityField extends OwnableField {
     }
     
     @Override
-    public int getPayPrice(Player currentPlayer, int sum){
+    public int getPayPrice(int sum){
         if(getOwner().getUtilitiesOwned() == 1){
             return sum * 80;
         }

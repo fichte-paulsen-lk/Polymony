@@ -570,7 +570,7 @@ public class Game implements GameInterface{
     public boolean isAbleToPayRent(){                                    
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField)fields[activePlayer.getPosition()];
-        if(activePlayer.getBalance() >= currentField.getPayPrice(activePlayer, sum)){
+        if(activePlayer.getBalance() >= currentField.getPayPrice(sum)){
             return true;
         }
         else{

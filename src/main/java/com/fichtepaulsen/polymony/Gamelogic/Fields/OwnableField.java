@@ -14,7 +14,7 @@ public abstract class OwnableField extends Field{
     //method to buy an ownableField 
     public abstract void buyField(Player currentPlayer, Field[] fields);
     //method to get the rent a player has to pay on a field
-    public abstract int getPayPrice(Player currentPlayer, int sum);
+    public abstract int getPayPrice(int sum);
   
     public boolean getIsMortgage() {
         return isMortgage;

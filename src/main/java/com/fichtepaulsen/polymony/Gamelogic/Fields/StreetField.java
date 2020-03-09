@@ -65,7 +65,7 @@ public class StreetField extends OwnableField{
     }
     
     @Override
-    public int getPayPrice(Player currentPlayer, int sum){
+    public int getPayPrice(int sum){
         int payPrice;
         if(this.houseamount == 0 && this.allStreetsOwned){
             payPrice = rents[0] * 2;
