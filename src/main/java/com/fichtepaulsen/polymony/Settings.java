@@ -32,7 +32,7 @@ public class Settings {
     //one fourth of the total amount of field on the
     //game board (so that no non multiples of four can be used)
     public final int rowLength = 10;
-    
+
     public final int GameFields = 40;
     
     public final String ApplicationVersion = "1.2";
@@ -52,6 +52,7 @@ public class Settings {
     public int numberOfPlayers = 4;
 
     public GridPane gameGridPane;
+    public StackPane gameStackPane;
     public Label diceResult1;
     public Label diceResult2;
     public Label playerLabel;
