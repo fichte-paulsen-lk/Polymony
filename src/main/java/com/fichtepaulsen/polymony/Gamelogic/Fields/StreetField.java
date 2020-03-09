@@ -7,6 +7,7 @@ public class StreetField extends OwnableField{
      private Color color;
      private int houseamount;
      private int[] rents;
+     private boolean allStreetsOwned;
      
      public StreetField(String name, int price, Color color, int rent, int house1, int house2, int house3, int house4, int hotel) {
          this.name = name;
@@ -33,8 +34,30 @@ public class StreetField extends OwnableField{
     }
     
     @Override
-    public void buyField(Player currentPlayer){
+    public void buyField(Player currentPlayer, Field[] fields){
+        int counter = 0;
+        int expected;
+        if(this.getColor() == color.BROWN || this.getColor() == color.BLUE){
+            expected = 2;
+        }    
+        else{
+            expected = 3;
+        }
+        
         this.setOwner(currentPlayer);
+        
+        for(int i = 0; i < fields.length; i++){
+            if (fields[i] instanceof StreetField){
+                StreetField f = (StreetField)fields[i];
+                if(f.getColor() == this.getColor() && f.getOwner() == this.getOwner()){
+                    counter++;
+                }
+            }
+        }
+        
+        if(counter == expected){
+            this.allStreetsOwned = true;
+        }
     }
     
     public int[] getRents(){
@@ -43,6 +66,13 @@ public class StreetField extends OwnableField{
     
     @Override
     public int getPayPrice(Player currentPlayer, int sum){
-        return rents[this.getHouseamount()];
+        int payPrice;
+        if(this.houseamount == 0 && this.allStreetsOwned){
+            payPrice = rents[0] * 2;
+        }
+        else{
+            payPrice = rents[houseamount];
+        }
+        return payPrice;
     }
 }

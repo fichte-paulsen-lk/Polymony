@@ -6,33 +6,38 @@ public abstract class OwnableField extends Field{
   public int price;
   private Player owner;
   public String name;
-  private boolean ishypothek;
-  private int hypothekamount;
   public int rent;
+  private int houseAmount;
+  private boolean isMortgage;
+  private int mortgageAmount;
 
     //method to buy an ownableField 
-    public abstract void buyField(Player currentPlayer);
+    public abstract void buyField(Player currentPlayer, Field[] fields);
     //method to get the rent a player has to pay on a field
     public abstract int getPayPrice(Player currentPlayer, int sum);
   
-    public boolean isIshypothek() {
-        return ishypothek;
+    public boolean getIsMortgage() {
+        return isMortgage;
     }
 
-    public void setIshypothek(boolean ishypothek) {
-        this.ishypothek = ishypothek;
+    public void setIsMortgage(boolean isMortgage) {
+        this.isMortgage = isMortgage;
     }
     
-    public void gethypothek(){
-        owner.setBalance(owner.getBalance()+hypothekamount);
-        ishypothek = true;
+    public void addMortgage(){
+        owner.setBalance(owner.getBalance()+mortgageAmount);
+        isMortgage = true;
     }
     
-    public void freehypothek(){
-        if(ishypothek==true){
-            owner.setBalance(owner.getBalance()-(hypothekamount+hypothekamount*1/10));
-            ishypothek=false;
+    public void freeMortgage(){
+        if(isMortgage==true){
+            owner.setBalance(owner.getBalance()-(mortgageAmount+mortgageAmount*1/10));
+            isMortgage=false;
         }
+    }
+    
+    public int getMortgageAmount() {
+        return mortgageAmount;
     }
     
     public String getName() {
@@ -43,6 +48,14 @@ public abstract class OwnableField extends Field{
         this.name = name;
     }
 
+    public int getHouseAmount() {
+        return houseAmount;
+    }
+
+    public void setHouseAmount(int houseAmount) {
+        this.houseAmount = houseAmount;
+    }
+  
     public int getPrice() {
         return price;
     }
@@ -58,6 +71,5 @@ public abstract class OwnableField extends Field{
     public void setOwner(Player owner) {
         this.owner = owner;
     }
-    
     
 }

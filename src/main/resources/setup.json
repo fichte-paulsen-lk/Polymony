@@ -42,9 +42,18 @@
         {"type":"StreetField","name" : "Schloßallee","price":8000, "color": 8, "rent":1000, "house1":4000,"house2":12000,"house3":28000,"house4":34000,"hotel":40000}
     ],
     
-   "cards":[
+   "cards":
+   {
+   "community":[
         {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":true},
-        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,"community":false},
+        {"type" : "MoneyCard","text" : "Ziehß 10 Euro ein","value" : 10,"community":true},
         {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":true}
-    ]
+		],
+	"chance":[
+	    {"type" : "MoneyCard","text" : "Ziehe 1 Euro ein","value" : 1,"community":false},
+        {"type" : "MoneyCard","text" : "Ziehe 10 Euro ein","value" : 10,"community":false},
+        {"type" : "MoneyCard","text" : "Ziehe 100 Euro ein","value" : 100,"community":false},
+		{"type" : "JumpCard","text" : "Springe 4 Schritte","community":false,"value":4}
+		]
+	}
 }

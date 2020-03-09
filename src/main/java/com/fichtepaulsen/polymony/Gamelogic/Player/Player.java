@@ -8,12 +8,13 @@ public abstract class Player {
     private int utilitiesOwned;
     private int balance;
     private int trainstationOwned;
-    private boolean incarcerated;
+    //private boolean incarcerated;
     private int amountPrisonFreeCard; 
     private int playerIndex;
     private boolean isInPrison;
-    private int prisonAttemptCounter;                                           //Counts doublet attempts in prison
-    private int doubletsCounter;
+    //Counts doublet attempts in prison
+    private int prisonAttemptCounter;                                           
+    private int doubletsCounter;     
     private Color color;
 
     public Player(int position, int balance, int index){
@@ -31,7 +32,7 @@ public abstract class Player {
     public void setAmountPrisonFreeCard(int amountPrisonFreeCard) {
         this.amountPrisonFreeCard = amountPrisonFreeCard;
     }
-
+/*
     public boolean isIncarcerated() {
         return incarcerated;
     }
@@ -42,7 +43,7 @@ public abstract class Player {
     public void setIncarcerated(boolean incarcerated) {
         this.incarcerated = incarcerated;
     }
-
+*/
     public int getUtilitiesOwned() {
         return utilitiesOwned;
     }
@@ -79,9 +80,14 @@ public abstract class Player {
         return playerIndex;
     }
     
-    public void setIsInPrison(boolean p){
-       this.isInPrison=p; 
+    public void setInPrison(){
+       this.setPosition(10);
+       this.isInPrison=true; 
     } 
+    
+    public void setOutOfPrison(){
+       this.isInPrison=false; 
+    }
     
     public boolean getIsInPrison(){
         return this.isInPrison;
@@ -109,5 +115,9 @@ public abstract class Player {
     
     public void setDoubletsCounter(int dc){
         this.doubletsCounter=dc; 
+    }
+    
+    public Color getColor(){
+        return this.color;
     }
 }

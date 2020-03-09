@@ -14,7 +14,7 @@ public class UtilityField extends OwnableField {
     }
     
     @Override
-    public void buyField(Player currentPlayer){
+    public void buyField(Player currentPlayer, Field[] fields){
         this.setOwner(currentPlayer);
         currentPlayer.setTrainstationOwned(currentPlayer.getUtilitiesOwned() + 1);
     }
