@@ -542,7 +542,7 @@ public class Game implements GameInterface {
     public void payRent(){
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
-        activePlayer.setBalance(activePlayer.getBalance() - currentField.getPayPrice(activePlayer, sum));
+        activePlayer.setBalance(activePlayer.getBalance() - currentField.getPayPrice(sum));
     }
     
     @Override
