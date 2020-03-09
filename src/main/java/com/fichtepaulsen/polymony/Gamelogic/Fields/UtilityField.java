@@ -14,4 +14,9 @@ public class UtilityField extends OwnableField {
     public void action(Game game) {
         Player activePlayer = game.getActivePlayer();
     }
+    
+    public void buyField(Player currentPlayer){
+        //this.setOwner(currentPlayer);
+        //currentPlayer.setTrainstationOwned(currentPlayer.getUtilitiesOwned() + 1);
+    }
 }

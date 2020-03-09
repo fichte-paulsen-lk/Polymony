@@ -262,7 +262,7 @@ public class Game implements GameInterface {
                     temp[i] = new StartField();
                     break;
                 case "StreetField":
-                    temp[i] = new StreetField((String) field.get("name"), (int) field.get("price"), getColor((int) field.get("color")));
+                    temp[i] = new StreetField((String)field.get("name"),(int)field.get("price"), getColor((int)field.get("color")),(int)field.get("rent"),(int)field.get("house1"),(int)field.get("house2"), (int)field.get("house3"), (int)field.get("house4"), (int)field.get("hotel"));
                     break;
                 case "ActionField":
                     try {
@@ -277,7 +277,7 @@ public class Game implements GameInterface {
                     temp[i] = new TaxField((int) field.get("tax"), (String) field.get("name"), i);
                     break;
                 case "TrafficField":
-                    temp[i] = new TrafficField();
+                    temp[i] = new TrafficField((String)field.get("name"),(int)field.get("price"),(int)field.get("rent"));
                     break;
                 case "Prison":
                     temp[i] = new PrisonField();
@@ -501,7 +501,7 @@ public class Game implements GameInterface {
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
         //player becomes owner of the ownableField
-        currentField.setOwner(activePlayer);
+        currentField.buyField(activePlayer);
         //Player loses as much money as the price of the ownableField 
         activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
 
@@ -514,10 +514,17 @@ public class Game implements GameInterface {
      */
     public boolean isAbleToBuyField() {
         Player activePlayer = getCurrentPlayer();
-        OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
-        if (activePlayer.getBalance() >= currentField.getPrice()) {
-            return true;
-        } else {
+        Field currentField = fields[activePlayer.getPosition()];
+        if (currentField instanceof OwnableField){
+            OwnableField oField = (OwnableField)fields[activePlayer.getPosition()];
+            if(activePlayer.getBalance() >= oField.getPrice()){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
             return false;
         }
     }
