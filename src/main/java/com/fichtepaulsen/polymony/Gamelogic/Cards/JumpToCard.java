@@ -20,9 +20,9 @@ public class JumpToCard extends Card {
     public void action(Game game) {
         players = game.getAllPlayers();
         Player currentPlayer = game.getCurrentPlayer();
-        /*if(game.passedStart(currentPlayer.getPosition(),position) && getMoney){
-        currentPlayer.changeBalance(200);
-      }*/
+        if(game.pastStart(currentPlayer.getPosition(),position) && getMoney){
+            currentPlayer.changeBalance(4000);
+        }
         currentPlayer.setPosition(position);
 
     }

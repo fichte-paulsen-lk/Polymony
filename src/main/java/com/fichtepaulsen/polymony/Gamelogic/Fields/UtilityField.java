@@ -1,5 +1,6 @@
 package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
 public class UtilityField extends OwnableField {
@@ -8,9 +9,10 @@ public class UtilityField extends OwnableField {
         name=nameset;
         price=priceset;
     }
-    
-    public int action(int Dieceresult){
-       return 0;  
+
+    @Override
+    public void action(Game game) {
+        Player activePlayer = game.getActivePlayer();
     }
     
     public void buyField(Player currentPlayer){

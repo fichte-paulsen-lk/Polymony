@@ -175,6 +175,7 @@ public class Game implements GameInterface {
         if (pastStart(lastPosition, newPos) && !activePlayer.getIsInPrison()) {
             activePlayer.setBalance(activePlayer.getBalance() + 4000);
         }
+        fields[newPos].action(this);
         return results;
     }
 
