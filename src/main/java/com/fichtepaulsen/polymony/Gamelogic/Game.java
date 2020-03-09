@@ -46,6 +46,8 @@ public class Game implements GameInterface {
     private Dice[] dices;
     private Card[] chanceCards;
     private int[] results;
+    private int housesAvaible;
+    private int hotelsAvaible;
 
     public Card[] getChanceCards() {
         return chanceCards;
@@ -204,6 +206,7 @@ public class Game implements GameInterface {
             return false;
         }
     }
+    
     public int getHousesAvaible() {
         return housesAvaible;
     }
@@ -703,14 +706,14 @@ public class Game implements GameInterface {
         StreetField save2 = (StreetField) fields[fieldIndex];
         if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 4 && isAllowedtoBuildHouseOnTheGivenField(fieldIndex)==true ) { //checks if the field is a StreetField and if there´s space on the field
             save2.setHouseamount(save2.getHouseamount() + 1);
-            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getHousePrice());
+            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getPrice());
             housesAvaible--;
         }
         if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() ==4 && isAllowedtoBuildHouseOnTheGivenField(fieldIndex)==true){ //if houseAmount is 4, a hotel sis build
             save2.setHouseAmount(save2.getHouseAmount()+1);
-            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getHousePrice());
+            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getPrice());
             housesAvaible=housesAvaible+4;
-            hotelsAvaible=hotelsAvaible-1;
+            this.hotelsAvaible=hotelsAvaible-1;
         }
     }
     
