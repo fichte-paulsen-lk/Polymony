@@ -108,6 +108,24 @@ public interface GameInterface {
     public boolean pastStart(int lastPosition, int newPosition);
     
     /*
+    requires: 
+    does:  current player pays the rent on the ownableField he stands on
+    */
+    public void payRent();
+    
+    /*
+    requires: 
+    returns: boolean if the current player has to pay rent on the field he stands on
+    */
+    public boolean hasToPayRent();
+    
+    /*
+    requires: 
+    returns: boolean if the current player is able to pay the rent on the field he stands on
+    */
+    public boolean isAbleToPayRent();
+
+    /*
     requires: index of the field where a player wants to add a mortgage to
     does:     set mortgage on the field at the given fieldIndex 
     */
@@ -130,5 +148,6 @@ public interface GameInterface {
     returns:  boolean if the current player is able to remove a mortgage from a field at fieldIndex
     */
     public boolean isAbleToRemoveMortgage(int fieldIndex);
+
 }
 

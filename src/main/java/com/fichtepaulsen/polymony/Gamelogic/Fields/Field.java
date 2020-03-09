@@ -23,4 +23,5 @@ public abstract class Field {
     public void setIndex(int index) {
         this.index = index;
     }
+
 }
