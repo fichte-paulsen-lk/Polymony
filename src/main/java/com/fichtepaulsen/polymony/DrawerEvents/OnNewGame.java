@@ -40,5 +40,6 @@ public class OnNewGame extends Drawer {
         
         this.stage.setScene(scene);
         this.stage.show();
-        }
+        this.stage.centerOnScreen();    
+    }
 }

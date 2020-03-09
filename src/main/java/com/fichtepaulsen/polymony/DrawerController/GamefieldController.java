@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.animation.PathTransition;
 import javafx.animation.PathTransition.OrientationType;
 import javafx.event.Event;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.HPos;
@@ -38,7 +39,9 @@ import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
+
 
 public class GamefieldController implements Initializable {
     
@@ -62,6 +65,10 @@ public class GamefieldController implements Initializable {
     
     
      PathTransition pathTransition;
+    
+    
+    @FXML
+    private VBox infoBox;
 
     //static here because logic concerns implementation of this class
     //requires: index of the player that we want the shape of
@@ -81,17 +88,20 @@ public class GamefieldController implements Initializable {
     //height and width of cornerfield are equal to the value of defaultFieldWidth 
     //if you change the defaultFieldWidth you should also resize the cornerFieldLength
     private double cornerFieldLength = 100.0;
-
+   
     private Field[] gameFields = null;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        //get vars from Singleton
         Settings.getInstance().diceResult1 = this.diceResult1;
         Settings.getInstance().diceResult2 = this.diceResult2;
         Settings.getInstance().gameGridPane = this.gp;
         Settings.getInstance().gameStackPane = this.playerPane;
         Settings.getInstance().rollDice = this.rollDice;
+        Settings.getInstance().infoBox = this.infoBox;
+  
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
 
@@ -153,11 +163,13 @@ public class GamefieldController implements Initializable {
             boolean isStreetField = false;
 
             int fac = subtract ? (factor - i) : (factor + i);
+            //checks whether or not a field is a streetField and sets isStreetField accordingly
+            //furthermore it determines the appropriate color for the streetField
             if (gameFields[fac] instanceof StreetField) {
                 c = ((StreetField)gameFields[fac]).getColor();
                 isStreetField = true;
             }
-            
+            //draws the base fields based on it's properties (StreetField, not StreetField etc.) 
             Rectangle rec = new Rectangle();
             rec.setHeight(horizontal ? (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth) : (defaultFieldHeight));
             rec.setWidth(horizontal ? (defaultFieldHeight) : (isStreetField ? defaultFieldWidth * 3/4 : defaultFieldWidth));
@@ -166,8 +178,16 @@ public class GamefieldController implements Initializable {
             rec.setStrokeType(StrokeType.INSIDE);
             rec.setStroke(Color.BLACK);
             rec.setFill(Color.LIGHTGREEN);
-
+            
+            //general attributes of an streetField + font and size for name and price
             Rectangle colorRec = new Rectangle();
+            Label name = new Label();
+            Label price = new Label();
+            name.setFont(new Font("Futura", 6));
+            price.setFont(new Font("Futura", 6));
+            
+            
+            //StreetFields also receive there specific color, that is shown an upper rectangle + name and price are added to label
             if(isStreetField){
                 colorRec.setHeight(horizontal ? defaultFieldWidth/4 : defaultFieldHeight);
                 colorRec.setWidth(horizontal ? defaultFieldHeight : defaultFieldWidth/4);
@@ -175,19 +195,43 @@ public class GamefieldController implements Initializable {
                 colorRec.setStrokeType(StrokeType.INSIDE);
                 colorRec.setStroke(Color.BLACK);
                 colorRec.setFill(c);
+                
+                //getting name and price from current field
+                StreetField f = (StreetField)gameFields[fac];
+                name.setText(f.getName());  
+                price.setText(f.getPrice() + "$");
             }
-
+            
             Pane box;
-
+            StackPane cardStack = new StackPane();
+            
+            //adds the base rectangle & topper one (for the streets) according to it's orientation 
+            //decides if a HBox or Vbox is necessary
             if(!horizontal) {
                 box = new HBox();
                 if(factor == 20) {
                     box.getChildren().add(rec);
                     box.getChildren().add(colorRec);
+                    
+                    name.setRotate(90);
+                    price.setRotate(90);
+                    
+                    //merging labels and rectangles from current field
+                    cardStack.getChildren().addAll(box, name, price);
+                    cardStack.setAlignment(name, Pos.CENTER);
+                    cardStack.setAlignment(price, Pos.CENTER_LEFT);
                 }
                 else {
-                box.getChildren().add(colorRec);
-                box.getChildren().add(rec);
+                    box.getChildren().add(colorRec);
+                    box.getChildren().add(rec);
+                    
+                    name.setRotate(-90);
+                    price.setRotate(-90);
+                    
+                    //merging labels and rectangles from current field
+                    cardStack.getChildren().addAll(box, name, price);
+                    cardStack.setAlignment(name, Pos.CENTER);
+                    cardStack.setAlignment(price, Pos.CENTER_RIGHT);
                 }
             }
             else {
@@ -195,30 +239,49 @@ public class GamefieldController implements Initializable {
                 if(factor == 20) {
                     box.getChildren().add(rec);
                     box.getChildren().add(colorRec);
+                    
+                    name.setRotate(180);
+                    price.setRotate(180);
+                    
+                    
+                    //merging labels and rectangles from current field
+                    cardStack.getChildren().addAll(box, name, price);
+                    cardStack.setAlignment(name, Pos.CENTER);
+                    cardStack.setAlignment(price, Pos.TOP_CENTER);
 
                 }
                 else {
                     box.getChildren().add(colorRec);
                     box.getChildren().add(rec);
+
+                    //merging labels and rectangles from current field
+                    cardStack.getChildren().addAll(box, name, price);
+                    cardStack.setAlignment(name, Pos.CENTER);
+                    cardStack.setAlignment(price, Pos.BOTTOM_CENTER);
                 }
             }
-
-            box.setOnMouseClicked( ( e ) ->
+            //OnMouseClick Event that shows details about Fields
+            cardStack.setOnMouseClicked( ( e ) ->
             {
               this.onCardClick(gameFields[fac]);
             } );
-
-            gp.add(box, ((x==-1) ? i : x), ((y==-1) ? i : y));
+            
+            
+            
+            
+           
+            
+            gp.add(cardStack, ((x==-1) ? i : x), ((y==-1) ? i : y));
         }
     }
-
+    
     private void onCardClick(Field field) {
         if (field instanceof StreetField) {
             StreetField f = (StreetField)field;
             showStreetCard(f);
         }
     }
-
+    //shows a detailed view of a streetCard with specific information
     private void showStreetCard(StreetField field){
         int price = field.getPrice();
         Color color = field.getColor();
@@ -243,14 +306,29 @@ public class GamefieldController implements Initializable {
         colorRec.setFill(color);
 
         vbox.getChildren().addAll(colorRec, rec);
+        
         Label streetName = new Label(name);
-        streetName.setStyle("-fx-font-weight: bold;");
         Label streetPrice = new Label(price + "$");
+        streetName.setStyle("-fx-font-weight: bold;");
         streetPrice.setStyle("-fx-font-weight: bold;");
+        
+        
+        
         StackPane stack = new StackPane(vbox, streetName, streetPrice);
+        
         stack.setAlignment(streetName, Pos.CENTER);
         stack.setAlignment(streetPrice, Pos.BOTTOM_CENTER);
+        
+        stack.setOnMouseClicked( ( e ) ->
+            {
+              this.onDetailsCard(stack);
+            } );
+        
         this.cardGridPane.getChildren().add(stack);
+    }
+    
+    public void onDetailsCard(StackPane stack) {
+        this.cardGridPane.getChildren().clear();
     }
 
     private void setupCorner(int x, int y) {
@@ -265,6 +343,7 @@ public class GamefieldController implements Initializable {
     public void rollDice(Event e) {
         if (Settings.isNextTurnButton) {
             PolyMonyDrawer.getInstance().onNextTurn.handle();
+            
         } else {
             PolyMonyDrawer.getInstance().onRoll.handle(); 
         }
