@@ -5,6 +5,8 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import java.awt.Color;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +15,9 @@ import static org.junit.Assert.*;
 public class GameLogicTest {
     private Game game;
     
-    public GameLogicTest() {  }
+    public GameLogicTest() { 
+       
+    }
     
     @Before
     public void setUp() {
@@ -30,19 +34,26 @@ public class GameLogicTest {
         game.startGame(2);
     }
     
+    
     @Test
     public void testReadJSON() {
+
         Field[] field = null;
         
+        
         try {
-            field = game.readJson(40);
+            field = game.readJson();
+            
         } catch (Exception ex) {
+            Logger.getLogger(Game.class.getName()).log(Level.SEVERE, ex.getMessage());
             assertNotNull(ex);
         } 
         
         assertNotNull(field);
         assertEquals(field.length, 40);
+
     }
+
     
     @Test
     public void testIsDoublets() {
@@ -58,13 +69,14 @@ public class GameLogicTest {
         Card[] cards = null;
                 
         try {
-            cards = game.readCardsJson(3);
+            game.readCardsJson();
         } catch (Exception ex) {
             assertNotNull(ex);
         }
         
-        assertNotNull(cards);
-        assertEquals(cards.length, 3);
+        assertNotNull(game.getCommunityCards());
+        assertNotNull(game.getChanceCards());
+        //assertEquals(cards.length, 4);
     }
     
     @Test

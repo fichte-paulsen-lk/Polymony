@@ -1,5 +1,6 @@
 package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.Gamelogic.Player.*;
 
 public class TaxField extends SpecialField {
@@ -12,8 +13,8 @@ public class TaxField extends SpecialField {
       this.name = name;
   }
   
-  @Override
-  public void action (Player activePlayer){
-      activePlayer.setBalance(activePlayer.getBalance()-tax);
-  }
+    @Override
+    public void action(Game game) {
+        game.getActivePlayer().setBalance(game.getActivePlayer().getBalance()-tax);
+    }
 }
