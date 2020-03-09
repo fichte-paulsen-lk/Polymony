@@ -21,7 +21,7 @@ public class JumpToCard extends Card {
         players = game.getAllPlayers();
         Player currentPlayer = game.getCurrentPlayer();
         if(game.pastStart(currentPlayer.getPosition(),position) && getMoney){
-            currentPlayer.changeBalance(200);
+            currentPlayer.changeBalance(4000);
         }
         currentPlayer.setPosition(position);
 
