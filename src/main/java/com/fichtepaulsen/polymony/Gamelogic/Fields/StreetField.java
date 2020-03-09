@@ -30,7 +30,7 @@ public class StreetField extends OwnableField{
     @Override
     public void action(Game game) {
         Player activePlayer = game.getActivePlayer();
-
+    }
      
     public int getHouseamount() {
         return houseamount;
