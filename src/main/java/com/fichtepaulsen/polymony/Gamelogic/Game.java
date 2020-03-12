@@ -24,7 +24,6 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.TrafficField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.UtilityField;
 import com.fichtepaulsen.polymony.Gamelogic.Player.HumanPlayer;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
-import com.fichtepaulsen.polymony.Settings;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -32,8 +31,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
@@ -625,6 +622,24 @@ public class Game implements GameInterface {
             return false;
         }
     }
+    
+    public boolean isInRange(int number, int rangeStart, int rangeEnd) {
+        if (number > rangeStart && number < rangeEnd) 
+            return true;
+        return false;
+    }
+    
+    public int getHousePrice(int fieldIndex) {
+        if(isInRange(fieldIndex, 0, 10)) {
+            return 1000;
+        } else if(isInRange(fieldIndex, 10, 20)) {
+            return 2000;
+        }  else if(isInRange(fieldIndex, 20, 30)) {
+            return 3000;
+        }  else {
+            return 4000;
+        }
+    }
 
     public Player getActivePlayer() {
         return players[activePlayerIndex];
@@ -633,17 +648,17 @@ public class Game implements GameInterface {
     @Override
     //effect: buys a house or hotel on the given field, follows automaticly the rules 
     public void buyHouse(int fieldIndex) { 
-        StreetField save2 = (StreetField) fields[fieldIndex];
-        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 4) { //checks if the field is a StreetField and if there´s space on the field
-            save2.setHouseamount(save2.getHouseamount() + 1);
-            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getPrice());
+        StreetField currentField = (StreetField) fields[fieldIndex];
+        if (currentField.getHouseamount() < 4) { //checks if the field is a StreetField and if there´s space on the field
+            currentField.setHouseamount(currentField.getHouseamount() + 1);
+            players[activePlayerIndex].changeBalance(-getHousePrice(fieldIndex));
             housesAvaible--;
         }
-        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() ==4){ //if houseAmount is 4, a hotel sis build
-            save2.setHouseAmount(save2.getHouseAmount()+1);
-            players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getPrice());
-            housesAvaible=housesAvaible+4;
-            this.hotelsAvaible=hotelsAvaible-1;
+        if (currentField.getHouseamount() == 4){ //if houseAmount is 4, a hotel sis build
+            currentField.setHouseAmount(currentField.getHouseAmount() + 1);
+            players[activePlayerIndex].changeBalance(-getHousePrice(fieldIndex));
+            housesAvaible += 4;
+            hotelsAvaible--;
         }
     }
     
