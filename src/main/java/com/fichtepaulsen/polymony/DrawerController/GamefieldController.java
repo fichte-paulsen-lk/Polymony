@@ -31,6 +31,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.layout.HBox;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
@@ -69,6 +70,10 @@ public class GamefieldController implements Initializable {
     
     @FXML
     private VBox infoBox;
+    
+    @FXML
+    private HBox playerCircleHbox;
+    
     
     private Game gameLogic;
 
@@ -152,14 +157,36 @@ public class GamefieldController implements Initializable {
             
             //all margins are defined from the top left
             StackPane.setAlignment(c, Pos.TOP_LEFT);
-            
             playerPane.getChildren().add(c);
 
             //quickly step onto go from the last field before it 
-            PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 500, 39);    
+            PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 500, 39); 
+            
         }
+        
+ 
+        playerCircleHbox.setSpacing(5);
+        for (int i = 0; i < Settings.getInstance().numberOfPlayers; i++) {
+            
+            //add a circle with a radius from Settings
+            Circle c = new Circle(Settings.getInstance().playerRadius * 2);
+            
+            //get color from the player class and color the player's circle
+            c.setFill(g.getNthPlayer(i).getColor());
+            
+            
+            final int b = i;
+            c.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                PolyMonyDrawer.getInstance().onNextTurn.getPlayerInfo(gameLogic.getNthPlayer(b));
+        });
+            playerCircleHbox.getChildren().add(c);
+        }
+        
 
-       PolyMonyDrawer.getInstance().onNextTurn.getPlayerInfo();
+       PolyMonyDrawer.getInstance().onNextTurn.getPlayerInfo(gameLogic.getCurrentPlayer());
+       
+       
+       
     }
 
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
