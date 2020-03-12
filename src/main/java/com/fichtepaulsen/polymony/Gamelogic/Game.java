@@ -177,7 +177,10 @@ public class Game implements GameInterface {
         if (pastStart(lastPosition, newPos) && !activePlayer.getIsInPrison()) {
             activePlayer.setBalance(activePlayer.getBalance() + 4000);
         }
-        fields[newPos].action(this);
+        if(hasToPayRent(activePlayer, fields[newPos])){
+            payRent();
+        }
+        
         return results;
     }
 
@@ -534,25 +537,26 @@ public class Game implements GameInterface {
         }
     }
 
-    @Override
     /*
     requires: 
-    does:  current player pays the rent on the ownableField he stands on
+    does:  current player pays the rent on the ownableField he stands on to the field owner
     */
     public void payRent(){
         Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
-        activePlayer.setBalance(activePlayer.getBalance() - currentField.getPayPrice(sum));
+        
+        int payPrice = currentField.getPayPrice(sum);
+        
+        activePlayer.setBalance(activePlayer.getBalance() - payPrice);
+        currentField.getOwner().setBalance(currentField.getOwner().getBalance() + payPrice);
     }
     
-    @Override
     /*
     requires: 
     returns: boolean if the current player has to pay rent on the field he stands on
     */
-    public boolean hasToPayRent(){
-        Player activePlayer = getCurrentPlayer();
-        Field currentField = fields[activePlayer.getPosition()];
+    public boolean hasToPayRent(Player activePlayer, Field currentField){
+        
         if (currentField instanceof OwnableField){
             OwnableField oField = (OwnableField)fields[activePlayer.getPosition()];
             if(oField.getOwner() != activePlayer && oField.getOwner() != null && !oField.getIsMortgage()){
@@ -567,14 +571,11 @@ public class Game implements GameInterface {
         }     
     }
     
-    @Override
     /*
     requires: 
     returns: boolean if the current player is able to pay the rent on the field he stands on
     */
-    public boolean isAbleToPayRent(){                                    
-        Player activePlayer = getCurrentPlayer();
-        OwnableField currentField = (OwnableField)fields[activePlayer.getPosition()];
+    public boolean isAbleToPayRent(Player activePlayer, OwnableField currentField){                                    
         if(activePlayer.getBalance() >= currentField.getPayPrice(sum)){
             return true;
         }
