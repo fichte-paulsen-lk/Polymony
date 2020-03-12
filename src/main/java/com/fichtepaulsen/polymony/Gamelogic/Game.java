@@ -703,6 +703,21 @@ public class Game implements GameInterface {
             hotelsAvaible--;
         }
     }
+    public void sellHouse(int fieldIndex){
+        StreetField currentField = (StreetField) fields[fieldIndex];
+        if (currentField.getHouseamount() < 5) { //checks if the field is a StreetField and if there´s space on the field
+            currentField.setHouseamount(currentField.getHouseamount() -1);
+            players[activePlayerIndex].changeBalance(+getHousePrice(fieldIndex));
+            housesAvaible++;
+        }
+        if (currentField.getHouseamount() == 5){ //if houseAmount is 4, a hotel sis build
+            currentField.setHouseAmount(currentField.getHouseAmount() -1);
+            players[activePlayerIndex].changeBalance(+getHousePrice(fieldIndex));
+            housesAvaible -= 4;
+            hotelsAvaible++;
+        }
+
+    }
     
     @Override
     //returns: a OwnableField-Array with all OwnableField
