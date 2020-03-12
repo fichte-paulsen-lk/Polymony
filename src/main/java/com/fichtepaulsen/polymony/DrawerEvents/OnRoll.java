@@ -51,10 +51,7 @@ public class OnRoll extends Drawer {
     public void handle() {
 
         showDice();
-       
-        //move the current player to the new position
-        drawPlayer(gameLogic.getCurrentPlayer());
-            
+                   
         Player currentPlayer = gameLogic.getCurrentPlayer();
         
         //save the old position before calling gamelogic and moving
