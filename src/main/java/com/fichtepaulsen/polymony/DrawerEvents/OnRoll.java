@@ -59,6 +59,26 @@ public class OnRoll extends Drawer {
 
         //move the player using an animation
         drawPlayerWithAnimation(currentPlayer, 1200, oldPosition);
+        
+        checkPlayerCanPay(currentPlayer);
+    }
+    
+    //gets: the current player (for convenience)
+    //does: checks whether the current player was actually able to pay
+    //      if not, give him options to give up or mortgage and sell
+    private void checkPlayerCanPay(Player currentPlayer) {
+        
+        //player should already have paid the rent
+        if (currentPlayer.getBalance() < 0) {
+            PolyMonyPopup.show (
+                    "Give up?",
+                    (gaveUp) -> {
+                        if (gaveUp) {
+                            
+                        }
+                    }
+            );
+        }
     }
 
     public void drawPlayerWithAnimation(Player p, int duration, int oldPosition) {

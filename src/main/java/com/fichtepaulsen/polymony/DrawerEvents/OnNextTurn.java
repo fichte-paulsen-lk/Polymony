@@ -28,12 +28,10 @@ public class OnNextTurn extends Drawer{
     }
     
     public void getPlayerInfo() {
-        
-
-      
         Player currentPlayer = gameLogic.getCurrentPlayer();
+        
         //Update player stats
-        player.setText("Player " +currentPlayer.getIndex());
+        player.setText("Player " + (currentPlayer.getIndex() + 1));
         player.setTextFill(currentPlayer.getColor());
         balance.setText("Balance: " + currentPlayer.getBalance());
         prisonFreeCards.setText("PrisonFreeCards: " + currentPlayer.getAmountPrisonFreeCard());  

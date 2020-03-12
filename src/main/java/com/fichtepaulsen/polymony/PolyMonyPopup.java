@@ -13,14 +13,7 @@ import javafx.stage.StageStyle;
 
 public class PolyMonyPopup {
     public static Stage stage;
-    
-//        PolyMonyPopup.show 
-//        (
-//            "Do you really want to buy a house?",
-//            (b) -> {
-//                System.out.println(b);
-//            }
-//        );
+
     public static void show(String question, Consumer<Boolean> onButton) {
         final Stage dialog = new Stage();
         
