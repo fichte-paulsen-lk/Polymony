@@ -84,4 +84,8 @@ public class StreetField extends OwnableField{
         }
         return payPrice;
     }
+    
+    public boolean hasAllStreetsOwned(){
+        return allStreetsOwned;
+    }
 }
