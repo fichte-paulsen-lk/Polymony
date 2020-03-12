@@ -6,9 +6,9 @@ import com.fichtepaulsen.polymony.Gamelogic.Game;
 
 public class JumpToCard extends Card {
 
-    private int position; //position on which the player jumps
+    private final int position; //position on which the player jumps
     private Player[] players;
-    private boolean getMoney; 
+    private final boolean getMoney; 
 
     public JumpToCard(int position, String title,boolean getMoney, boolean community) {
         super(title, community);
@@ -19,11 +19,10 @@ public class JumpToCard extends Card {
     @Override
     public void action(Game game) {
         players = game.getAllPlayers();
-        Player currentPlayer = game.getCurrentPlayer();
-        if(game.pastStart(currentPlayer.getPosition(),position) && getMoney){
-            currentPlayer.changeBalance(200);
+        if(game.pastStart(game.activePlayer.getPosition(),position) && getMoney){
+            game.activePlayer.addBalance(200);
         }
-        currentPlayer.setPosition(position);
+        game.activePlayer.setPosition(position);
 
     }
 }

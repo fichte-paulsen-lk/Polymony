@@ -68,8 +68,12 @@ public abstract class Player {
         this.balance = balance;
     }
     
-    public void changeBalance(int money) {
+    public void addBalance(int money) {
         this.balance += money;
+    }
+    
+    public void substractBalance(int money) {
+        this.balance -= money;
     }
 
     public int getPosition() {

@@ -9,6 +9,6 @@ public class GoToPrisonField extends SpecialField {
     @Override
     public void action(Game game){
         
-        game.getActivePlayer().setInPrison();
+        game.activePlayer.setInPrison();
     }
 }

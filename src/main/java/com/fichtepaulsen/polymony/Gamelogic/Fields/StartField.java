@@ -10,7 +10,6 @@ public class StartField extends Field{
 
     @Override
     public void action(Game game) {
-        Player activePlayer = game.getActivePlayer();
-        activePlayer.changeBalance(2000);
+        game.activePlayer.addBalance(2000);
     }
 }

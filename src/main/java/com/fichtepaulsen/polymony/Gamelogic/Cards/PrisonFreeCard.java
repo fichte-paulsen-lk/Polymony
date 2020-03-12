@@ -11,7 +11,6 @@ public class PrisonFreeCard extends Card{
 
     @Override
     public void action(Game game) {
-        Player activePlayer = game.getActivePlayer();
-        activePlayer.setAmountPrisonFreeCard(activePlayer.getAmountPrisonFreeCard()+1);
+        game.activePlayer.setAmountPrisonFreeCard(game.activePlayer.getAmountPrisonFreeCard()+1);
     }
 }

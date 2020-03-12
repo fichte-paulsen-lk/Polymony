@@ -24,7 +24,6 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.TrafficField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.UtilityField;
 import com.fichtepaulsen.polymony.Gamelogic.Player.HumanPlayer;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
-import com.fichtepaulsen.polymony.Settings;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -44,6 +43,10 @@ public class Game implements GameInterface {
     private Dice[] dices;
     private Card[] chanceCards;
     private int[] results;
+    private Card[] communityCards;
+    private boolean keepActivePlayer;
+    private int activePlayerIndex;
+    public Player activePlayer = getCurrentPlayer();
 
     public Card[] getChanceCards() {
         return chanceCards;
@@ -53,9 +56,7 @@ public class Game implements GameInterface {
         return communityCards;
     }
 
-    private Card[] communityCards;
-    private boolean keepActivePlayer;
-    private int activePlayerIndex;
+    
 
     public Game() {
 
@@ -119,7 +120,7 @@ public class Game implements GameInterface {
      */
     @Override
     public int[] rollDices() {
-        int lastPosition = getCurrentPlayer().getPosition();
+        int lastPosition = this.activePlayer.getPosition();
         //Returns an array of roll results
         results = new int[dices.length];
         for (int i = 0; i < dices.length; i++) {
@@ -132,7 +133,6 @@ public class Game implements GameInterface {
             gesamtZahl += value;
         }
 
-        Player activePlayer = players[activePlayerIndex];
         //Tests for doublets
         boolean doublets = isDoublets(results);
         //Calculates next position after rolling the dices
@@ -194,8 +194,7 @@ public class Game implements GameInterface {
     returns: boolean if the current player is able to buy himself out of prison
      */
     public boolean isAbleToBuyOutOfPrison() {
-        Player activePlayer = players[activePlayerIndex];
-        if (activePlayer.getIsInPrison() == true && activePlayer.getBalance() >= 1000) {
+        if (this.activePlayer.getIsInPrison() == true && this.activePlayer.getBalance() >= 1000) {
             return true;
         } else {
             return false;
@@ -302,7 +301,6 @@ public class Game implements GameInterface {
                  to get the player index: getIndex().
                  to get the player position: getPosition().
      */
-    @Override
     public Player getCurrentPlayer() {
         return players[activePlayerIndex];
     }
@@ -498,12 +496,11 @@ public class Game implements GameInterface {
     does:  current player buys the ownableField he stands on
      */
     public void buyField() {
-        Player activePlayer = getCurrentPlayer();
         OwnableField currentField = (OwnableField) fields[activePlayer.getPosition()];
         //player becomes owner of the ownableField
         currentField.setOwner(activePlayer);
         //Player loses as much money as the price of the ownableField 
-        activePlayer.setBalance(activePlayer.getBalance() - currentField.getPrice());
+        this.activePlayer.substractBalance(currentField.getPrice());
 
     }
 
@@ -586,9 +583,5 @@ public class Game implements GameInterface {
         } else {
             return false;
         }
-    }
-
-    public Player getActivePlayer() {
-        return players[activePlayerIndex];
     }
 }

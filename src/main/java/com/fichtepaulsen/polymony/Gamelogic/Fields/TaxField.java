@@ -4,8 +4,8 @@ import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.Gamelogic.Player.*;
 
 public class TaxField extends SpecialField {
-  private int tax;
-  private int index;
+  private final int tax;
+  private final int index;
    
   public TaxField(int tax,String name,int index) { //Konstruktor
       this.tax = tax;
@@ -15,6 +15,7 @@ public class TaxField extends SpecialField {
   
     @Override
     public void action(Game game) {
-        game.getActivePlayer().setBalance(game.getActivePlayer().getBalance()-tax);
+        Player activePlayer = game.getCurrentPlayer();
+        activePlayer.substractBalance(tax);
     }
 }
