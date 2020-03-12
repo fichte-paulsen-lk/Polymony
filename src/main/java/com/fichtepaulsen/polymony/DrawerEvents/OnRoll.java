@@ -4,13 +4,19 @@ import javafx.stage.Stage;
 import com.fichtepaulsen.polymony.Gamelogic.GameInterface;
 import com.fichtepaulsen.polymony.DoublePair;
 import com.fichtepaulsen.polymony.DrawerController.GamefieldController;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.OwnableField;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.StreetField;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import com.fichtepaulsen.polymony.IntPair;
+import com.fichtepaulsen.polymony.PolyMonyDrawer;
+import com.fichtepaulsen.polymony.PolyMonyPopup;
 import com.fichtepaulsen.polymony.Settings;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import com.fichtepaulsen.polymony.Settings;
+import javafx.scene.control.Button;
 import javafx.animation.PathTransition;
 import javafx.animation.PathTransition.OrientationType;
 import javafx.scene.control.Label;
@@ -31,6 +37,8 @@ public class OnRoll extends Drawer {
     private final double dimX = 50;
     private final double dimY = 100;
 
+    public OwnableField currentField;
+  
     public OnRoll(GameInterface ga, Stage st) {
         super(ga, st);
     }
@@ -41,7 +49,7 @@ public class OnRoll extends Drawer {
 
     @Override
     public void handle() {
-
+                   
         Player currentPlayer = gameLogic.getCurrentPlayer();
         
         //save the old position before calling gamelogic and moving
@@ -276,6 +284,27 @@ public class OnRoll extends Drawer {
         diceLabel2.setGraphic(new ImageView(diceFace2));
 
         Settings.toggleRollDiceButton();
+    } 
+    
+    public void showBuyButton(){
+        if(gameLogic.isAbleToBuyField()){
+            
+        
+        currentField = (OwnableField) this.getCurrentField();
+        PolyMonyPopup.show 
+        (
+            "Do you want to buy " + currentField.getName()+ " for " + currentField.getPrice() +"?",
+            (b) -> {
+               if(b) gameLogic.buyField();
+               PolyMonyDrawer.getInstance().onNextTurn.getPlayerInfo();
+            }
+        );
+        }
+        
+    }
+    
+    public Field getCurrentField(){
+        return gameLogic.getNthField(gameLogic.getCurrentPlayer().getPosition());
     }
 
     //TODO move this method into a better situated class

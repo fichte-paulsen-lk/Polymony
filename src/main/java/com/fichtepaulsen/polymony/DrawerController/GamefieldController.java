@@ -69,6 +69,8 @@ public class GamefieldController implements Initializable {
     
     @FXML
     private VBox infoBox;
+    
+    private Game gameLogic;
 
     //static here because logic concerns implementation of this class
     //requires: index of the player that we want the shape of
@@ -101,6 +103,7 @@ public class GamefieldController implements Initializable {
         Settings.getInstance().gameStackPane = this.playerPane;
         Settings.getInstance().rollDice = this.rollDice;
         Settings.getInstance().infoBox = this.infoBox;
+        gameLogic = Settings.getInstance().gameInteface;
   
 
         gameFields = Settings.getInstance().gameInteface.getAllFields();
@@ -155,6 +158,8 @@ public class GamefieldController implements Initializable {
             //quickly step onto go from the last field before it 
             PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 500, 39);    
         }
+
+       PolyMonyDrawer.getInstance().onNextTurn.getPlayerInfo();
     }
 
     private void setupRow(int x, int y, int factor, boolean subtract, boolean horizontal) {
@@ -275,7 +280,7 @@ public class GamefieldController implements Initializable {
         }
     }
     
-    private void onCardClick(Field field) {
+    public void onCardClick(Field field) {
         if (field instanceof StreetField) {
             StreetField f = (StreetField)field;
             showStreetCard(f);
@@ -345,7 +350,11 @@ public class GamefieldController implements Initializable {
             PolyMonyDrawer.getInstance().onNextTurn.handle();
             
         } else {
+            
             PolyMonyDrawer.getInstance().onRoll.handle(); 
+            onCardClick(gameLogic.getNthField(gameLogic.getCurrentPlayer().getPosition()));
+            PolyMonyDrawer.getInstance().onRoll.showBuyButton();
+            
         }
     }
 
