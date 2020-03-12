@@ -1,33 +1,51 @@
 package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
+
+import com.fichtepaulsen.polymony.Gamelogic.Game;
+import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import javafx.scene.paint.Color;
 
 public class StreetField extends OwnableField{
      private Color color;
-     private int housePrice;
-     private int houseAmount;
+     private int houseamount;
+     private int[] rents = new int[6];
      
-     public StreetField(String name, int price, Color color) {
+     public StreetField(String name, int price, Color color, int rent, int house1, int house2, int house3, int house4, int hotel) {
          this.name = name;
          this.price = price;
          this.color = color;
-         this.houseAmount=0;
+         rents[0] = rent;
+         rents[1] = house1;
+         rents[2] = house2;
+         rents[3] = house3;
+         rents[4] = house4;
+         rents[5] = hotel;
      }
      
      public Color getColor(){
         return this.color;
      }
 
-    public int getHousePrice() {
-        return housePrice;
+
+    @Override
+    public void action(Game game) {
+        Player activePlayer = game.getActivePlayer();
+    }
+     
+    public int getHouseamount() {
+        return houseamount;
     }
 
-    public int getHouseAmount() {
-        return houseAmount;
-    }
-
-    public void setHouseAmount(int houseAmount) {
-        this.houseAmount = houseAmount;
+    public void setHouseamount(int houseamount) {
+        this.houseamount = houseamount;
     }
     
+    public void buyField(Player currentPlayer){
+        //this.setOwner(currentPlayer);
+    }
+    
+    public int[] getRents(){
+        return rents;
+
+    }
 }

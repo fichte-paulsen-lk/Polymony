@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" spacing="8.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.fichtepaulsen.polymony.DrawerController.GamefieldController">
@@ -54,32 +55,54 @@
                      <children>
                         <HBox alignment="CENTER" prefHeight="207.0" prefWidth="441.0" GridPane.columnIndex="1" GridPane.columnSpan="2">
                            <children>
-                              <GridPane id="gp" fx:id="gp" alignment="CENTER" prefHeight="500.0" prefWidth="500.0">
-                  </GridPane>
+                              <StackPane id="playerPane" fx:id="playerPane" prefHeight="150.0" prefWidth="200.0">
+                                 <children>
+                                    <GridPane id="gp" fx:id="gp" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="631.0">
+                              </GridPane>
+                                 </children>
+                              </StackPane>
                            </children>
                         </HBox>
-                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" />
+                        <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
+                          <children>
+                              <VBox fx:id="infoBox" prefHeight="200.0" prefWidth="100.0" />
+                            <GridPane id="cardGridPane" fx:id="cardGridPane" alignment="BOTTOM_CENTER" prefHeight="400.0" prefWidth="200.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints />
+                                 </columnConstraints>
+                                 <rowConstraints>
+                                    <RowConstraints />
+                                 </rowConstraints></GridPane>
+                          </children>
+                        </VBox>
                         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                            <children>
                               <VBox>
                                  <children>
-                        
-                                                                              <Button fx:id="rollDice" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice">
-                                       <padding>
+                                    <HBox alignment="CENTER">
+                                       <children>
+                                          <Button fx:id="rollDice" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#rollDice" text="Roll Dice">
+                                             <padding>
+                                                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                             </padding>
+                                             <opaqueInsets>
+                                                <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                                             </opaqueInsets>
+                                          </Button>
+                                       </children>
+                                       <opaqueInsets>
                                           <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </Button>
-                                    <Button fx:id="nextButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNextTurn" text="Next Turn">
-                                       <padding>
-                                          <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                                       </padding>
-                                    </Button>
+                                       </opaqueInsets>
+                                       <VBox.margin>
+                                          <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                                       </VBox.margin>
+                                    </HBox>
                                  </children>
                               </VBox>
                               <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="100.0" prefWidth="315.0">
                                  <children>
                                     <Label fx:id="diceResult2" alignment="BOTTOM_LEFT" />
-                        
+
                                                       <Label fx:id="diceResult1" alignment="BOTTOM_RIGHT" />
                                  </children>
                               </HBox>
@@ -90,6 +113,6 @@
                </children>
             </HBox>
         </children>
-    </VBox> 
+    </VBox>
   </children>
 </VBox>

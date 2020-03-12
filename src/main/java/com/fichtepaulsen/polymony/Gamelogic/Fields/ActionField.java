@@ -1,12 +1,25 @@
 package com.fichtepaulsen.polymony.Gamelogic.Fields;
 
+import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
+import com.fichtepaulsen.polymony.Gamelogic.Game;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 
 public class ActionField extends SpecialField{
-
+    boolean community;
+    boolean freeParking;
+    public ActionField(boolean community,boolean freeParking){
+        this.community = community;
+        this.freeParking = freeParking;
+    }
     @Override
-    public void action(Player activePlayer) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void action(Game game) {
+        if (!this.freeParking){
+            if (this.community){
+                game.getCommunityCards()[0].action(game);
+            }else{
+                game.getChanceCards()[0].action(game);
+            }
+        }
     }
     
 }

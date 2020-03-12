@@ -1,23 +1,28 @@
 package com.fichtepaulsen.polymony.Gamelogic.Player;
 
+import javafx.scene.paint.Color;
+
 public abstract class Player {
     
     private int position;
     private int utilitiesOwned;
     private int balance;
-    private int trainstaitionOwned;
-    private boolean incarcerated;
+    private int trainstationOwned;
+    //private boolean incarcerated;
     private int amountPrisonFreeCard; 
     private int playerIndex;
     private boolean isInPrison;
-    private int prisonAttemptCounter;                                           //Counts doublet attempts in prison
-    private int doubletsCounter;                                                
+    //Counts doublet attempts in prison
+    private int prisonAttemptCounter;                                           
+    private int doubletsCounter;     
+    private Color color;
 
     public Player(int position, int balance, int index){
         this.position = position;
         this.balance = balance;
         this.playerIndex = index;
         this.isInPrison = false;
+        this.color = Color.rgb( (int) (Math.random()*255)+1,(int) (Math.random()*255)+1,(int) (Math.random()*255)+1);
     }
     
     public int getAmountPrisonFreeCard() {
@@ -27,15 +32,18 @@ public abstract class Player {
     public void setAmountPrisonFreeCard(int amountPrisonFreeCard) {
         this.amountPrisonFreeCard = amountPrisonFreeCard;
     }
-
+/*
     public boolean isIncarcerated() {
         return incarcerated;
+    }
+    public Color getColor(){
+        return this.color;
     }
 
     public void setIncarcerated(boolean incarcerated) {
         this.incarcerated = incarcerated;
     }
-
+*/
     public int getUtilitiesOwned() {
         return utilitiesOwned;
     }
@@ -44,12 +52,12 @@ public abstract class Player {
         this.utilitiesOwned = utilitiesOwned;
     }
 
-    public int getTrainstaitionOwned() {
-        return trainstaitionOwned;
+    public int getTrainstationOwned() {
+        return trainstationOwned;
     }
 
-    public void setTrainstaitionOwned(int trainstaitionOwned) {
-        this.trainstaitionOwned = trainstaitionOwned;
+    public void setTrainstationOwned(int trainstationOwned) {
+        this.trainstationOwned = trainstationOwned;
     }
 
     public int getBalance() {
@@ -58,6 +66,10 @@ public abstract class Player {
     
     public void setBalance(int balance) {
         this.balance = balance;
+    }
+    
+    public void changeBalance(int money) {
+        this.balance += money;
     }
 
     public int getPosition() {
@@ -72,9 +84,14 @@ public abstract class Player {
         return playerIndex;
     }
     
-    public void setIsInPrison(boolean p){
-       this.isInPrison=p; 
+    public void setInPrison(){
+       this.setPosition(10);
+       this.isInPrison=true; 
     } 
+    
+    public void setOutOfPrison(){
+       this.isInPrison=false; 
+    }
     
     public boolean getIsInPrison(){
         return this.isInPrison;
@@ -102,5 +119,9 @@ public abstract class Player {
     
     public void setDoubletsCounter(int dc){
         this.doubletsCounter=dc; 
+    }
+    
+    public Color getColor(){
+        return this.color;
     }
 }
