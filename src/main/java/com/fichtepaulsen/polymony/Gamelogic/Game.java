@@ -24,13 +24,13 @@ import com.fichtepaulsen.polymony.Gamelogic.Fields.TrafficField;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.UtilityField;
 import com.fichtepaulsen.polymony.Gamelogic.Player.HumanPlayer;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
-import com.fichtepaulsen.polymony.Settings;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.logging.Level;
@@ -44,6 +44,8 @@ public class Game implements GameInterface {
     private Dice[] dices;
     private Card[] chanceCards;
     private int[] results;
+    private int housesAvaible;
+    private int hotelsAvaible;
 
     public Card[] getChanceCards() {
         return chanceCards;
@@ -60,7 +62,14 @@ public class Game implements GameInterface {
     private int activePlayerIndex;
 
     public Game() {
-
+//        cards = new Card[Settings.getInstance().GameFields]; 
+//        try {
+//            cards = shuffle(readCardsJson(Settings.getInstance().GameFields));
+//        } catch (IOException e) {
+//           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
+//        }
+        housesAvaible=32;
+        hotelsAvaible=12;
     }
 
     /*
@@ -188,9 +197,9 @@ public class Game implements GameInterface {
             }
         }
         return true;
+
     }
 
-    @Override
     /*
     requires: 
     returns: boolean if the current player is able to buy himself out of prison
@@ -202,6 +211,22 @@ public class Game implements GameInterface {
         } else {
             return false;
         }
+    }
+    
+    public int getHousesAvaible() {
+        return housesAvaible;
+    }
+
+    public void setHousesAvaible(int housesAvaible) {
+        this.housesAvaible = housesAvaible;
+    }
+
+    public int getHotelsAvaible() {
+        return hotelsAvaible;
+    }
+
+    public void setHotelsAvaible(int hotelsAvaible) {
+        this.hotelsAvaible = hotelsAvaible;
     }
 
     @Override
@@ -649,8 +674,91 @@ public class Game implements GameInterface {
             return false;
         }
     }
+    
+    public boolean isInRange(int number, int rangeStart, int rangeEnd) {
+        if (number > rangeStart && number < rangeEnd) 
+            return true;
+        return false;
+    }
+    
+    public int getHousePrice(int fieldIndex) {
+        if(isInRange(fieldIndex, 0, 10)) {
+            return 1000;
+        } else if(isInRange(fieldIndex, 10, 20)) {
+            return 2000;
+        }  else if(isInRange(fieldIndex, 20, 30)) {
+            return 3000;
+        }  else {
+            return 4000;
+        }
+    }
 
     public Player getActivePlayer() {
         return players[activePlayerIndex];
+    }
+    
+    @Override
+    //effect: buys a house or hotel on the given field, follows automaticly the rules 
+    public void buyHouse(int fieldIndex) { 
+        StreetField currentField = (StreetField) fields[fieldIndex];
+        if (currentField.getHouseamount() < 4) { //checks if the field is a StreetField and if there´s space on the field
+            currentField.setHouseamount(currentField.getHouseamount() + 1);
+            players[activePlayerIndex].changeBalance(-getHousePrice(fieldIndex));
+            housesAvaible--;
+        }
+        if (currentField.getHouseamount() == 4){ //if houseAmount is 4, a hotel sis build
+            currentField.setHouseAmount(currentField.getHouseAmount() + 1);
+            players[activePlayerIndex].changeBalance(-getHousePrice(fieldIndex));
+            housesAvaible += 4;
+            hotelsAvaible--;
+        }
+    }
+    
+    @Override
+    //returns: a OwnableField-Array with all OwnableField
+    public OwnableField [] getFieldsOwnedBy (Player player){
+        
+        ArrayList<OwnableField> list = new ArrayList<>();
+        
+        for (OwnableField field : getAllOwnableFields()) {
+            if(field.getOwner() == player)
+                list.add(((OwnableField)field));
+        }
+        
+        return Arrays.copyOf(list.toArray(), list.toArray().length, OwnableField[].class);
+    }
+    
+    //returns: a StreetField-Array with all StreetFields owned by one player
+    public StreetField [] getStreetFieldsOwnedBy (Player player){
+        ArrayList<StreetField> list = new ArrayList<>();
+        
+        for (OwnableField field : getAllOwnableFields()) {
+            if(field.getOwner() == player && field instanceof StreetField)
+                list.add(((StreetField)field));
+        }
+        
+        return Arrays.copyOf(list.toArray(), list.toArray().length, StreetField[].class);
+    }
+    //returns: a StreetField-Array with all StreetFields on the playground
+    public StreetField[] getAllStreetFields(){
+        ArrayList<StreetField> list = new ArrayList<>();
+        
+        for (OwnableField field : getAllOwnableFields()) {
+            if(field instanceof StreetField)
+                list.add(((StreetField)field));
+        }
+        
+        return Arrays.copyOf(list.toArray(), list.toArray().length, StreetField[].class);
+    }
+    //returns: a ownableField-Array with all OwnableFields on the playground
+    public OwnableField[] getAllOwnableFields(){
+        ArrayList<OwnableField> list = new ArrayList<>();
+        
+        for (Field field : fields) {
+            if(field instanceof OwnableField)
+                list.add(((OwnableField)field));
+        }
+        
+        return Arrays.copyOf(list.toArray(), list.toArray().length, OwnableField[].class);
     }
 }

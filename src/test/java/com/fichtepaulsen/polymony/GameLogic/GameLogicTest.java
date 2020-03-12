@@ -2,7 +2,6 @@ package com.fichtepaulsen.polymony.Gamelogic;
 
 import com.fichtepaulsen.polymony.Gamelogic.Cards.Card;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
-import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.After;
@@ -76,4 +75,14 @@ public class GameLogicTest {
         assertNotNull(game.getChanceCards());
         //assertEquals(cards.length, 4);
     }
+    
+    @Test
+    public void testAmountColoredFields() {
+    
+        game.startGame(2);
+
+        assertNotNull(game.getAllOwnableFields());
+        assertNotNull(game.getAllStreetFields());
+
+    } 
 }

@@ -4,6 +4,7 @@ import com.fichtepaulsen.polymony.Gamelogic.Dice.Dice;
 import com.fichtepaulsen.polymony.Gamelogic.Fields.Field;
 import com.fichtepaulsen.polymony.Gamelogic.Player.Player;
 import javafx.scene.paint.Color;
+import com.fichtepaulsen.polymony.Gamelogic.Fields.OwnableField;
 
 public interface GameInterface {
     
@@ -69,6 +70,20 @@ public interface GameInterface {
               to see if the the field has hypothek: isHypothek().
     */ 
     public Field getNthField(int index);
+   
+    /*
+    requires: index from a field 
+    returns:  nothing
+    effect: buys a house on the given field if the active player owns the Field
+    */ 
+     public void buyHouse (int fieldIndex);
+    
+     /*
+     requires: Player attribute
+     returns: OwnableField- Array with all OwnableFields the player owns
+     effect: nothing 
+     */
+     public OwnableField [] getFieldsOwnedBy (Player player);
     
     /*
     requires: Color index from json file
