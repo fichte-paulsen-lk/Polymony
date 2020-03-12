@@ -571,20 +571,6 @@ public class Game implements GameInterface {
         }     
     }
     
-    /*
-    requires: 
-    returns: boolean if the current player is able to pay the rent on the field he stands on
-    */
-    public boolean isAbleToPayRent(Player activePlayer, OwnableField currentField){                                    
-        if(activePlayer.getBalance() >= currentField.getPayPrice(sum)){
-            return true;
-        }
-        else{
-            return false;
-        }
-
-    }
-    
     @Override
     /*
     requires: integer for the last position of a player
