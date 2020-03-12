@@ -68,13 +68,6 @@ public interface GameInterface {
     effect: buys a house on the given field if the active player owns the Field
     */ 
      public void buyHouse (int fieldIndex);
-     
-    /*
-     requires: index from a field and a player
-     returns: boolean, if the player is allowed to build a house
-     effect: nothing
-     */
-     public boolean isAllowedtoBuildHouseOnTheGivenField(int fieldIndex);
     
      /*
      requires: Player attribute

@@ -70,9 +70,10 @@ public class GameLogicTest {
     @Test
     public void testAmountColoredFields() {
     
-        HashMap<Color, Integer> map = game.amountOfColoredFields();
-        
-        assertEquals(map.get(Color.BLUE), new Integer(2));
-        assertEquals(map.get(Color.RED), new Integer(3));
+        game.startGame(2);
+
+        assertNotNull(game.getAllOwnableFields());
+        assertNotNull(game.getAllStreetFields());
+
     } 
 }

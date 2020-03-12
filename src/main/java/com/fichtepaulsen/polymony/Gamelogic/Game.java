@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Random;
@@ -50,6 +52,8 @@ public class Game implements GameInterface {
 //        } catch (IOException e) {
 //           Logger.getLogger(Game.class.getName()).log(Level.SEVERE, e.getMessage());
 //        }
+        housesAvaible=32;
+        hotelsAvaible=12;
     }
 
     /*
@@ -157,22 +161,6 @@ public class Game implements GameInterface {
         }
         return true;
 
-    }
-
-    public int getHousesAvaible() {
-        return housesAvaible;
-    }
-
-    public void setHousesAvaible(int housesAvaible) {
-        this.housesAvaible = housesAvaible;
-    }
-
-    public int getHotelsAvaible() {
-        return hotelsAvaible;
-    }
-
-    public void setHotelsAvaible(int hotelsAvaible) {
-        this.hotelsAvaible = hotelsAvaible;
     }
 
     public Field[] readJson(int length) throws IOException, JSONException, NoSuchMethodException, ClassNotFoundException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -383,92 +371,16 @@ public class Game implements GameInterface {
         return activePlayerIndex;
     }
     
-    //requires: field[] is not null
-    //returns: HashMap; key is the Color and the Integer- value ahows how many fields are there of that Color
-    public HashMap amountOfColoredFields() {  
-        HashMap<Color, Integer> tobereturned = new HashMap<>();
-        StreetField[] save = getAllStreetFields();
-        Color save1 = save[0].getColor();
-        for (int i = 0; i <= save.length; i++) {
-            if(save[i].getColor() != null) {
-                if (save1 == save[i].getColor()) {
-                    tobereturned.put(save1, tobereturned.get(save1) + 1);
-                } 
-                else {
-                    save1 = save[i].getColor();
-                    tobereturned.put(save1, tobereturned.get(save1) + 1);
-                }
-            }
-        }
-        return tobereturned;
-    }
-    
-    //returns: HashMap: key: Color, value: int (counts only the Streetfields the player owns)
-    public HashMap amountfieldsownedbyPlayer(Player player) {
-        HashMap<Color, Integer> tobereturned = new HashMap<Color, Integer>();
-        StreetField[] save = (StreetField[]) getStreetFieldsOwnedBy(player);
-        Color save1 = save[0].getColor();
-        for (int i = 0; i <= save.length; i++) {
-            if (save1 == save[i].getColor()) {
-                tobereturned.put(save1, tobereturned.get(save1) + 1);
-            } else {
-                save1 = save[i].getColor();
-                tobereturned.put(save1, tobereturned.get(save1) + 1);
-            }
-        }
-        return tobereturned;
-    }
-    
-    //returns: true if given player owns all street from one color
-    //         false if not
-    public boolean ownsAllFieldsFromOneColor(Player player, int fieldIndex) {
-        StreetField[] save = getAllStreetFields();
-        HashMap<Color, Integer> tobereturned;
-        HashMap<Color, Integer> should;
-        tobereturned = amountfieldsownedbyPlayer(players[activePlayerIndex]);
-        should = amountOfColoredFields();
-        if (Objects.equals(tobereturned.get(save[fieldIndex].getColor()), should.get(save[fieldIndex].getColor()))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
     @Override
-    //returns true if the activePlayer is allowed to buy a hpuse on the given field
-    public boolean isAllowedtoBuildHouseOnTheGivenField(int fieldIndex){ 
-        StreetField [] save=new StreetField [3]; 
-        StreetField [] allFieldsSave= getAllStreetFields();
-        int y=1; 
-        save[0]=allFieldsSave[fieldIndex]; 
-        Color color=allFieldsSave[fieldIndex].getColor();
-        for(int i=0;i<allFieldsSave.length; i++){ 
-            if(allFieldsSave[i].getColor()==color){
-                save[y]=allFieldsSave[i];
-                y++;
-            }
-        }
-        if(save[3]!=null){ 
-            if(save[1].getHouseAmount()-save[0].getHouseAmount()<=1 && save[2].getHouseAmount()-save[0].getHouseAmount()<=1){
-                return true;
-            }
-        }
-        else{ 
-            if(save[1].getHouseAmount()-save[0].getHouseAmount()<=1){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public void buyHouse(int fieldIndex) { //buys a house or hotel automaticly follows the rules 
+    //effect: buys a house or hotel on the given field, follows automaticly the rules 
+    public void buyHouse(int fieldIndex) { 
         StreetField save2 = (StreetField) fields[fieldIndex];
-        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 4 && isAllowedtoBuildHouseOnTheGivenField(fieldIndex)==true ) { //checks if the field is a StreetField and if there´s space on the field
+        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() < 4) { //checks if the field is a StreetField and if there´s space on the field
             save2.setHouseamount(save2.getHouseamount() + 1);
             players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getHousePrice());
             housesAvaible--;
         }
-        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() ==4 && isAllowedtoBuildHouseOnTheGivenField(fieldIndex)==true){ //if houseAmount is 4, a hotel sis build
+        if (fields[fieldIndex] instanceof StreetField && save2.getHouseamount() ==4){ //if houseAmount is 4, a hotel sis build
             save2.setHouseAmount(save2.getHouseAmount()+1);
             players[activePlayerIndex].setBalance(players[activePlayerIndex].getBalance() - save2.getHousePrice());
             housesAvaible=housesAvaible+4;
@@ -477,50 +389,50 @@ public class Game implements GameInterface {
     }
     
     @Override
+    //returns: a OwnableField-Array with all OwnableField
     public OwnableField [] getFieldsOwnedBy (Player player){
-        OwnableField [] tobereturned= new OwnableField [36];
-        OwnableField [] save= getAllOwnableFields();
-        int y=0; //Counter for the returned Array
-        for(int i =0; i<fields.length; i++ ){
-            if(save[i].getOwner()==player){
-                tobereturned[y]=save[i];
-            }
-        }
-        return tobereturned;
-    }
-    
-    public StreetField [] getStreetFieldsOwnedBy (Player player){
-        StreetField [] tobereturned= new StreetField [36];
-        OwnableField [] save= getAllOwnableFields();
-        int y=0; //Counter for the returned Array
-        for(int i =0; i<fields.length; i++ ){
-            if(save[i].getOwner()==player && save[i] instanceof StreetField){
-                tobereturned[y]=(StreetField)save[i];
-            }
-        }
-        return tobereturned;
-    }
-    public StreetField[] getAllStreetFields(){
-        StreetField [] save= new StreetField [36];
-        int c=0;
-        for(int i=0; i < save.length; i++){
-            if(fields[i] instanceof StreetField){
-                save[c]=(StreetField) fields[i];
-                c++;
-            }
+        
+        ArrayList<OwnableField> list = new ArrayList<>();
+        
+        for (OwnableField field : getAllOwnableFields()) {
+            if(field.getOwner() == player)
+                list.add(((OwnableField)field));
         }
         
-        return save;
+        return Arrays.copyOf(list.toArray(), list.toArray().length, OwnableField[].class);
     }
-    public OwnableField[] getAllOwnableFields(){
-        OwnableField [] save= new OwnableField [36];
-        int c=0;
-        for(int i=0; i<fields.length; i++){
-            if(fields[i] instanceof OwnableField){
-                save[c]=(OwnableField)fields[i];
-                c++;
-            }
+    
+    //returns: a StreetField-Array with all StreetFields owned by one player
+    public StreetField [] getStreetFieldsOwnedBy (Player player){
+        ArrayList<StreetField> list = new ArrayList<>();
+        
+        for (OwnableField field : getAllOwnableFields()) {
+            if(field.getOwner() == player && field instanceof StreetField)
+                list.add(((StreetField)field));
         }
-        return save;
+        
+        return Arrays.copyOf(list.toArray(), list.toArray().length, StreetField[].class);
+    }
+    //returns: a StreetField-Array with all StreetFields on the playground
+    public StreetField[] getAllStreetFields(){
+        ArrayList<StreetField> list = new ArrayList<>();
+        
+        for (OwnableField field : getAllOwnableFields()) {
+            if(field instanceof StreetField)
+                list.add(((StreetField)field));
+        }
+        
+        return Arrays.copyOf(list.toArray(), list.toArray().length, StreetField[].class);
+    }
+    //returns: a ownableField-Array with all OwnableFields on the playground
+    public OwnableField[] getAllOwnableFields(){
+        ArrayList<OwnableField> list = new ArrayList<>();
+        
+        for (Field field : fields) {
+            if(field instanceof OwnableField)
+                list.add(((OwnableField)field));
+        }
+        
+        return Arrays.copyOf(list.toArray(), list.toArray().length, OwnableField[].class);
     }
 }
