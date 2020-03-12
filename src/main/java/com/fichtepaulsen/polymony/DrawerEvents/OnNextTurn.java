@@ -24,15 +24,13 @@ public class OnNextTurn extends Drawer{
     public void handle() {
         Settings.toggleRollDiceButton();
         gameLogic.nextTurn();
-        getPlayerInfo();
+        getPlayerInfo(gameLogic.getCurrentPlayer());
     }
     
-    public void getPlayerInfo() {
+    public void getPlayerInfo(Player currentPlayer) {
         
 
-      
-        Player currentPlayer = gameLogic.getCurrentPlayer();
-        //Update player stats
+             //Update player stats
         player.setText("Player " +currentPlayer.getIndex());
         player.setTextFill(currentPlayer.getColor());
         balance.setText("Balance: " + currentPlayer.getBalance());

@@ -296,7 +296,7 @@ public class OnRoll extends Drawer {
             "Do you want to buy " + currentField.getName()+ " for " + currentField.getPrice() +"?",
             (b) -> {
                if(b) gameLogic.buyField();
-               PolyMonyDrawer.getInstance().onNextTurn.getPlayerInfo();
+               PolyMonyDrawer.getInstance().onNextTurn.getPlayerInfo(gameLogic.getCurrentPlayer());
             }
         );
         }

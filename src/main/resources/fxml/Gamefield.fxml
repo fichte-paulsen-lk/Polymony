@@ -65,6 +65,7 @@
                         </HBox>
                         <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3">
                           <children>
+                              <HBox fx:id="playerCircleHbox" alignment="TOP_CENTER" prefHeight="100.0" prefWidth="274.0" />
                               <VBox fx:id="infoBox" prefHeight="200.0" prefWidth="100.0" />
                             <GridPane id="cardGridPane" fx:id="cardGridPane" alignment="BOTTOM_CENTER" prefHeight="400.0" prefWidth="200.0">
                                  <columnConstraints>
