@@ -49,8 +49,6 @@ public class OnRoll extends Drawer {
 
     @Override
     public void handle() {
-
-        showDice();
                    
         Player currentPlayer = gameLogic.getCurrentPlayer();
         
