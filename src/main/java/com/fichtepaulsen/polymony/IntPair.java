@@ -16,13 +16,8 @@ public class IntPair {
         return second;
     }
     
-    /*
-     * Takes the field index and the width of the game field(amount of fields / 4)
-     * Returns (x,y) as int "coordinates" - top left is (0,0), bottom right (width, width)
-     * these coordinates are independent of the actual floating point coordinates for graphics
-     * and can be used to calculated these using field width and other parameters
-     */ 
-    //gets: the field index and thw 
+    //gets: the field index and the width of the game field(amount of fields/4)
+    //does: returns (x,y) as  int "coordinates" - top left is (0,0), bottom right (width, width)
     public static IntPair indexToPos(int index, int width) {
         
         //translate all indices by half of the amount of fields
