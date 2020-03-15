@@ -27,8 +27,6 @@ public class DoublePair {
     public static DoublePair indexToPoint(int position, int width, double lengthShortSide, double lengthLongSide) {
         IntPair gridCoordinates = IntPair.indexToPos(position, width);
 
-        DoublePair ret;
-
         double cornerOffsetX = 0;
         double cornerOffsetY = 0;
 
