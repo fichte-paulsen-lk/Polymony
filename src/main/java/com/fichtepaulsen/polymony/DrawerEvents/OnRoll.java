@@ -32,10 +32,6 @@ public class OnRoll extends Drawer {
     //interval of the x coordinates of the players
     private final double minX = 0.1;
     private final double maxX = 0.65;
-    private final double offX = 1;
-    private final double offY = 1;
-    private final double dimX = 50;
-    private final double dimY = 100;
 
     public OwnableField currentField;
   
@@ -43,24 +39,30 @@ public class OnRoll extends Drawer {
         super(ga, st);
     }
 
+    //gets: nothing
+    //does: logs errors etc.
     private void log(Level lvl, String msg) {
         Logger.getLogger(OnRoll.class.getName()).log(lvl, msg);
     }
 
     @Override
     public void handle() {
-                   
+ 
         Player currentPlayer = gameLogic.getCurrentPlayer();
         
         //save the old position before calling gamelogic and moving
         int oldPosition = currentPlayer.getPosition();
 
+        //roll the dices and show them
+        //changes currentPlayer position
         showDice();
 
         //move the player using an animation
         drawPlayerWithAnimation(currentPlayer, 1200, oldPosition);
     }
 
+    //gets: the current player, the duration of animation, the oldPosition
+    //does: moves the player with an animation
     public void drawPlayerWithAnimation(Player p, int duration, int oldPosition) {
 
         //make an ad hoc travel class to calculate how many corners have been
@@ -68,8 +70,10 @@ public class OnRoll extends Drawer {
         Travel travel = new Travel();
         log(Level.INFO, "oldPosition: " + oldPosition + ", newPosition: " + p.getPosition());
         
+        //calculates which corners the Player passed
         travel.calculateCornersPassed(oldPosition, p.getPosition());
-
+        
+        //error handeling
         if (p == null) {
             log(Level.SEVERE, "Player is null");
         }
@@ -77,20 +81,14 @@ public class OnRoll extends Drawer {
             if (getPlayerNode(p.getIndex()) == null) {
                 log(Level.SEVERE, "Player's Shape is null");
             }
-
-            PathTransition anim = new PathTransition(
+            //creates the Player animation and starts it
+            new PathTransition(
                     Duration.millis(duration),
                     travel.getPlayerTransitionPath(p, oldPosition),
-                    getPlayerNode(p.getIndex()));
-
-            if (anim == null) {
-                log(Level.SEVERE, "Animation couldn't be started (PathTransition is null)");
-            } else {
-                anim.play();
-            }
+                    getPlayerNode(p.getIndex())).play();
         }
     }
-
+    //inner class that calculates the animation path
     private class Travel {
 
         //one boolean value for each corner (0 is bottom right, then clockwise)
@@ -100,19 +98,21 @@ public class OnRoll extends Drawer {
         public Travel() {
         }
 
-        //gets: a player who just moved
+        //gets: a player who just moved and his old position
         //does: returns a path of the movement the player should
         //      perform
         public Path getPlayerTransitionPath(Player p, int oldPosition) {
 
             //contains the return value
             Path path = new Path();
+            
+            double playerRadius = Settings.getInstance().playerRadius;
 
             //calculate the starting position of the player, where the animation
             //starts from
             DoublePair startPosition = fieldPosition(oldPosition,
                     p.getIndex(),
-                    Settings.getInstance().playerRadius);
+                    playerRadius);
 
             //flag as to whether any corners have been passed
             boolean passedCorner = false;
@@ -120,14 +120,14 @@ public class OnRoll extends Drawer {
             //for a point where the player should change direction or stop
             DoublePair checkpoint;
 
-            for (int i = 0; i < 4; ++i) {
+            for (int i = 0; i < cornersPassed.length; ++i) {
                 if (cornersPassed[i]) {
 
                     log(Level.INFO, "Passed corner " + i);
 
                     //calculate the x and y coordinates of the player if it
                     //were standing on the current corner
-                    checkpoint = fieldPosition(i * 10, p.getIndex(), Settings.getInstance().playerRadius);
+                    checkpoint = fieldPosition(i * Settings.getInstance().rowLength, p.getIndex(), playerRadius);
 
                     //add that corner to the path
                     path.getElements().add(new LineTo(checkpoint.getX(), checkpoint.getY()));
@@ -135,10 +135,9 @@ public class OnRoll extends Drawer {
                     passedCorner = true;
                 }
             }
-
-            checkpoint = fieldPosition(p.getPosition(), p.getIndex(), Settings.getInstance().playerRadius);
+            checkpoint = fieldPosition(p.getPosition(), p.getIndex(), playerRadius);
+            
             //add the player's final position to the path as well
-
             //only add start and end if the player has actually moved,
             //otherwise return an empty path
             if (p.getPosition() != oldPosition || passedCorner) {
@@ -153,14 +152,17 @@ public class OnRoll extends Drawer {
             }
 
             log(Level.INFO, "Path: ");
-
+            //Logs the path
             for (int i = 0; i < path.getElements().size(); i++) {
                 log(Level.INFO, path.getElements().get(i).toString());
             }
-
+            
+            //returns the created path
             return path;
         }
-
+        
+        //gets: the old and the new index of the player
+        //does: fills the cornersPassed array with the corners that were passed
         public void calculateCornersPassed(int oldIndex, int newIndex) {
             int rowLength = Settings.getInstance().rowLength;
             
@@ -181,6 +183,8 @@ public class OnRoll extends Drawer {
         }
     }
 
+    //gets: the index of the Player
+    //does: returns the PlayerNode at the given Index
     private Node getPlayerNode(int index) {
         return GamefieldController.getPlayerNode(Settings.getInstance().gameStackPane, index);
     }
@@ -202,7 +206,9 @@ public class OnRoll extends Drawer {
                               fieldCorner.getY() + insideField.getY() - offset);
     }
 
-    //gets: index of player whose position in a field should be calculated
+    //gets: index of player whose position in a field should be calculated,
+    //      the position of the field, the minimum and maximum offset and
+    //      and the short and longSide
     //does: calculates the position of the n-th player in a single field
     //      (0,0) is the top left corner the field and (1,1) the bottom right
     private DoublePair insideFieldOffsets(int player, int position, double min, double max, double shortSide, double longSide) {
@@ -215,7 +221,8 @@ public class OnRoll extends Drawer {
 
         //variable coordinate is the minimum plus a certain spacing
         double variable;
-
+        //checks if ther are more than one player
+        //prevents division by zero
         if (numP > 1) {
             //space between the x-coords of players
             spacing = (max - min) / (double) (numP - 1);
@@ -224,8 +231,9 @@ public class OnRoll extends Drawer {
             spacing = ((max - min) / 2);
             variable = min + spacing;
         }
-        
+        //calculates how often the position needs to bee rotated
         int rotations = (position / Settings.getInstance().rowLength + 2) % 4;
+        //checks if the field the player stands on is a corner
         position %= Settings.getInstance().rowLength;
         
         double offsetX;
@@ -236,9 +244,10 @@ public class OnRoll extends Drawer {
         
         //special case for corners
         if (position == 0) {
+            //players stand on a diagonal
             offsetX = variable;
             offsetY = variable;
-            
+            //corners consist of two longsides
             xLength = longSide;
             yLength = longSide;
         }
@@ -249,10 +258,11 @@ public class OnRoll extends Drawer {
             xLength = shortSide;
             yLength = longSide;
         }
-        
+        //creates a temp variable for swapping
+        double temp;
+        //recalculate the offsets and swap the lengths
         for (int i = 0; i < rotations; i++) {
-            //recalculate the offsets and swap the lengths
-            double temp = offsetX;
+            temp = offsetX;
             offsetX = 1 - offsetY;
             offsetY = temp;
             
@@ -262,7 +272,6 @@ public class OnRoll extends Drawer {
             yLength = temp;
         }
         
-        //System.out.println("Spacing = " + spacing);
         //the players are on the middle vertical axis with the calculated x coordinate
         
         log(Level.INFO, "Relative offset: "  + offsetX + ", " + offsetY);
@@ -307,8 +316,4 @@ public class OnRoll extends Drawer {
         return gameLogic.getNthField(gameLogic.getCurrentPlayer().getPosition());
     }
 
-    //TODO move this method into a better situated class
-    private int getPlayerStrip(int index) {
-        return index / Settings.getInstance().rowLength;
-    }
 }
