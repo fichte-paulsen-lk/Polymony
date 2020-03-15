@@ -16,6 +16,8 @@ public class DoublePair {
         return this.y;
     }
 
+    //gets :    the Y and X offest, the shortside and x and y
+    //does :    returns the topLeftCorner of the field the player ist standing on
     private static DoublePair topLeftCorner(double offsetX, double offsetY, double shortSide, int x, int y) {
         return new DoublePair(x*shortSide + offsetX, y*shortSide + offsetY);
     }
@@ -42,24 +44,7 @@ public class DoublePair {
             cornerOffsetY = lengthLongSide;
             y--;
         }
-
-        /*
-        if (gridCoordinates.getFirst() == 0 || gridCoorinates.getFirst() == width) {
-            ret = topLeftCorner(cornerOffsetX, cornerOffsetY, lengthShortSide, x, y);
-            /*
-            ret = new DoublePair((gridCoordinates.getFirst()-1)*lengthShortSide + cornerOffsetX,
-                                 gridCoordinates.getSecond()*lengthShortSide + cornerOffsetY);
-
-        }
-        else if (gridCoordinates.getSecond() == 0 || gridCoorinates.getSecond() == width) {
-            ret = topLeftCorner(cornerOffsetX, cornerOffsetY, lengthShortSide, x, y);
-            /*
-            ret = new DoublePair(gridCoordinates.getFirst()*lengthShortSide + cornerOffsetX,
-                                 (gridCoordinates.getSecond()-1)*lengthShortSide + cornerOffsetY);
-
-        }
-        */
-
+        
         return topLeftCorner(cornerOffsetX, cornerOffsetY, lengthShortSide, x, y);
     }
 }
