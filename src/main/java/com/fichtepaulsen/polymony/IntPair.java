@@ -22,6 +22,7 @@ public class IntPair {
      * these coordinates are independent of the actual floating point coordinates for graphics
      * and can be used to calculated these using field width and other parameters
      */ 
+    //gets: the field index and thw 
     public static IntPair indexToPos(int index, int width) {
         
         //translate all indices by half of the amount of fields

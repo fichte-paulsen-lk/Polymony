@@ -88,6 +88,7 @@ public class OnRoll extends Drawer {
                     getPlayerNode(p.getIndex())).play();
         }
     }
+    
     //inner class that calculates the animation path
     private class Travel {
 
@@ -131,10 +132,12 @@ public class OnRoll extends Drawer {
 
                     //add that corner to the path
                     path.getElements().add(new LineTo(checkpoint.getX(), checkpoint.getY()));
-
+                    //a corner was passed
                     passedCorner = true;
                 }
             }
+            
+            //the current position of the player
             checkpoint = fieldPosition(p.getPosition(), p.getIndex(), playerRadius);
             
             //add the player's final position to the path as well

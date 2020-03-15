@@ -143,10 +143,12 @@ public class GamefieldController implements Initializable {
         
         //add all players' shapes at 
         //the start of the game
+        Circle c;
+        double radius = Settings.getInstance().playerRadius;
         for (int i = 0; i < Settings.getInstance().numberOfPlayers; i++) {
             
             //add a circle with a radius from Settings
-            Circle c = new Circle(Settings.getInstance().playerRadius);
+            c = new Circle(radius);
             
             //get color from the player class and color the player's circle
             c.setFill(g.getNthPlayer(i).getColor());
@@ -159,7 +161,7 @@ public class GamefieldController implements Initializable {
             StackPane.setAlignment(c, Pos.TOP_LEFT);
             playerPane.getChildren().add(c);
 
-            //quickly step onto go from the last field before it 
+            //moves the player to his starting location
             PolyMonyDrawer.getInstance().onRoll.drawPlayerWithAnimation(g.getNthPlayer(i), 500, 39); 
             
         }
@@ -169,7 +171,7 @@ public class GamefieldController implements Initializable {
         for (int i = 0; i < Settings.getInstance().numberOfPlayers; i++) {
             
             //add a circle with a radius from Settings
-            Circle c = new Circle(Settings.getInstance().playerRadius * 2);
+             c = new Circle(radius * 2);
             
             //get color from the player class and color the player's circle
             c.setFill(g.getNthPlayer(i).getColor());
