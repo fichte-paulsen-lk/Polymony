@@ -101,7 +101,8 @@ public class OnRoll extends Drawer {
 
         //gets: a player who just moved and his old position
         //does: returns a path of the movement the player should
-        //      perform
+        //      perform, this is never empty because the player will
+        //      move in every imaginable case (can't roll 0 or 40)
         public Path getPlayerTransitionPath(Player p, int oldPosition) {
 
             //contains the return value
@@ -115,6 +116,9 @@ public class OnRoll extends Drawer {
                     p.getIndex(),
                     playerRadius);
 
+            //start from the player's current position
+            path.getElements().add(0, new MoveTo(startPosition.getX(), startPosition.getY()));
+                
             //flag as to whether any corners have been passed
             boolean passedCorner = false;
 
@@ -140,19 +144,11 @@ public class OnRoll extends Drawer {
             //the current position of the player
             checkpoint = fieldPosition(p.getPosition(), p.getIndex(), playerRadius);
             
-            //add the player's final position to the path as well
-            //only add start and end if the player has actually moved,
-            //otherwise return an empty path
-            if (p.getPosition() != oldPosition || passedCorner) {
-
-                //start from the player's current position
-                path.getElements().add(0, new MoveTo(startPosition.getX(), startPosition.getY()));
-
-                //also add the final position
-                path.getElements().add(
-                        new LineTo(checkpoint.getX(), checkpoint.getY())
-                );
-            }
+            //also add the final position
+            path.getElements().add(
+                new LineTo(checkpoint.getX(), checkpoint.getY())
+            );
+                
 
             log(Level.INFO, "Path: ");
             //Logs the path
